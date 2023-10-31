@@ -9,6 +9,8 @@ import Community from "./components/Community/Community";
 import Login from "./components/Login/Login";
 import Join from "./components/Join/Join";
 import MyPage from "./components/MyPage/MyPage";
+import BoardWriteForm from "./components/Community/BoardWriteForm";
+import BoardDetail from "./components/Community/BoardDetail";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/join" element={<Join />}></Route>
         <Route path="/join" element={<MyPage />}></Route>
+        <Route path="/boardwriteform" element={<BoardWriteForm />}></Route>
+        <Route path="/boarddetail" element={<BoardDetail />}></Route>
       </Routes>
     </div>
   );

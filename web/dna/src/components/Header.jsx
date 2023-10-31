@@ -25,6 +25,7 @@ const Header = () => {
       <Link to="/join">
         <button>회원가입</button>
       </Link>
+      <hr />
     </div>
   );
 };
