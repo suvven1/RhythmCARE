@@ -58,21 +58,21 @@ router.post("/join/nickDupCheck", (req, res) => {
 // 로그인 시작 -------------------------------------------------------------------------------
 router.post("/login", (req, res) => {
   console.log("user login");
-  let { id, pw } = req.body;
-  let sql = "select * from member where id=? and pw=?";
-  conn.query(sql, [id, pw], (err, rows) => {
-    if (rows.length != 0) {
-      console.log("로그인 성공!", rows[0].nick);
-      res.json({ loginResult: rows[0].nick });
-      // req.session.id = rows[0].id;
-      // req.session.save(()=>{
-      //     res.json({loginResult : rows[0].id})
-      // })
-    } else {
-      console.log("로그인 실패!");
-      res.json({ loginResult: false });
-    }
-  });
+  // let { id, pw } = req.body;
+  // let sql = "select * from member where id=? and pw=?";
+  // conn.query(sql, [id, pw], (err, rows) => {
+  //   if (rows.length != 0) {
+  //     console.log("로그인 성공!", rows[0].nick);
+  //     res.json({ loginResult: rows[0].nick });
+  // req.session.id = rows[0].id;
+  // req.session.save(()=>{
+  //     res.json({loginResult : rows[0].id})
+  // })
+  //   } else {
+  //     console.log("로그인 실패!");
+  //     res.json({ loginResult: false });
+  //   }
+  // });
 });
 // 로그인 끝 ---------------------------------------------------------------------------------
 

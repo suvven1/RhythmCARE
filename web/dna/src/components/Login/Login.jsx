@@ -1,13 +1,19 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../axios";
 
 const Login = () => {
   const nav = useNavigate();
   const login = (e) => {
     e.preventDefault();
     console.log("login");
+    doLogin();
     // nav("/");
+  };
+
+  const doLogin = () => {
+    axios.post("/user/login", { test: "test" }).then(console.log("test"));
   };
 
   return (
