@@ -57,8 +57,8 @@ router.post("/join/nickDupCheck", (req, res) => {
 
 // 로그인 시작 -------------------------------------------------------------------------------
 router.post("/login", (req, res) => {
-  console.log("user login");
-  // let { id, pw } = req.body;
+  console.log("user login", req.body);
+  let { user, id, pw } = req.body;
   // let sql = "select * from member where id=? and pw=?";
   // conn.query(sql, [id, pw], (err, rows) => {
   //   if (rows.length != 0) {

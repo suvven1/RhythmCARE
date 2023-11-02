@@ -14,6 +14,9 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "web", "dna", "build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "web", "dna", "build", "index.html"));
+});
 app.listen(app.get("port"), () => {
   console.log(app.get("port"), "port waiting...");
 });

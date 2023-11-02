@@ -59,14 +59,14 @@ const SideBar = ({ width = 280, children, close, closeSet }) => {
       >
         {isOpen ? (
           <img
-            src={"images/Close.png"}
+            src={`${process.env.PUBLIC_URL}/images/Close.png`}
             onClick={toggleMenu}
             alt=""
             className="btnSideBar btnOn"
           />
         ) : (
           <img
-            src={"images/Menu.png"}
+            src={`${process.env.PUBLIC_URL}/images/Menu.png`}
             onClick={toggleMenu}
             alt=""
             className="btnSideBar btnOff"

@@ -12,7 +12,10 @@ const SideBarContents = ({ close }) => {
         <ImgBox>
           <div className="innerImgBox">
             <Link to="/login" onClick={closeMenu}>
-              <img src={"images/User.png"} alt="유저사진" />
+              <img
+                src={`${process.env.PUBLIC_URL}/images/User.png`}
+                alt="유저사진"
+              />
             </Link>
           </div>
         </ImgBox>

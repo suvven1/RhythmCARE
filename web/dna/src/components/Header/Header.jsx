@@ -26,7 +26,10 @@ const Header = () => {
       <HeaderBox>
         <Logo>
           <Link to="/">
-            <img src={"images/WebLogo.png"} alt="헤더 로고" />
+            <img
+              src={`${process.env.PUBLIC_URL}/images/WebLogo.png`}
+              alt="헤더 로고"
+            />
           </Link>
         </Logo>
         {headerWidth > 1040 ? (
