@@ -11,6 +11,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "web", "dna", "build")));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "web", "dna", "build", "index.html"));
+});
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use(bodyParser.urlencoded({ extended: true }));
