@@ -1,27 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 const SideBarContents = ({ close }) => {
   const closeMenu = () => {
     close(true);
   };
+  const [name, setName] = useState();
+  const [nick, setNick] = useState();
+
+  useEffect(() => {
+    setName(sessionStorage.getItem("name"));
+    setNick(sessionStorage.getItem("nick"));
+  }, []);
+
+  const logout = () => {
+    sessionStorage.clear();
+    window.location.replace("/");
+  };
 
   return (
     <SideBarContentBox>
       <UserDataBox>
-        <ImgBox>
-          <div className="innerImgBox">
-            <Link to="/login" onClick={closeMenu}>
-              <img
-                src={`${process.env.PUBLIC_URL}/images/User.png`}
-                alt="유저사진"
-              />
+        {name == null ? (
+          <>
+            <ImgBox>
+              <div className="innerImgBox">
+                <Link to="/login" onClick={closeMenu}>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/User.png`}
+                    alt="유저사진"
+                  />
+                </Link>
+              </div>
+            </ImgBox>
+            <Link to="/login" className="goTOLogin" onClick={closeMenu}>
+              로그인이 필요합니다.
             </Link>
-          </div>
-        </ImgBox>
-        <Link to="/login" className="goTOLogin" onClick={closeMenu}>
-          로그인이 필요합니다.
-        </Link>
+          </>
+        ) : (
+          <>
+            <ImgBox>
+              <div className="innerImgBox" style={{ backgroundColor: "white" }}>
+                <Link to="/mypage" onClick={closeMenu}>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/AppLogo.png`}
+                    alt="유저사진"
+                  />
+                </Link>
+              </div>
+            </ImgBox>
+            <LoginedUserBox>
+              <Link to="/mypage" className="goTOmypage" onClick={closeMenu}>
+                {name}({nick})
+              </Link>
+              <Link to="/" onClick={logout}>
+                로그아웃
+              </Link>
+            </LoginedUserBox>
+          </>
+        )}
       </UserDataBox>
       <MenuBox>
         <Link to="/" onClick={closeMenu}>
@@ -65,6 +102,19 @@ const UserDataBox = styled.div`
     &:hover {
       color: white;
       font-size: 17px;
+    }
+  }
+`;
+
+const LoginedUserBox = styled.div`
+  margin-top: 15px;
+  & a {
+    color: black;
+  }
+  & .goTOmypage {
+    margin: 0 70px 0 40px;
+    &:hover {
+      color: white;
     }
   }
 `;

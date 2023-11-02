@@ -5,11 +5,35 @@ const conn = require("../config/database");
 // 회원가입 시작 ------------------------------------------------------------------------------
 router.post("/join", (req, res) => {
   console.log("user join", req.body);
-  let { id, pw, name, nick, birth, gender, phone } = req.body;
-  let joinSql = "insert into user values (?, ?, ?, ?, ?, ?, ?)";
+  let {
+    id,
+    pw,
+    mName,
+    nick,
+    mBirth,
+    mGender,
+    mPhone,
+    uName,
+    uBirth,
+    uGender,
+    uPhone,
+  } = req.body.joinData;
+  let joinSql = "insert into user values (?,?,?,?,?,?,?,?,?,?,?)";
   conn.query(
     joinSql,
-    [id, pw, name, nick, birth, gender, phone],
+    [
+      id,
+      pw,
+      mName,
+      nick,
+      mBirth,
+      mGender,
+      mPhone,
+      uName,
+      uBirth,
+      uGender,
+      uPhone,
+    ],
     (err, rows) => {
       if (rows) {
         console.log("회원가입 성공");
@@ -59,20 +83,27 @@ router.post("/join/nickDupCheck", (req, res) => {
 router.post("/login", (req, res) => {
   console.log("user login", req.body);
   let { user, id, pw } = req.body;
-  // let sql = "select * from member where id=? and pw=?";
-  // conn.query(sql, [id, pw], (err, rows) => {
-  //   if (rows.length != 0) {
-  //     console.log("로그인 성공!", rows[0].nick);
-  //     res.json({ loginResult: rows[0].nick });
-  // req.session.id = rows[0].id;
-  // req.session.save(()=>{
-  //     res.json({loginResult : rows[0].id})
-  // })
-  //   } else {
-  //     console.log("로그인 실패!");
-  //     res.json({ loginResult: false });
-  //   }
-  // });
+  let loginSql = "select * from user where manager_id=? and password=?";
+  conn.query(loginSql, [id, pw], (err, rows) => {
+    if (rows.length != 0) {
+      console.log("로그인 성공!", rows[0].manager_nick);
+      if (user == "manager") {
+        res.json({
+          loginResult: {
+            nick: rows[0].manager_nick,
+            name: rows[0].manager_name,
+          },
+        });
+      } else {
+        res.json({
+          loginResult: { nick: rows[0].manager_nick, name: rows[0].user_name },
+        });
+      }
+    } else {
+      console.log("로그인 실패!");
+      res.json({ loginResult: false });
+    }
+  });
 });
 // 로그인 끝 ---------------------------------------------------------------------------------
 

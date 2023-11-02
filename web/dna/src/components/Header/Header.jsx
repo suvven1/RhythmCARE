@@ -6,6 +6,7 @@ import SideBar from "./SideBar";
 import SideBarContents from "./SideBarContents";
 const Header = () => {
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
+
   const handelResize = () => {
     setHeaderWidth(window.innerWidth);
   };

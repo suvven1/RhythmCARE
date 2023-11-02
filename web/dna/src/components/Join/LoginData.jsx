@@ -20,12 +20,14 @@ const LoginData = () => {
 
   return (
     <LoginDataBox>
-      <Title>보호자와 기기 사용자가 같이 사용할 아이디 / 비밀번호입니다.</Title>
       <LoginDataInput>
+        <Title>
+          보호자와 기기 사용자가 같이 사용할 아이디 / 비밀번호입니다.
+        </Title>
         <div>
           <input
             type="text"
-            placeholder="     닉네임"
+            placeholder="닉네임"
             onChange={(e) => {
               setNick(e.target.value);
             }}
@@ -34,7 +36,7 @@ const LoginData = () => {
         <div>
           <input
             type="text"
-            placeholder="     아이디"
+            placeholder="아이디"
             onChange={(e) => {
               setId(e.target.value);
             }}
@@ -43,7 +45,7 @@ const LoginData = () => {
         <div>
           <input
             type="text"
-            placeholder="     비밀번호"
+            placeholder="비밀번호"
             onChange={(e) => {
               setPw(e.target.value);
             }}
@@ -52,7 +54,7 @@ const LoginData = () => {
         <div>
           <input
             type="text"
-            placeholder="     비밀번호 확인"
+            placeholder="비밀번호 확인"
             // onChange={(e) => {
             //   setNick(e.target.value);
             // }}
@@ -75,14 +77,14 @@ const LoginDataBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
   border-radius: 20px;
   & input {
     border-radius: 10px;
-    height: 55px;
+    height: 50px;
     width: 380px;
     margin: 5px;
     border: none;
+    padding-left: 12px;
   }
 
   & input::placeholder {
@@ -95,7 +97,7 @@ const LoginDataBox = styled.div`
     font-size: 15px;
     border-radius: 10px;
     box-shadow: none;
-    height: 55px;
+    height: 50px;
     width: 390px;
     margin: 8px;
     background-color: #2e2288;
@@ -122,6 +124,8 @@ const LoginDataBox = styled.div`
 
 const Title = styled.div`
   font-size: 13px;
+  margin-left: 10px;
+  margin-top: 20px;
 `;
 
 const LoginDataInput = styled.div`

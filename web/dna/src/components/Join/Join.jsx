@@ -33,6 +33,6 @@ const JoinBox = styled.div`
   align-items: center;
   & img {
     width: 400px;
-    margin: 20px 0 0 0;
+    margin: 30px 0 -10px 0;
   }
 `;
