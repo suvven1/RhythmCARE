@@ -50,14 +50,15 @@ router.post("/join", (req, res) => {
 router.post("/join/idDupCheck", (req, res) => {
   console.log("user join idDupCheck", req.body);
   let { id } = req.body;
-  let idDupCheckSql = "select * from user where id=?";
-  conn.query(checksql, [id], (err, rows) => {
-    if (rows.length == 0) {
+  let idDupCheckSql = "select * from user where manager_id=?";
+  conn.query(idDupCheckSql, [id], (err, rows) => {
+    console.log(rows.length);
+    if (rows.length != 0) {
       console.log("ID 중복");
-      res.json({ idDupResult: true });
+      res.json({ idDupResult: false });
     } else {
       console.log("사용 가능한 ID");
-      res.json({ idDupResult: false });
+      res.json({ idDupResult: true });
     }
   });
 });
@@ -66,14 +67,14 @@ router.post("/join/idDupCheck", (req, res) => {
 router.post("/join/nickDupCheck", (req, res) => {
   console.log("user join nickDupCheck", req.body);
   let { nick } = req.body;
-  let nickDupCheckSql = "select * from user where user_nick=?";
-  conn.query(checksql, [id], (err, rows) => {
-    if (rows.length == 0) {
+  let nickDupCheckSql = "select * from user where manager_nick=?";
+  conn.query(nickDupCheckSql, [nick], (err, rows) => {
+    if (rows.length != 0) {
       console.log("Nick 중복");
-      res.json({ nickDupResult: true });
+      res.json({ nickDupResult: false });
     } else {
       console.log("사용 가능한 Nick");
-      res.json({ nickDupResult: false });
+      res.json({ nickDupResult: true });
     }
   });
 });

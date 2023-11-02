@@ -250,6 +250,7 @@ const LoginDataInput = styled.div`
 const BirthBox = styled.div`
   & input[type="date"] {
     position: relative;
+    background-color: white;
   }
   & input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;

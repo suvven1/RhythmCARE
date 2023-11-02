@@ -149,7 +149,7 @@ const Label = styled.label`
   display: inline-block;
   position: relative;
   width: 188px;
-  height: 40px;
+  height: 55px;
   border-radius: 1000px;
   color: #bdbdbd;
   line-height: 55px;
@@ -218,6 +218,7 @@ const LoginForm = styled.form`
     border: none;
     color: white;
     font-size: 15px;
+    cursor: pointer;
   }
 `;
 
