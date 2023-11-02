@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "web", "dna", "build")));
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set("port", process.env.PORT || 3333);
+app.set("port", process.env.PORT || 80);
 app.listen(app.get("port"), () => {
   console.log(app.get("port"), "port waiting...");
 });
