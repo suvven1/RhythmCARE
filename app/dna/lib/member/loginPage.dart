@@ -1,21 +1,18 @@
-import 'package:dna/joinPage.dart';
-import 'package:dna/loginPage.dart';
 import 'package:flutter/material.dart';
-import 'homePage.dart';
+import '../mainPage.dart';
+import 'findPage.dart';
+import 'joinPage.dart';
 
-class findPage extends StatefulWidget {
-  const findPage({super.key});
+class loginPage extends StatefulWidget {
+  const loginPage({super.key});
 
   @override
-  State<findPage> createState() => _findPageState();
+  State<loginPage> createState() => _loginPageState();
 }
 
-class _findPageState extends State<findPage> {
-  TextEditingController nameCon = TextEditingController();
-  TextEditingController birthCon = TextEditingController();
-  TextEditingController phoneCon = TextEditingController();
-
-  String findIt = '아이디';
+class _loginPageState extends State<loginPage> {
+  TextEditingController idCon = TextEditingController();
+  TextEditingController pwCon = TextEditingController();
 
   // toggle 변수
   bool isGuard = true;
@@ -39,51 +36,48 @@ class _findPageState extends State<findPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset('image/logo.png'),
                   SizedBox(
                     height: 50,
                   ),
                   ToggleButtons(
-                    borderColor: Colors.transparent, // 큰 박스 선 색
-                    renderBorder: false, // 선택된 박스 선 색
+                    borderColor: Color(0xff2e2288), // 큰 박스 선 색
+                    borderRadius: BorderRadius.all(Radius.circular(50)), // 큰 박스 선 둥글게
                     highlightColor: Colors.transparent, // 클릭 시, 동그랗게 퍼지는 색
-                    fillColor: Colors.transparent, // 선택된 박스 색
-                    selectedColor: Color(0xff2e2288), // 선택된 박스 텍스트 색
+                    fillColor: Color(0xff2e2288), // 선택된 박스 색
+                    selectedColor: Colors.white, // 선택된 박스 텍스트 색
                     color: Colors.grey, // 미 선택된 박스 텍스트 색
+                    textStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     isSelected: isSelected,
                     onPressed: toggleSelect,
                     children: [
-                      SizedBox(width: 100, child: const Center(child: Text('아이디 찾기',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),))),
-                      SizedBox(width: 100, child: const Center(child: Text('비밀번호 찾기',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),))),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.1,
+                        child: const Center(child: Text('보호자 로그인')),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.1,
+                        child: const Center(child: Text('사용자 로그인')),
+                      ),
                     ],
                   ),
                   SizedBox(
                     height: 30,
                   ),
                   TextField(
-                    controller: nameCon,
+                    controller: idCon,
                     decoration: const InputDecoration(
-                      labelText: '보호자 성명',
+                      labelText: '아이디',
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextField(
-                    controller: birthCon,
+                    controller: pwCon,
                     decoration: const InputDecoration(
-                      labelText: '보호자 생년월일 8자리',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextField(
-                    controller: phoneCon,
-                    decoration: const InputDecoration(
-                      labelText: '보호자 휴대폰번호',
+                      labelText: '비밀번호',
                     ),
                   ),
                   SizedBox(
@@ -96,17 +90,34 @@ class _findPageState extends State<findPage> {
                     child: Container(
                       width: double.infinity,
                       height: 50,
-                      child: Center(child: Text('$findIt 찾기')),
+                      child: Center(child: Text('로그인')),
                     ),
                     onPressed: () {
-                      if(findIt == '아이디') {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => loginPage()));
-                      } else{
-
-                      }
+                      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => mainPage()));
                     },
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>findPage()));
+                          },
+                          child: Text('아이디 찾기',
+                              style: TextStyle(color: Colors.black))),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>findPage()));
+                          },
+                          child: Text('비밀번호 찾기',
+                              style: TextStyle(color: Colors.black))),
+                    ],
+                  )
                 ],
               ),
               Row(
@@ -121,12 +132,10 @@ class _findPageState extends State<findPage> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => joinPage()));
                     },
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text('회원가입',
-                            style: TextStyle(
-                                color: Color(0xff2e2288),
-                                fontWeight: FontWeight.bold))),
+                    child: Text('회원가입',
+                        style: TextStyle(
+                            color: Color(0xff2e2288),
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
@@ -142,11 +151,9 @@ class _findPageState extends State<findPage> {
     if (value == 0) {
       isGuard = true;
       isUser = false;
-      findIt = '아이디';
     } else {
       isGuard = false;
       isUser = true;
-      findIt = '비밀번호';
     }
     setState(() {
       isSelected = [isGuard, isUser];
