@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import axios from "../../axios";
@@ -8,14 +8,29 @@ import styled from "styled-components";
 const LoginData = () => {
   const nav = useNavigate();
 
+  // 이전 버튼으로 다시 돌아왔을때 기존 입력 데이터 유지
+  const returnData = useLocation().state;
+  useEffect(() => {
+    if (returnData != null) {
+      setId(returnData.loginData.id);
+      setNick(returnData.loginData.nick);
+      setPw(returnData.loginData.pw);
+      setRePw(returnData.loginData.pw);
+      checkDupID();
+      checkDupNick();
+    }
+  }, []);
+
   // 아이디 관련 변수
   const [id, setId] = useState("");
   const [passID, setPassID] = useState();
+  const [passDupID, setPassDupID] = useState(false);
   const [checkIDText, setCheckIDText] = useState("");
   const checkID = () => {
+    setPassDupID(false);
     if (id.length > 4 && id.length < 11) {
       setPassID(true);
-      setCheckIDText();
+      setCheckIDText("* 아이디 중복 확인을 해주세요.");
     } else if (id == "") {
       setPassID();
       setCheckIDText();
@@ -32,6 +47,7 @@ const LoginData = () => {
     axios.post("/user/join/idDupCheck", { id: id }).then((res) => {
       if (res.data.idDupResult) {
         setPassID(true);
+        setPassDupID(true);
         setCheckIDText("* 사용가능한 아이디 입니다.");
       } else {
         setPassID(false);
@@ -83,11 +99,13 @@ const LoginData = () => {
   // 닉네임 관련 변수
   const [nick, setNick] = useState("");
   const [passNick, setPassNick] = useState();
+  const [passDupNick, setPassDupNick] = useState(false);
   const [checkNickText, setCheckNickText] = useState("");
   const checkNick = () => {
+    setPassDupNick(false);
     if (nick.length > 1 && nick.length < 7) {
       setPassNick(true);
-      setCheckNickText();
+      setCheckNickText("* 닉네임 중복 확인을 해주세요.");
     } else if (nick == "") {
       setPassNick();
       setCheckNickText();
@@ -105,6 +123,7 @@ const LoginData = () => {
       if (res.data.nickDupResult) {
         setPassNick(true);
         setCheckNickText("* 사용가능한 닉네임 입니다.");
+        setPassDupNick(true);
       } else {
         setPassNick(false);
         setCheckNickText("* 중복된 닉네임 입니다.");
@@ -119,8 +138,11 @@ const LoginData = () => {
   };
 
   const nextToUserData = () => {
-    console.log(loginData);
-    nav("/join/userdata", { state: { loginData: loginData } });
+    if (passDupID && passDupNick && passPW && passRePW) {
+      nav("/join/userdata", { state: { loginData: loginData } });
+    } else {
+      alert("회원가입 정보를 올바르게 입력해주세요.");
+    }
   };
 
   return (
@@ -147,6 +169,7 @@ const LoginData = () => {
             className="nickInput"
             type="text"
             placeholder="닉네임 (2~6글자)"
+            value={nick}
             onChange={(e) => {
               setNick(e.target.value);
             }}
@@ -176,6 +199,7 @@ const LoginData = () => {
             className="idInput"
             type="text"
             placeholder="아이디 (5~10글자)"
+            value={id}
             onChange={(e) => {
               setId(e.target.value);
             }}
@@ -206,6 +230,7 @@ const LoginData = () => {
             className="pwInput"
             type="password"
             placeholder="비밀번호 (8자리 이상) "
+            value={pw}
             onChange={(e) => {
               setPw(e.target.value);
             }}
@@ -231,6 +256,7 @@ const LoginData = () => {
             className="pwInput"
             type="password"
             placeholder="비밀번호 확인"
+            value={rePw}
             onChange={(e) => {
               setRePw(e.target.value);
             }}

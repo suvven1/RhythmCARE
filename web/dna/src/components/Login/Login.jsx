@@ -81,7 +81,7 @@ const Login = () => {
           </div>
           <div>
             <input
-              type="text"
+              type="password"
               className="userInput"
               placeholder="비밀번호"
               onChange={(e) => {

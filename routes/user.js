@@ -52,7 +52,6 @@ router.post("/join/idDupCheck", (req, res) => {
   let { id } = req.body;
   let idDupCheckSql = "select * from user where manager_id=?";
   conn.query(idDupCheckSql, [id], (err, rows) => {
-    console.log(rows.length);
     if (rows.length != 0) {
       console.log("ID 중복");
       res.json({ idDupResult: false });

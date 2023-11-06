@@ -6,6 +6,8 @@ import SideBar from "./SideBar";
 import SideBarContents from "./SideBarContents";
 const Header = () => {
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
+  const name = sessionStorage.getItem("name");
+  const nick = sessionStorage.getItem("nick");
 
   const handelResize = () => {
     setHeaderWidth(window.innerWidth);
@@ -22,6 +24,13 @@ const Header = () => {
   const closeMenu = (e) => {
     setClose(e);
   };
+
+  const logout = () => {
+    sessionStorage.clear();
+    alert("로그아웃이 완료되었습니다.");
+    window.location.replace("/");
+  };
+
   return (
     <div>
       <HeaderBox>
@@ -52,14 +61,31 @@ const Header = () => {
                 <Link to="/community">커뮤니티</Link>
               </div>
             </ContentBox>
-            <UserBox>
-              <div>
-                <Link to="/login">로그인</Link>
-              </div>
-              <div>
-                <Link to="/join/logindata">회원가입</Link>
-              </div>
-            </UserBox>
+            {name == null ? (
+              <UserContainer>
+                로그인이 필요합니다.
+                <UserBox>
+                  <div>
+                    <Link to="/login">로그인</Link>
+                  </div>
+                  <div>
+                    <Link to="/join/logindata">회원가입</Link>
+                  </div>
+                </UserBox>
+              </UserContainer>
+            ) : (
+              <UserContainer>
+                {name}({nick})
+                <UserBox>
+                  <div>
+                    <Link onClick={logout}>로그아웃</Link>
+                  </div>
+                  <div>
+                    <Link to="/mypage">마이페이지</Link>
+                  </div>
+                </UserBox>
+              </UserContainer>
+            )}
           </>
         ) : (
           <div className="SideBar">
@@ -124,15 +150,21 @@ const ContentBox = styled.div`
   }
 `;
 
+const UserContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 11px;
+`;
+
 const UserBox = styled.div`
   display: flex;
-  margin-left: 30px;
+  margin-top: 5px;
   & div {
-    width: 60px;
-    margin-left: -10px;
+    width: 70px;
+    margin-right: -10px;
   }
   & a {
-    margin-left: 15px;
     font-size: 11px;
     color: gray;
   }
