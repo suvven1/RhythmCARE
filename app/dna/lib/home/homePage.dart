@@ -1,5 +1,8 @@
 import 'package:dna/home/stressPage.dart';
 import 'package:dna/home/tiredPage.dart';
+import 'package:dna/home/widget/heartBeat.dart';
+import 'package:dna/home/widget/stressModel.dart';
+import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 
 class homePage extends StatefulWidget {
@@ -44,218 +47,17 @@ class _homePageState extends State<homePage> {
           child: Column(
             children: [
               // 심박수
-              Stack(
-                children: [
-                  Image.asset('image/heart.gif'),
-                  Center(
-                    heightFactor: 3,
-                    child: Column(
-                      children: [
-                        Text(
-                          '98',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 65),
-                        ),
-                        Text(
-                          'bpm',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+              heartBeat(100),
               // 스트레스 모델
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.black
-                ),
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>stressPage()));
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('현재 스트레스 지수'),
-                    Stack(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 52,
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(50)),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(6),
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50)),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '낮음',
-                          style: TextStyle(color: Colors.green),
-                        ),
-                        Text(
-                          '높음',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '현재 스트레스는',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '낮은',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red),
-                                ),
-                                Text(
-                                  ' 상태입니다.',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Image.asset(
-                          'image/heart.gif',
-                          height: 50,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 1,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black)),
-              ),
-              SizedBox(
-                height: 30,
-              ),
+              visualModel(context, "스트레스"),
+              SizeBoxH30,
+              horisonLine,
+              SizeBoxH30,
               // 피로도
-              TextButton(
-                style: TextButton.styleFrom(
-                    primary: Colors.black
-                ),
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>tiredPage()));
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('현재 피로도 지수'),
-                    Stack(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 52,
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(50)),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(6),
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50)),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '낮음',
-                          style: TextStyle(color: Colors.green),
-                        ),
-                        Text(
-                          '높음',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '현재 피로도는',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '낮은',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red),
-                                ),
-                                Text(
-                                  ' 상태입니다.',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Image.asset(
-                          'image/heart.gif',
-                          height: 50,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 1,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black)),
-              ),
-              SizedBox(
-                height: 30,
-              ),
+              visualModel(context, "피로도"),
+              SizeBoxH30,
+              horisonLine,
+              SizeBoxH30,
               // 잔디심기
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,9 +80,7 @@ class _homePageState extends State<homePage> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 30,
-              ),
+              SizeBoxH30,
               // _gridView
             ],
           ),

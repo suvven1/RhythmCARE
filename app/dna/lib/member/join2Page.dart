@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widget/sizeBox.dart';
 import 'loginPage.dart';
 
 class join2Page extends StatefulWidget {
@@ -43,21 +44,21 @@ class _join2PageState extends State<join2Page> {
                         labelText: '사용자 성명',
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizeBoxH10,
                     TextField(
                       controller: birth2Con,
                       decoration: const InputDecoration(
                         labelText: '사용자 생년월일 8자리',
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizeBoxH10,
                     TextField(
                       controller: gender2Con,
                       decoration: const InputDecoration(
                         labelText: '사용자 성별',
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizeBoxH10,
                     TextField(
                       controller: phone2Con,
                       decoration: const InputDecoration(

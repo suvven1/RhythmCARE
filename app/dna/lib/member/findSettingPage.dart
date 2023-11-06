@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widget/sizeBox.dart';
 import 'joinPage.dart';
 import 'loginPage.dart';
 
@@ -28,9 +29,7 @@ class _findSettingPageState extends State<findSettingPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset('image/logo.png'),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  SizeBoxH50,
                   Text('변경할 비밀번호를 입력해주세요'),
                   TextField(
                     controller: pwCon,
@@ -38,18 +37,14 @@ class _findSettingPageState extends State<findSettingPage> {
                       labelText: '비밀번호',
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizeBoxH10,
                   TextField(
                     controller: pw2Con,
                     decoration: const InputDecoration(
                       labelText: '비밀번호 확인',
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizeBoxH40,
                   // FlaltButton 은 화면 위에 떠있는 동그란 버튼
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(

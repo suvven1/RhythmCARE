@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../mainPage.dart';
+import '../widget/sizeBox.dart';
 import 'findPage.dart';
 import 'joinPage.dart';
 
@@ -38,9 +39,7 @@ class _loginPageState extends State<loginPage> {
               Column(
                 children: [
                   Image.asset('image/logo.png'),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  SizeBoxH50,
                   ToggleButtons(
                     borderColor: Color(0xff2e2288), // 큰 박스 선 색
                     borderRadius: BorderRadius.all(Radius.circular(50)), // 큰 박스 선 둥글게
@@ -62,27 +61,21 @@ class _loginPageState extends State<loginPage> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizeBoxH30,
                   TextField(
                     controller: idCon,
                     decoration: const InputDecoration(
                       labelText: '아이디',
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizeBoxH10,
                   TextField(
                     controller: pwCon,
                     decoration: const InputDecoration(
                       labelText: '비밀번호',
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizeBoxH40,
                   // FlaltButton 은 화면 위에 떠있는 동그란 버튼
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -106,9 +99,7 @@ class _loginPageState extends State<loginPage> {
                           MaterialPageRoute(builder: (_) => mainPage()));
                     },
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizeBoxH20,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
