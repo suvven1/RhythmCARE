@@ -1,5 +1,7 @@
-import 'package:dna/loginPage.dart';
 import 'package:flutter/material.dart';
+
+import '../widget/sizeBox.dart';
+import 'loginPage.dart';
 
 class join2Page extends StatefulWidget {
   const join2Page({super.key});
@@ -42,21 +44,21 @@ class _join2PageState extends State<join2Page> {
                         labelText: '사용자 성명',
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizeBoxH10,
                     TextField(
                       controller: birth2Con,
                       decoration: const InputDecoration(
                         labelText: '사용자 생년월일 8자리',
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizeBoxH10,
                     TextField(
                       controller: gender2Con,
                       decoration: const InputDecoration(
                         labelText: '사용자 성별',
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizeBoxH10,
                     TextField(
                       controller: phone2Con,
                       decoration: const InputDecoration(
@@ -69,7 +71,7 @@ class _join2PageState extends State<join2Page> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color(0xff2e2288)
                       ),
                       child: Container(
                         width: double.infinity,
@@ -77,6 +79,7 @@ class _join2PageState extends State<join2Page> {
                         child: const Center(child: Text('회원가입')),
                       ),
                       onPressed: (){
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                         Navigator.push(context, MaterialPageRoute(builder: (_)=>loginPage()));
                       },
                     ),

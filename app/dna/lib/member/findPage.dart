@@ -1,7 +1,7 @@
-import 'package:dna/joinPage.dart';
-import 'package:dna/loginPage.dart';
+import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
-import 'homePage.dart';
+import 'findSettingPage.dart';
+import 'joinPage.dart';
 
 class findPage extends StatefulWidget {
   const findPage({super.key});
@@ -42,9 +42,7 @@ class _findPageState extends State<findPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset('image/logo.png'),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  SizeBoxH50,
                   ToggleButtons(
                     borderColor: Colors.transparent, // 큰 박스 선 색
                     renderBorder: false, // 선택된 박스 선 색
@@ -59,36 +57,28 @@ class _findPageState extends State<findPage> {
                       SizedBox(width: 100, child: const Center(child: Text('비밀번호 찾기',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),))),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizeBoxH30,
                   TextField(
                     controller: nameCon,
                     decoration: const InputDecoration(
                       labelText: '보호자 성명',
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizeBoxH10,
                   TextField(
                     controller: birthCon,
                     decoration: const InputDecoration(
                       labelText: '보호자 생년월일 8자리',
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizeBoxH10,
                   TextField(
                     controller: phoneCon,
                     decoration: const InputDecoration(
                       labelText: '보호자 휴대폰번호',
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizeBoxH40,
                   // FlaltButton 은 화면 위에 떠있는 동그란 버튼
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -100,10 +90,9 @@ class _findPageState extends State<findPage> {
                     ),
                     onPressed: () {
                       if(findIt == '아이디') {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => loginPage()));
+                        Navigator.pop(context);
                       } else{
-
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=>findSettingPage()));
                       }
                     },
                   ),
@@ -121,12 +110,10 @@ class _findPageState extends State<findPage> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => joinPage()));
                     },
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text('회원가입',
-                            style: TextStyle(
-                                color: Color(0xff2e2288),
-                                fontWeight: FontWeight.bold))),
+                    child: Text('회원가입',
+                        style: TextStyle(
+                            color: Color(0xff2e2288),
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),

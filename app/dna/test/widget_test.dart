@@ -5,25 +5,53 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:dna/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  Text('test');
+}
+// 걸음 수 리스트 >> 35개
+List<int> walkNum = List.filled(35, 0);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+// Test
+void testGrass() {
+  walkNum[0] = 10000;
+  walkNum[1] = 6000;
+}
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+List<Widget> walkGrass() {
+  testGrass();
+  int i = 0;
+  int j = 0;
+  Color grassColor = Colors.grey;
+  List<Widget> _container = [];
+  List<Widget> _rowContainer = [];
+  while (j < 5) {
+    i = 0;
+    _container = [];
+    while (i < 7) {
+      if (walkNum[i] > 9999) {
+        grassColor = Colors.green;
+      } else if (walkNum[i] > 5999) {
+        grassColor = Colors.lightGreen;
+      } else {
+        grassColor = Colors.grey;
+      }
+      i++;
+      _container.add(
+        Container(
+          margin: EdgeInsets.all(2),
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            color: grassColor,
+          ),
+        ),
+      );
+    }
+    _rowContainer.add(Row(
+        children: _container
+    ),);
+  }
+  return _rowContainer;
 }

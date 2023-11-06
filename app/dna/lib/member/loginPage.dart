@@ -1,8 +1,8 @@
-import 'package:dna/joinPage.dart';
 import 'package:flutter/material.dart';
-
+import '../mainPage.dart';
+import '../widget/sizeBox.dart';
 import 'findPage.dart';
-import 'homePage.dart';
+import 'joinPage.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -39,9 +39,7 @@ class _loginPageState extends State<loginPage> {
               Column(
                 children: [
                   Image.asset('image/logo.png'),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  SizeBoxH50,
                   ToggleButtons(
                     borderColor: Color(0xff2e2288), // 큰 박스 선 색
                     borderRadius: BorderRadius.all(Radius.circular(50)), // 큰 박스 선 둥글게
@@ -63,27 +61,21 @@ class _loginPageState extends State<loginPage> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizeBoxH30,
                   TextField(
                     controller: idCon,
                     decoration: const InputDecoration(
                       labelText: '아이디',
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizeBoxH10,
                   TextField(
                     controller: pwCon,
                     decoration: const InputDecoration(
                       labelText: '비밀번호',
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizeBoxH40,
                   // FlaltButton 은 화면 위에 떠있는 동그란 버튼
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -94,13 +86,20 @@ class _loginPageState extends State<loginPage> {
                       child: Center(child: Text('로그인')),
                     ),
                     onPressed: () {
+                      // Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      /*
+                      * Unhandled Exception: This widget has been unmounted,
+                      * so the State no longer has a context (and should be considered defunct).
+                      * navigator로 이어진 페이지들을 삭제할 시, context가 사라져서
+                      * 더 이상 context를 마운트 할 수 없게 되어 해당 오류가 생김.
+                      * 이거 어케 해결함??
+                      * 저걸 넣은 이유는 메인 페이지에서 뒤로가기 눌렀을 때 로그인 창이랑 스플래시 떠서..
+                      * */
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => homePage()));
+                          MaterialPageRoute(builder: (_) => mainPage()));
                     },
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizeBoxH20,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

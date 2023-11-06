@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'loginPage.dart';
+import 'member/loginPage.dart';
 
 class splash extends StatefulWidget {
   const splash({super.key});
