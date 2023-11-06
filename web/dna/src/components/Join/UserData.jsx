@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 const UserData = () => {
   const nav = useNavigate();
+  const loginData = useLocation().state.loginData;
   // 데이터 베이스 순서대로 정렬
   const id = useLocation().state.loginData.id;
   const pw = useLocation().state.loginData.pw;
@@ -29,21 +30,29 @@ const UserData = () => {
     uGender: uGender,
     uPhone: uPhone,
   };
-
   const doJoin = () => {
-    axios.post("/user/join", { joinData: joinData }).then((res) => {
-      if (res.data.joinResult) {
-        endJoin();
-        console.log("success Join!");
-      } else {
-        alert("알수없는 이유로 회원가입에 실패하였습니다.");
-      }
-    });
+    if (Object.values(joinData).includes("")) {
+      alert("빈칸 없이 입력해주세요.");
+    } else if (!uPhone.includes("-") && !mPhone.includes("-")) {
+      alert("올바른 휴대폰 번호를 입력해주세요.");
+    } else {
+      axios.post("/user/join", { joinData: joinData }).then((res) => {
+        if (res.data.joinResult) {
+          endJoin();
+        } else {
+          alert("알수없는 이유로 회원가입에 실패하였습니다.");
+        }
+      });
+    }
   };
 
   const endJoin = () => {
     alert("Rhythm Care에 오신걸 환영합니다.");
     nav("/login");
+  };
+
+  const backToPage = () => {
+    nav("/join/logindata", { state: { loginData: loginData } });
   };
 
   return (
@@ -73,7 +82,8 @@ const UserData = () => {
         <div>
           <input
             type="text"
-            placeholder="사용자 휴대폰번호"
+            maxLength={13}
+            placeholder="보호자 휴대폰번호  ex) 010-1111-4444"
             onChange={(e) => {
               setMPhone(e.target.value);
             }}
@@ -130,7 +140,8 @@ const UserData = () => {
         <div>
           <input
             type="text"
-            placeholder="사용자 휴대폰번호"
+            maxLength={13}
+            placeholder="사용자 휴대폰번호  ex) 010-1111-4444"
             onChange={(e) => {
               setUPhone(e.target.value);
             }}
@@ -172,9 +183,9 @@ const UserData = () => {
       <button className="btnJoin" onClick={doJoin}>
         회원가입
       </button>
-      <Link to="/join/logindata">
-        <button className="btnBack">이전</button>
-      </Link>
+      <button className="btnBack" onClick={backToPage}>
+        이전
+      </button>
     </LoginDataBox>
   );
 };

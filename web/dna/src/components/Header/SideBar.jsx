@@ -109,6 +109,8 @@ const SideBarView = styled.div`
   }
   & .btnOff {
     left: -55px;
+    /* background-color: white;
+    border-radius: 50%; */
   }
   & .btnOn {
     left: 300px;

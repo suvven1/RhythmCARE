@@ -1,4 +1,9 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { UserContext } from "./context/UserContext";
+import axios from "./axios";
+
+// 화면 페이지 import
 import Main from "./components/Main/Main";
 import Header from "./components/Header/Header";
 import Rhythm from "./components/Rhythm/Rhythm";
@@ -15,25 +20,30 @@ import UserData from "./components/Join/UserData";
 import FindIdPw from "./components/Login/FindIdPw";
 
 function App() {
+  const getUserData = JSON.parse(localStorage.getItem("userData"));
+  const [userData, setUserData] = useState(getUserData);
+
   return (
     <div>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Main />}></Route>
-        <Route path="/rhythm" element={<Rhythm />}></Route>
-        <Route path="/calender" element={<Calender />}></Route>
-        <Route path="/hospital" element={<Hospital />}></Route>
-        <Route path="/community" element={<Community />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/findidpw" element={<FindIdPw />}></Route>
-        <Route path="/join" element={<Join />}>
-          <Route path="/join/logindata" element={<LoginData />}></Route>
-          <Route path="/join/userdata" element={<UserData />}></Route>
-        </Route>
-        <Route path="/mypage" element={<MyPage />}></Route>
-        <Route path="/boardwriteform" element={<BoardWriteForm />}></Route>
-        <Route path="/boarddetail" element={<BoardDetail />}></Route>
-      </Routes>
+      <UserContext.Provider value={userData}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/rhythm" element={<Rhythm />}></Route>
+          <Route path="/calender" element={<Calender />}></Route>
+          <Route path="/hospital" element={<Hospital />}></Route>
+          <Route path="/community" element={<Community />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/findidpw" element={<FindIdPw />}></Route>
+          <Route path="/join" element={<Join />}>
+            <Route path="/join/logindata" element={<LoginData />}></Route>
+            <Route path="/join/userdata" element={<UserData />}></Route>
+          </Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
+          <Route path="/boardwriteform" element={<BoardWriteForm />}></Route>
+          <Route path="/boarddetail" element={<BoardDetail />}></Route>
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }

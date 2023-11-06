@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BiMenu } from "react-icons/bi";
 import SideBar from "./SideBar";
 import SideBarContents from "./SideBarContents";
+import { UserContext } from "../../context/UserContext";
 const Header = () => {
+  const userData = useContext(UserContext);
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
 
   const handelResize = () => {
@@ -22,66 +24,105 @@ const Header = () => {
   const closeMenu = (e) => {
     setClose(e);
   };
+
+  const logout = () => {
+    localStorage.clear();
+    alert("로그아웃이 완료되었습니다.");
+    window.location.replace("/");
+  };
+
   return (
     <div>
-      <HeaderBox>
-        <Logo>
-          <Link to="/">
-            <img
-              src={`${process.env.PUBLIC_URL}/images/WebLogo.png`}
-              alt="헤더 로고"
-            />
-          </Link>
-        </Logo>
-        {headerWidth > 1040 ? (
-          <>
-            <ContentBox>
-              <div>
-                <Link to="/">서비스소개</Link>
-              </div>
-              <div>
-                <Link to="/rhythm">측정데이터확인</Link>
-              </div>
-              <div>
-                <Link to="/calender">캘린더</Link>
-              </div>
-              <div>
-                <Link to="/hospital">주변병원정보</Link>
-              </div>
-              <div>
-                <Link to="/community">커뮤니티</Link>
-              </div>
-            </ContentBox>
-            <UserBox>
-              <div>
-                <Link to="/login">로그인</Link>
-              </div>
-              <div>
-                <Link to="/join/logindata">회원가입</Link>
-              </div>
-            </UserBox>
-          </>
-        ) : (
-          <div className="SideBar">
-            <SideBar width={350} close={close} closeSet={closeMenu}>
-              <SideBarContents close={closeMenu} />
-            </SideBar>
-          </div>
-        )}
-      </HeaderBox>
-      <hr />
+      <BlankBox></BlankBox>
+      <HeaderContainer>
+        <HeaderBox>
+          <Logo>
+            <Link to="/">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/WebLogo.png`}
+                alt="헤더 로고"
+              />
+            </Link>
+          </Logo>
+          {headerWidth > 1040 ? (
+            <>
+              <ContentBox>
+                <div>
+                  <Link to="/">서비스소개</Link>
+                </div>
+                <div>
+                  <Link to="/rhythm">측정데이터확인</Link>
+                </div>
+                <div>
+                  <Link to="/calender">캘린더</Link>
+                </div>
+                <div>
+                  <Link to="/hospital">주변병원정보</Link>
+                </div>
+                <div>
+                  <Link to="/community">커뮤니티</Link>
+                </div>
+              </ContentBox>
+              {userData == null ? (
+                <UserContainer>
+                  로그인이 필요합니다.
+                  <UserBox>
+                    <div>
+                      <Link to="/login">로그인</Link>
+                    </div>
+                    <div>
+                      <Link to="/join/logindata">회원가입</Link>
+                    </div>
+                  </UserBox>
+                </UserContainer>
+              ) : (
+                <UserContainer>
+                  {userData.name}({userData.nick})
+                  <UserBox>
+                    <div>
+                      <Link onClick={logout}>로그아웃</Link>
+                    </div>
+                    <div>
+                      <Link to="/mypage">마이페이지</Link>
+                    </div>
+                  </UserBox>
+                </UserContainer>
+              )}
+            </>
+          ) : (
+            <div className="SideBar">
+              <SideBar width={350} close={close} closeSet={closeMenu}>
+                <SideBarContents close={closeMenu} />
+              </SideBar>
+            </div>
+          )}
+        </HeaderBox>
+      </HeaderContainer>
     </div>
   );
 };
 
 export default Header;
 
+const BlankBox = styled.div`
+  height: 90px;
+  background-color: whitesmoke;
+`;
+
+const HeaderContainer = styled.div`
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 99;
+`;
 const HeaderBox = styled.div`
   width: 100%;
+  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  border-bottom: 1px solid #bdbdbd;
   & a {
     text-decoration: none;
   }
@@ -124,15 +165,21 @@ const ContentBox = styled.div`
   }
 `;
 
+const UserContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 11px;
+`;
+
 const UserBox = styled.div`
   display: flex;
-  margin-left: 30px;
+  margin-top: 5px;
   & div {
-    width: 60px;
-    margin-left: -10px;
+    width: 70px;
+    margin-right: -10px;
   }
   & a {
-    margin-left: 15px;
     font-size: 11px;
     color: gray;
   }

@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 
 const Login = () => {
+  useEffect(() => {
+    if (sessionStorage.getItem("isLogin") == "true") {
+      // nav("/");
+    }
+  });
+
   const nav = useNavigate();
   const [user, setUser] = useState("manager");
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
-  const [name, setName] = useState("");
-  const [nick, setNick] = useState("");
   const login = (e) => {
     e.preventDefault();
     console.log(user);
@@ -19,20 +23,18 @@ const Login = () => {
   const doLogin = () => {
     axios.post("/user/login", { user: user, id: id, pw: pw }).then((res) => {
       if (res.data.loginResult) {
-        endLogin(res.data.loginResult.name, res.data.loginResult.nick);
+        const userData = {
+          data: res.data.loginResult.data,
+          name: res.data.loginResult.name,
+          nick: res.data.loginResult.nick,
+        };
+        alert(`${userData.name}(${userData.nick})님 환영합니다!`);
+        localStorage.setItem("userData", JSON.stringify(userData));
+        window.location.replace("/");
       } else {
         alert("아이디 또는 비밀번호를 확인해주세요!");
       }
     });
-  };
-
-  const endLogin = async (name, nick) => {
-    await setName(name);
-    await setNick(nick);
-    alert(`${name}(${nick})님 환영합니다!`);
-    sessionStorage.setItem("name", `${name}`);
-    sessionStorage.setItem("nick", `${nick}`);
-    window.location.replace("/");
   };
 
   return (
@@ -81,7 +83,7 @@ const Login = () => {
           </div>
           <div>
             <input
-              type="text"
+              type="password"
               className="userInput"
               placeholder="비밀번호"
               onChange={(e) => {
