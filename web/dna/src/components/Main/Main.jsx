@@ -4,7 +4,7 @@ import { Link } from "react-scroll";
 
 const Main = () => {
   return (
-    <mainBox>
+    <MainBox>
       <SloganBack>
         <p>
           리듬 속 건강🎶
@@ -153,14 +153,15 @@ const Main = () => {
           <Detail_card />
         </Detail>
       </Detail_back>
-    </mainBox>
+    </MainBox>
   );
 };
 
 export default Main;
 
-const mainBox = styled.div`
+const MainBox = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;

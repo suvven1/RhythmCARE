@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Image from "./Image";
@@ -6,7 +6,10 @@ import ManagerData from "./ManagerData";
 import UserData from "./UserData";
 import Delete from "./Delete";
 import Badge from "./Badge";
+import { UserContext } from "../../context/UserContext";
 const MyPage = () => {
+  const userData = useContext(UserContext);
+
   return (
     <MyPageBox>
       <MypageContent>
@@ -14,7 +17,7 @@ const MyPage = () => {
         <Image />
 
         {/* 유저 닉네임 표시 */}
-        <div style={{ fontWeight: "bold" }}>우산동멍멍이</div>
+        <div style={{ fontWeight: "bold" }}>{userData.nick}</div>
 
         {/* 보호자 정보 */}
         <TitleBox>

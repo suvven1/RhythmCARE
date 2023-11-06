@@ -30,18 +30,12 @@ const UserData = () => {
     uGender: uGender,
     uPhone: uPhone,
   };
-
   const doJoin = () => {
-    if (
-      mName != "" &&
-      mBirth != "" &&
-      mGender != "" &&
-      mPhone != "" &&
-      uName != "" &&
-      uBirth != "" &&
-      uGender != "" &&
-      uPhone
-    ) {
+    if (Object.values(joinData).includes("")) {
+      alert("빈칸 없이 입력해주세요.");
+    } else if (!uPhone.includes("-") && !mPhone.includes("-")) {
+      alert("올바른 휴대폰 번호를 입력해주세요.");
+    } else {
       axios.post("/user/join", { joinData: joinData }).then((res) => {
         if (res.data.joinResult) {
           endJoin();
@@ -49,8 +43,6 @@ const UserData = () => {
           alert("알수없는 이유로 회원가입에 실패하였습니다.");
         }
       });
-    } else {
-      alert("빈칸 없이 입력해주세요.");
     }
   };
 
@@ -90,7 +82,8 @@ const UserData = () => {
         <div>
           <input
             type="text"
-            placeholder="사용자 휴대폰번호"
+            maxLength={13}
+            placeholder="보호자 휴대폰번호  ex) 010-1111-4444"
             onChange={(e) => {
               setMPhone(e.target.value);
             }}
@@ -147,7 +140,8 @@ const UserData = () => {
         <div>
           <input
             type="text"
-            placeholder="사용자 휴대폰번호"
+            maxLength={13}
+            placeholder="사용자 휴대폰번호  ex) 010-1111-4444"
             onChange={(e) => {
               setUPhone(e.target.value);
             }}

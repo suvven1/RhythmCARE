@@ -10,12 +10,12 @@ const Badge = () => {
     { title: "test4", img: "" },
     { title: "test5", img: "" },
     { title: "test6", img: "" },
-    { title: "test1", img: "" },
-    { title: "test2", img: "" },
-    { title: "test3", img: "" },
-    { title: "test4", img: "" },
-    { title: "test5", img: "" },
-    { title: "test6", img: "" },
+    { title: "test7", img: "" },
+    { title: "test8", img: "" },
+    { title: "test9", img: "" },
+    { title: "test10", img: "" },
+    { title: "test11", img: "" },
+    { title: "test12", img: "" },
   ]);
   return (
     <BadgeBox>

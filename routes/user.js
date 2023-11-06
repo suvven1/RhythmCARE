@@ -92,11 +92,16 @@ router.post("/login", (req, res) => {
           loginResult: {
             nick: rows[0].manager_nick,
             name: rows[0].manager_name,
+            data: rows[0],
           },
         });
       } else {
         res.json({
-          loginResult: { nick: rows[0].manager_nick, name: rows[0].user_name },
+          loginResult: {
+            nick: rows[0].manager_nick,
+            name: rows[0].user_name,
+            data: rows[0],
+          },
         });
       }
     } else {
@@ -106,5 +111,22 @@ router.post("/login", (req, res) => {
   });
 });
 // 로그인 끝 ---------------------------------------------------------------------------------
+
+// 회원 정보 불러오기 시작 -------------------------------------------------------------------------------
+router.post("/getUserData", (req, res) => {
+  console.log("getUserData", req.body);
+  let { nick } = req.body;
+  let getUserDataSql = "select * from user where manager_nick=?";
+  conn.query(getUserDataSql, [nick], (err, rows) => {
+    if (rows.length != 0) {
+      console.log("유저 정보 조회 성공!", rows[0].manager_nick);
+      res.json({ userData: rows[0] });
+    } else {
+      console.log("유저 정보 조회 실패!");
+      res.json({ userData: false });
+    }
+  });
+});
+// 회원 정보 불러오기 끝 ---------------------------------------------------------------------------------
 
 module.exports = router;

@@ -23,7 +23,7 @@ const Image = () => {
           />
         )}
       </Img>
-      <label for="file">
+      <label htmlFor="file">
         <VscEdit />
       </label>
       <input
@@ -44,7 +44,7 @@ const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 40px 0 0 0;
+  margin: 60px 0 0 0;
 
   label {
     position: relative;
@@ -76,14 +76,14 @@ const Img = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  height: 150px;
-  border-radius: 75px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
   border: 1px solid #bdbdbd;
   overflow: hidden;
 
   & img {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 200px;
+    max-height: 200px;
   }
 `;

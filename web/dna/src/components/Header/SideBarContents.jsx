@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
 const SideBarContents = ({ close }) => {
+  const userData = useContext(UserContext);
+
   const closeMenu = () => {
     close(true);
   };
-  const [name, setName] = useState();
-  const [nick, setNick] = useState();
-
-  useEffect(() => {
-    setName(sessionStorage.getItem("name"));
-    setNick(sessionStorage.getItem("nick"));
-  }, []);
 
   const logout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     alert("로그아웃이 완료되었습니다.");
     window.location.replace("/");
   };
@@ -22,7 +18,7 @@ const SideBarContents = ({ close }) => {
   return (
     <SideBarContentBox>
       <UserDataBox>
-        {name == null ? (
+        {userData == null ? (
           <>
             <ImgBox>
               <div className="innerImgBox">
@@ -52,7 +48,7 @@ const SideBarContents = ({ close }) => {
             </ImgBox>
             <LoginedUserBox>
               <Link to="/mypage" className="goTOmypage" onClick={closeMenu}>
-                {name}({nick})
+                {userData.name}({userData.nick})
               </Link>
               <Link to="/" onClick={logout}>
                 로그아웃
