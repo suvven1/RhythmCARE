@@ -13,7 +13,6 @@ class _SplashState extends State<splash> {
   void initState(){
     super.initState();
     Future.delayed(const Duration(seconds: 3), (){
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const loginPage()));
     });
   }

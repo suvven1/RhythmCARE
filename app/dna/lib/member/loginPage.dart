@@ -93,7 +93,15 @@ class _loginPageState extends State<loginPage> {
                       child: Center(child: Text('로그인')),
                     ),
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      // Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      /*
+                      * Unhandled Exception: This widget has been unmounted,
+                      * so the State no longer has a context (and should be considered defunct).
+                      * navigator로 이어진 페이지들을 삭제할 시, context가 사라져서
+                      * 더 이상 context를 마운트 할 수 없게 되어 해당 오류가 생김.
+                      * 이거 어케 해결함??
+                      * 저걸 넣은 이유는 메인 페이지에서 뒤로가기 눌렀을 때 로그인 창이랑 스플래시 떠서..
+                      * */
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => mainPage()));
                     },

@@ -12,6 +12,6 @@ class _hospitalPageState extends State<hospitalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(child: Text('병원 정보입니다.')),
-    );;
+    );
   }
 }

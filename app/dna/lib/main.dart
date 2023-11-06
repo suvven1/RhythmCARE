@@ -1,13 +1,15 @@
 import 'package:dna/member/findSettingPage.dart';
 import 'package:dna/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'mainPage.dart';
 import 'member/findPage.dart';
 import 'member/join2Page.dart';
 import 'member/joinPage.dart';
 import 'member/loginPage.dart';
 
-void main() {
+void main() async{
+  await initializeDateFormatting();
   runApp(const MyApp());
 }
 
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
       color: Colors.black
     )
   ),
+* 캘린더 라이브러리
+  table_calendar
+*
 */
 
 
