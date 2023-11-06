@@ -8,7 +8,9 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  Text('test');
+  Center(
+    child: Text('test'),
+  );
 }
 // 걸음 수 리스트 >> 35개
 List<int> walkNum = List.filled(35, 0);

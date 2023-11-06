@@ -8,36 +8,40 @@ import 'member/join2Page.dart';
 import 'member/joinPage.dart';
 import 'member/loginPage.dart';
 
-void main() async{
+void main() async {
   await initializeDateFormatting();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        // member
-        '/login' : (_) => loginPage(),
-        '/join' : (_) => joinPage(),
-        '/join2' : (_) => join2Page(),
-        '/find' : (_) => findPage(),
-        '/findpw' : (_) => findSettingPage(),
-        // main
-        '/main' : (_) => mainPage(),
-        // calendar
-        // hospital
-        // home
-        // blog
-        // mypage
-      },
-      home: splash(),
-    );
+        initialRoute: '/',
+        routes: {
+          // member
+          '/login': (_) => loginPage(),
+          '/join': (_) => joinPage(),
+          '/join2': (_) => join2Page(),
+          '/find': (_) => findPage(),
+          '/findpw': (_) => findSettingPage(),
+          // main
+          '/main': (_) => mainPage(),
+          // calendar
+          // hospital
+          // home
+          // blog
+          // mypage
+        },
+        home: splash(),
+        );
   }
 }
 
@@ -62,7 +66,3 @@ class MyApp extends StatelessWidget {
   table_calendar
 *
 */
-
-
-
-
