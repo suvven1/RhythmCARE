@@ -1,3 +1,5 @@
+import 'package:dna/member/widget/textField.dart';
+import 'package:dna/member/widget/toggleButton2.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'findSettingPage.dart';
@@ -33,92 +35,68 @@ class _findPageState extends State<findPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Transform.scale(
-          scale: 0.82, // 로그인 화면 여백 지정
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width*0.1),
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height*0.87,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset('image/logo.png'),
-                  SizeBoxH50,
-                  ToggleButtons(
-                    borderColor: Colors.transparent, // 큰 박스 선 색
-                    renderBorder: false, // 선택된 박스 선 색
-                    highlightColor: Colors.transparent, // 클릭 시, 동그랗게 퍼지는 색
-                    fillColor: Colors.transparent, // 선택된 박스 색
-                    selectedColor: Color(0xff2e2288), // 선택된 박스 텍스트 색
-                    color: Colors.grey, // 미 선택된 박스 텍스트 색
-                    isSelected: isSelected,
-                    onPressed: toggleSelect,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(width: 100, child: const Center(child: Text('아이디 찾기',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),))),
-                      SizedBox(width: 100, child: const Center(child: Text('비밀번호 찾기',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),))),
+                      Image.asset('image/logo.png'),
+                      SizeBoxH50,
+                      toggleButton2(context, isSelected, toggleSelect),
+                      SizeBoxH30,
+                      textField(nameCon, '보호자 성명'),
+                      SizeBoxH10,
+                      textField(birthCon, '보호자 생년월일 8자리'),
+                      SizeBoxH10,
+                      textField(phoneCon, '보호자 휴대폰번호'),
+                      SizeBoxH40,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff2e2288)),
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: Center(child: Text('$findIt 찾기')),
+                        ),
+                        onPressed: () {
+                          if(isGuard) {
+                            Navigator.pop(context);
+                          } else{
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>findSettingPage()));
+                          }
+                        },
+                      ),
                     ],
                   ),
-                  SizeBoxH30,
-                  TextField(
-                    controller: nameCon,
-                    decoration: const InputDecoration(
-                      labelText: '보호자 성명',
-                    ),
-                  ),
-                  SizeBoxH10,
-                  TextField(
-                    controller: birthCon,
-                    decoration: const InputDecoration(
-                      labelText: '보호자 생년월일 8자리',
-                    ),
-                  ),
-                  SizeBoxH10,
-                  TextField(
-                    controller: phoneCon,
-                    decoration: const InputDecoration(
-                      labelText: '보호자 휴대폰번호',
-                    ),
-                  ),
-                  SizeBoxH40,
-                  // FlaltButton 은 화면 위에 떠있는 동그란 버튼
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff2e2288)),
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: Center(child: Text('$findIt 찾기')),
-                    ),
-                    onPressed: () {
-                      if(findIt == '아이디') {
-                        Navigator.pop(context);
-                      } else{
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>findSettingPage()));
-                      }
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '아직 계정이 없으신가요?',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => joinPage()));
+                        },
+                        child: Text('회원가입',
+                            style: TextStyle(
+                                color: Color(0xff2e2288),
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '아직 계정이 없으신가요?',
-                    style: TextStyle(color: Colors.grey[600]),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => joinPage()));
-                    },
-                    child: Text('회원가입',
-                        style: TextStyle(
-                            color: Color(0xff2e2288),
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

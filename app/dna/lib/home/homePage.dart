@@ -14,23 +14,6 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  // Widget _gridView = GridView.builder(
-  //   itemCount: 10, // 아이템 갯수
-  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //     crossAxisCount: 3, // 행마다 보여줄 아이템 갯수
-  //     childAspectRatio: 1/2, // 아이템의 가로 1, 세로 2의 비율
-  //     mainAxisSpacing: 10, // 수평 패딩
-  //     crossAxisSpacing: 10 // 수직 패딩
-  //   ),
-  //   itemBuilder: (BuildContext context, int index){
-  //     return Container(
-  //       width: 10,
-  //       height: 10,
-  //       margin: EdgeInsets.all(2),
-  //       color: Colors.grey,
-  //     );
-  //   },
-  // );
 
   // 스트레스 바
   // 피로도 바
@@ -61,30 +44,25 @@ class _homePageState extends State<homePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.05),
-          child: Column(
-            children: [
-              // 심박수
-              heartBeat(hearBeatNum),
-              // 스트레스 모델
-              visualModel(context, "스트레스"),
-              SizeBoxH30,
-              horisonLine,
-              SizeBoxH30,
-              // 피로도
-              visualModel(context, "피로도"),
-              SizeBoxH30,
-              horisonLine,
-              SizeBoxH30,
-              // 잔디심기
-              grass(grassColor(walkNum)),
-              SizeBoxH30,
-              // _gridView
-            ],
-          ),
+        child: ListView(
+          children: [
+            // 심박수
+            heartBeat(hearBeatNum),
+            // 스트레스 모델
+            visualModel(context, "스트레스"),
+            SizeBoxH30,
+            horisonLine,
+            SizeBoxH30,
+            // 피로도
+            visualModel(context, "피로도"),
+            SizeBoxH30,
+            horisonLine,
+            SizeBoxH30,
+            // 잔디심기
+            grass(grassColor(walkNum)),
+            SizeBoxH30,
+            // _gridView
+          ],
         ),
       ),
     );

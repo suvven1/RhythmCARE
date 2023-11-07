@@ -12,9 +12,12 @@ grassTable<Widget>(List list) {
               (propsIndex) => TableRow(children: List.generate(
                 7,
                     (index) => Container(
-                  height: 40,
-                  margin: EdgeInsets.all(3),
-                  color: list[index + propsIndex * 7],
+                  height: 39,
+                  margin: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: list[index + propsIndex * 7],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   ),
                 ),
               )
