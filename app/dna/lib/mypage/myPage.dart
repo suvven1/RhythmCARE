@@ -8,6 +8,11 @@ class myPage extends StatefulWidget {
 }
 
 class _myPageState extends State<myPage> {
+
+  // 대표 이미지 이름
+  String imageName = "face.jpg";
+  String nickName = "닉네임";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,25 +22,9 @@ class _myPageState extends State<myPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('image/face.jpg'),
-              Text('닉네임'),
-              Container(
-                child: Column(
-                  children: [
-                    Text('보호자 정보'),
-                    Text('프로필 사진과 이름은 다른 사람이 볼 수 있습니다.'),
-                    Table(
-                      border: TableBorder.all(),
-                      columnWidths: {
-                        0: FixedColumnWidth(100),
-                        1: FixedColumnWidth(20),
-                        2: FixedColumnWidth(20),
-                      },
-                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    )
-                  ],
-                ),
-              )
+              Image.asset('image/${imageName}'),
+              Text('$nickName'),
+
             ],
           ),
         ),
