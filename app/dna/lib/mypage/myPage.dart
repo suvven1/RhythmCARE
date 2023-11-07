@@ -8,10 +8,27 @@ class myPage extends StatefulWidget {
 }
 
 class _myPageState extends State<myPage> {
+
+  // 대표 이미지 이름
+  String imageName = "face.jpg";
+  String nickName = "닉네임";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('내 정보입니다.')),
-    );;
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('image/${imageName}'),
+              Text('$nickName'),
+
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

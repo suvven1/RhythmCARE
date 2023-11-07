@@ -1,3 +1,5 @@
+import 'package:dna/member/widget/textField.dart';
+import 'package:dna/member/widget/toggleButton.dart';
 import 'package:flutter/material.dart';
 import '../mainPage.dart';
 import '../widget/sizeBox.dart';
@@ -27,6 +29,12 @@ class _loginPageState extends State<loginPage> {
     super.initState();
   }
 
+  void printIdPw(bool who, idCon, pwCon){
+    print(who);
+    print(idCon.text);
+    print(pwCon.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,41 +48,11 @@ class _loginPageState extends State<loginPage> {
                 children: [
                   Image.asset('image/logo.png'),
                   SizeBoxH50,
-                  ToggleButtons(
-                    borderColor: Color(0xff2e2288), // 큰 박스 선 색
-                    borderRadius: BorderRadius.all(Radius.circular(50)), // 큰 박스 선 둥글게
-                    highlightColor: Colors.transparent, // 클릭 시, 동그랗게 퍼지는 색
-                    fillColor: Color(0xff2e2288), // 선택된 박스 색
-                    selectedColor: Colors.white, // 선택된 박스 텍스트 색
-                    color: Colors.grey, // 미 선택된 박스 텍스트 색
-                    textStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                    isSelected: isSelected,
-                    onPressed: toggleSelect,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.1,
-                        child: const Center(child: Text('보호자 로그인')),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.1,
-                        child: const Center(child: Text('사용자 로그인')),
-                      ),
-                    ],
-                  ),
+                  toggleButton(context, isSelected, toggleSelect),
                   SizeBoxH30,
-                  TextField(
-                    controller: idCon,
-                    decoration: const InputDecoration(
-                      labelText: '아이디',
-                    ),
-                  ),
+                  textField(idCon, "아이디"),
                   SizeBoxH10,
-                  TextField(
-                    controller: pwCon,
-                    decoration: const InputDecoration(
-                      labelText: '비밀번호',
-                    ),
-                  ),
+                  textField(pwCon, "비밀번호"),
                   SizeBoxH40,
                   // FlaltButton 은 화면 위에 떠있는 동그란 버튼
                   ElevatedButton(
@@ -95,6 +73,11 @@ class _loginPageState extends State<loginPage> {
                       * 이거 어케 해결함??
                       * 저걸 넣은 이유는 메인 페이지에서 뒤로가기 눌렀을 때 로그인 창이랑 스플래시 떠서..
                       * */
+
+                      // 로그인 버튼 클릭 시, id pw 를 run 창에 출력
+                      // true : 보호자, false : 사용자
+                      printIdPw(isGuard, idCon, pwCon);
+                      // 로그인 버튼 클릭 시, 액션을 여기에 넣으면 됨
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => mainPage()));
                     },

@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   table_calendar: ^3.0.9 # 캘린더 라이브러리
   intl: ^0.18.1 # 언어패치
+  get: ^4.6.6 # 상태관리
 
 dev_dependencies:
   flutter_test:
