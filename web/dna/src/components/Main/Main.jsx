@@ -170,17 +170,17 @@ const Main = () => {
 
         <Detail_right id="service_detail4">
           <div>
-            <p className="title">일정 관리하기</p>
+            <p className="title">건강관련 정보보기</p>
               <p className="content">
-                병원 방문 일자,
-                <br /> 개인 일정을 기록해서
-                <br /> 관리해요
+                건강과 관련된
+                <br /> 유용한 정보를
+                <br /> 볼 수 있어요
               </p>
               <p className="detail">
-                병원 방문 일자,
-                <br /> 개인 일정 등<br /> 나만의 스케줄을
+                건강과 관련된
+                <br /> 정보를 확인하고<br /> 하루하루 변하는 모습을
                 <br />
-                기록하여 관리할 수 있어요
+                경험해보세요
               </p>
           </div>
           <div className="blank"></div>
