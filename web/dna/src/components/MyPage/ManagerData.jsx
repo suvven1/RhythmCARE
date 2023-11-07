@@ -1,39 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
-import ChangePW from "./ChangePW";
+import ChangePW from "./Change/ChangePW";
 const ManagerData = () => {
   const userData = useContext(UserContext);
-  const [changeNick, setChangeNick] = useState(userData.nick);
 
-  // 비밀번호 변경 모달 띄우기
+  // 모달 띄우기
   const [changePwOpen, setChangePwOpen] = useState(false);
 
   // 모달창 노출
   const showChangePw = () => {
     setChangePwOpen(true);
   };
-  // 비밀번호 변경 모달 끝
+  // 모달 끝
 
   return (
     <UserDataBox>
+      <TitleBox>
+        <div className="mainTitle">보호자 정보</div>
+        <div className="subTitle">
+          <div>프로필 사진과 닉네임은 다른 사람이&nbsp;</div>
+          <div>볼 수 있습니다.</div>
+        </div>
+      </TitleBox>
       <table>
         <tbody>
           <tr>
             <th>이름</th>
             <th>{userData.name}</th>
-          </tr>
-          <tr>
-            <th>닉네임</th>
-            <th>
-              <input
-                type="text"
-                value={changeNick}
-                onChange={(e) => {
-                  setChangeNick(e.target.value);
-                }}
-              />
-            </th>
           </tr>
           <tr>
             <th>휴대폰번호</th>
@@ -49,8 +43,11 @@ const ManagerData = () => {
           </tr>
           <tr>
             <th>비밀번호</th>
-            <th>
-              ******** <button onClick={showChangePw}>변경하기</button>
+            <th className="changePW">
+              <div>********</div>
+              <div className="btnBox">
+                <button onClick={showChangePw}>변경하기</button>
+              </div>
             </th>
           </tr>
         </tbody>
@@ -68,12 +65,39 @@ const UserDataBox = styled.div`
   align-items: center;
   width: 100%;
 
+  & .changePW {
+    display: flex;
+    align-items: center;
+
+    & .btnBox {
+      display: flex;
+      width: 100%;
+      align-items: end;
+      justify-content: end;
+    }
+  }
+
+  & button {
+    background-color: #2e2288;
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 80px;
+    margin-right: 10px;
+  }
+
   & table {
     border-spacing: 0;
-    width: 85%;
+    width: 80%;
     border-bottom: 1px solid gray;
     font-size: 15px;
     font-weight: bolder;
+
+    @media only screen and (max-width: 380px) {
+      font-size: 14px;
+    }
+
     & th {
       height: 40px;
       border-top: 1px solid gray;
@@ -85,8 +109,11 @@ const UserDataBox = styled.div`
     }
 
     & th:nth-child(2) {
-      padding-left: 50px;
+      padding-left: 40px;
       text-align: left;
+      @media only screen and (max-width: 380px) {
+        padding-left: 25px;
+      }
     }
   }
 
@@ -94,5 +121,25 @@ const UserDataBox = styled.div`
     font-size: 15px;
     padding-left: 3px;
     margin-left: -3px;
+  }
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 50px 0 20px 0;
+
+  & .mainTitle {
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  & .subTitle {
+    display: flex;
+    font-size: 12px;
+    @media only screen and (max-width: 380px) {
+      flex-direction: column;
+    }
   }
 `;

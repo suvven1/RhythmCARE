@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 const UserData = () => {
@@ -33,26 +33,44 @@ const UserData = () => {
   const doJoin = () => {
     if (Object.values(joinData).includes("")) {
       alert("빈칸 없이 입력해주세요.");
+    } else if (
+      !parseInt(mPhone) ||
+      !parseInt(uPhone) ||
+      mPhone.length != 11 ||
+      uPhone.length != 11
+    ) {
+      alert("휴대폰 번호를 확인해주세요.");
     } else {
-      axios.post("/user/join", { joinData: joinData }).then((res) => {
-        if (res.data.joinResult) {
-          endJoin();
-        } else {
-          alert("알수없는 이유로 회원가입에 실패하였습니다.");
-        }
-      });
+      changePhoneNum();
+      endJoin();
     }
   };
 
   const endJoin = () => {
-    alert("Rhythm Care에 오신걸 환영합니다.");
-    nav("/login");
+    axios.post("/user/join", { joinData: joinData }).then((res) => {
+      if (res.data.joinResult) {
+        alert("Rhythm Care에 오신걸 환영합니다.");
+        nav("/login");
+      } else {
+        alert("알수없는 이유로 회원가입에 실패하였습니다.");
+      }
+    });
   };
 
   const backToPage = () => {
     nav("/join/logindata", { state: { loginData: loginData } });
   };
 
+  const changePhoneNum = () => {
+    const mPhonList = mPhone.split("");
+    const uPhonList = uPhone.split("");
+    mPhonList.splice(3, 0, "-");
+    mPhonList.splice(8, 0, "-");
+    uPhonList.splice(3, 0, "-");
+    uPhonList.splice(8, 0, "-");
+    joinData.mPhone = mPhonList.join("");
+    joinData.uPhone = uPhonList.join("");
+  };
   return (
     <LoginDataBox>
       <LoginDataInput>
@@ -80,9 +98,8 @@ const UserData = () => {
         <div>
           <input
             type="text"
-            value={uPhone}
-            maxLength={13}
-            placeholder="보호자 휴대폰번호  ex) 010-1111-4444"
+            maxLength={11}
+            placeholder="보호자 휴대폰번호  ex) 01093459876"
             onChange={(e) => {
               setMPhone(e.target.value);
             }}
@@ -94,7 +111,7 @@ const UserData = () => {
               id="manager-man"
               type="radio"
               name="manager-Gender"
-              value="man"
+              value="M"
               onChange={(e) => {
                 setMGender(e.target.value);
               }}
@@ -107,7 +124,7 @@ const UserData = () => {
               id="manager-woman"
               type="radio"
               name="manager-Gender"
-              value="woman"
+              value="W"
               onChange={(e) => {
                 setMGender(e.target.value);
               }}
@@ -139,8 +156,8 @@ const UserData = () => {
         <div>
           <input
             type="text"
-            maxLength={13}
-            placeholder="사용자 휴대폰번호  ex) 010-1111-4444"
+            maxLength={11}
+            placeholder="사용자 휴대폰번호  ex) 01056872345"
             onChange={(e) => {
               setUPhone(e.target.value);
             }}
@@ -152,7 +169,7 @@ const UserData = () => {
               id="user-man"
               type="radio"
               name="user-Gender"
-              value="man"
+              value="M"
               onChange={(e) => {
                 setUGender(e.target.value);
               }}
@@ -165,7 +182,7 @@ const UserData = () => {
               id="user-woman"
               type="radio"
               name="user-Gender"
-              value="woman"
+              value="W"
               onChange={(e) => {
                 setUGender(e.target.value);
               }}

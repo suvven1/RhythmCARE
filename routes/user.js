@@ -112,21 +112,55 @@ router.post("/login", (req, res) => {
 });
 // 로그인 끝 ---------------------------------------------------------------------------------
 
-// 회원 정보 불러오기 시작 -------------------------------------------------------------------------------
-router.post("/getUserData", (req, res) => {
-  console.log("getUserData", req.body);
-  let { nick } = req.body;
-  let getUserDataSql = "select * from user where manager_nick=?";
-  conn.query(getUserDataSql, [nick], (err, rows) => {
-    if (rows.length != 0) {
-      console.log("유저 정보 조회 성공!", rows[0].manager_nick);
-      res.json({ userData: rows[0] });
+// 비밀번호 변경 시작 -------------------------------------------------------------------------------
+router.post("/changePw", (req, res) => {
+  console.log("changePw", req.body);
+  let { id, changePw } = req.body;
+  let changePwSql = "update user set password=? where manager_id=?";
+  conn.query(changePwSql, [changePw, id], (err, rows) => {
+    if (rows) {
+      console.log("비밀번호 변경 성공!");
+      res.json({ changePwResult: true });
     } else {
-      console.log("유저 정보 조회 실패!");
-      res.json({ userData: false });
+      console.log("비밀번호 변경 실패!");
+      res.json({ changePwResult: false });
     }
   });
 });
-// 회원 정보 불러오기 끝 ---------------------------------------------------------------------------------
+// 비밀번호 변경 끝 ---------------------------------------------------------------------------------
+
+// 닉네임 변경 시작 -------------------------------------------------------------------------------
+router.post("/changeNick", (req, res) => {
+  console.log("changeNick", req.body);
+  let { id, nick } = req.body;
+  let changeNickSql = "update user set manager_nick=? where manager_id=?";
+  conn.query(changeNickSql, [nick, id], (err, rows) => {
+    if (rows) {
+      console.log("닉네임 변경 성공!");
+      res.json({ changeNickResult: true });
+    } else {
+      console.log("닉네임 변경 실패!");
+      res.json({ changeNickResult: false });
+    }
+  });
+});
+// 닉네임 변경 끝 ---------------------------------------------------------------------------------
+
+// 회원탈퇴 변경 시작 -------------------------------------------------------------------------------
+router.post("/delete", (req, res) => {
+  console.log("delete", req.body);
+  let { id } = req.body;
+  let deleteSql = "delete from user where manager_id=?";
+  conn.query(deleteSql, [id], (err, rows) => {
+    if (rows) {
+      console.log("[탈퇴] 회원탈퇴 성공!");
+      res.json({ deleteResult: true });
+    } else {
+      console.log("[탈퇴] 회원탈퇴 실패!");
+      res.json({ deleteResult: false });
+    }
+  });
+});
+// 회원탈퇴 변경 끝 ---------------------------------------------------------------------------------
 
 module.exports = router;

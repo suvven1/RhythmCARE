@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../../context/UserContext";
+import CheckDelete from "./CheckDelete";
 
 const Delete = () => {
-  const lastCheck = () => {
-    if (
-      window.confirm("탈퇴시 복구가 불가능 합니다.\n정말 탈퇴 하시겠습니까?")
-    ) {
-      alert("탈퇴가 완료되었습니다.");
-    } else {
-      alert("취소 되었습니다.");
-    }
+  const userData = useContext(UserContext);
+
+  // 모달창
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const showDelete = () => {
+    setDeleteOpen(true);
   };
 
-  const deleteUser = () => {};
   return (
     <DeleteBox>
       <table>
@@ -20,11 +19,12 @@ const Delete = () => {
           <tr>
             <th>계정 탈퇴</th>
             <th>
-              <button onClick={lastCheck}>탈퇴하기</button>
+              <button onClick={showDelete}>탈퇴하기</button>
             </th>
           </tr>
         </tbody>
       </table>
+      {deleteOpen && <CheckDelete setDeleteOpen={setDeleteOpen} />}
     </DeleteBox>
   );
 };
@@ -40,7 +40,7 @@ const DeleteBox = styled.div`
 
   & table {
     border-spacing: 0;
-    width: 85%;
+    width: 80%;
     border-bottom: 1px solid gray;
     font-size: 15px;
     font-weight: bolder;
@@ -55,8 +55,11 @@ const DeleteBox = styled.div`
     }
 
     & th:nth-child(2) {
-      padding-left: 50px;
+      padding-left: 40px;
       text-align: left;
+      @media only screen and (max-width: 380px) {
+        padding-left: 25px;
+      }
     }
   }
 

@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../../context/UserContext";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import styled from "styled-components";
+import axios from "../../../axios";
 
 const ChangePW = ({ setChangePwOpen }) => {
   const userData = useContext(UserContext);
 
+  // 비밀번호 유효성 검사 함수 시작 ------------------------------------------------------------------------------------
   // 기존 비밀번호 관련 변수
   const [pw, setPw] = useState("");
   const [passPW, setPassPW] = useState();
@@ -32,11 +34,14 @@ const ChangePW = ({ setChangePwOpen }) => {
   const [passChangePW, setPassChangePW] = useState();
   const [checkChangePWText, setCheckChangePWText] = useState("");
   const checkChangePW = () => {
-    if (changePw.length >= 8) {
-      setPassChangePW(true);
-      setCheckChangePWText();
-    } else if (changePw == "") {
+    if (changePw == "") {
       setPassChangePW();
+      setCheckChangePWText();
+    } else if (changePw == pw) {
+      setPassChangePW(false);
+      setCheckChangePWText("* 기존 비밀번호와 다른 비밀번호를 입력해주세요.");
+    } else if (changePw.length >= 8) {
+      setPassChangePW(true);
       setCheckChangePWText();
     } else {
       setPassChangePW(false);
@@ -66,10 +71,35 @@ const ChangePW = ({ setChangePwOpen }) => {
   useEffect(() => {
     checkRePW();
   }, [rePw]);
+  // 비밀번호 유효성 검사 함수 끝-----------------------------------------------------------------------
 
+  // 비밀번호 변경 함수 시작----------------------------------------------------------------------------
+  const changePW = () => {
+    if (passChangePW && passPW && passRePW) {
+      axios
+        .post("/user/changePw", {
+          id: userData.data.manager_id,
+          changePw: changePw,
+        })
+        .then((res) => {
+          if (res.data.changePwResult) {
+            userData.data.password = changePw;
+            localStorage.setItem("userData", JSON.stringify(userData));
+            setChangePwOpen(false);
+            alert("비밀번호 변경이 완료 되었습니다.");
+          }
+        });
+    } else {
+      alert("유효한 비밀번호를 설정해주세요.");
+    }
+  };
+  // 비밀번호 변경 함수 끝------------------------------------------------------------------------------
+
+  // 모달 코드 시작------------------------------------------------------------------------------------
   // 모달 끄기
-  const closeReview = () => {
+  const closeChangePw = () => {
     setChangePwOpen(false);
+    alert("비밀번호 변경이 취소 되었습니다.");
   };
 
   // 모달 외부 클릭 시 끄기
@@ -94,10 +124,13 @@ const ChangePW = ({ setChangePwOpen }) => {
       // document.removeEventListener('touchstart', handler); // 모바일 대응
     };
   });
+  // 모달 코드 끝-------------------------------------------------------------------------------------
+
   return (
     <ChangePWBox ref={changePwRef}>
+      <img src={"/images/WebLogo.png"} alt="리듬케어 로고" />
       <ChangePwInput>
-        <Title>기존 비밀번호를 입력 후 변경할 비밀번호를 입력해주세요.</Title>
+        <Title>기존 비밀번호 입력 후 변경할 비밀번호를 입력해주세요.</Title>
 
         <Input>
           <CheckBox>
@@ -183,8 +216,8 @@ const ChangePW = ({ setChangePwOpen }) => {
 
         <Warning>{checkRePWText}</Warning>
       </ChangePwInput>
-      <button>변경</button>
-      <button onClick={closeReview}>취소</button>
+      <button onClick={changePW}>변경</button>
+      <button onClick={closeChangePw}>취소</button>
     </ChangePWBox>
   );
 };
@@ -207,20 +240,27 @@ const ChangePWBox = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.253);
   border-radius: 10px;
   box-shadow: 0 0 2cqi rgba(41, 41, 41, 0.3);
+  padding-bottom: 15px;
+
+  @media only screen and (max-width: 430px) {
+    width: 90%;
+  }
+
+  & img {
+    width: 90%;
+    margin: 10px 0 -10px 0;
+  }
+
   & input {
     height: 50px;
-
+    width: 80%;
     margin: 5px;
     border: none;
+    border-radius: 0 10px 10px 0;
     background-image: url("/images/User");
     background-repeat: no-repeat;
     background-size: 32px;
     background-position: 10px center;
-  }
-
-  & .pwInput {
-    border-radius: 0 10px 10px 0;
-    width: 80%;
   }
 
   & input::placeholder {
@@ -238,29 +278,33 @@ const ChangePWBox = styled.div`
     border-radius: 10px;
     box-shadow: none;
     height: 50px;
-    width: 85%;
-    margin: 8px 8px 20px 8px;
+    width: 75%;
+    margin: 8px 8px 10px 8px;
     background-color: #2e2288;
     border: none;
     cursor: pointer;
+    @media only screen and (max-width: 430px) {
+      width: 85%;
+    }
   }
 `;
 
 const Title = styled.div`
-  font-size: 13px;
-  margin-left: 10px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  font-size: 12px;
+  margin-bottom: 20px;
 `;
 
 const ChangePwInput = styled.div`
   height: 600px;
+  margin-bottom: -200px;
 `;
 
 const Input = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   align-items: center;
+  justify-content: center;
 `;
 
 const Warning = styled.div`

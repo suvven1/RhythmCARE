@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
 
 const UserData = () => {
+  const userData = useContext(UserContext);
   return (
     <UserDataBox>
       <table>
         <tbody>
           <tr>
             <th>이름</th>
-            <th>유정숙</th>
+            <th>{userData.data.user_name}</th>
           </tr>
           <tr>
             <th>휴대폰번호</th>
-            <th>010-9899-9160</th>
+            <th>{userData.data.user_hp}</th>
           </tr>
           <tr>
             <th>생년월일</th>
-            <th>1957-10-13</th>
+            <th>{userData.data.user_bd}</th>
           </tr>
         </tbody>
       </table>
@@ -34,10 +36,15 @@ const UserDataBox = styled.div`
 
   & table {
     border-spacing: 0;
-    width: 85%;
+    width: 80%;
     border-bottom: 1px solid gray;
     font-size: 15px;
     font-weight: bolder;
+
+    @media only screen and (max-width: 380px) {
+      font-size: 14px;
+    }
+
     & th {
       height: 40px;
       border-top: 1px solid gray;
@@ -49,8 +56,11 @@ const UserDataBox = styled.div`
     }
 
     & th:nth-child(2) {
-      padding-left: 50px;
+      padding-left: 40px;
       text-align: left;
+      @media only screen and (max-width: 380px) {
+        padding-left: 25px;
+      }
     }
   }
 `;

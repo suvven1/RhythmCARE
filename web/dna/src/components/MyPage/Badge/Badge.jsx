@@ -30,7 +30,7 @@ export default Badge;
 
 const BadgeBox = styled.div`
   display: grid;
-  width: 85%;
+  width: 80%;
   grid-template-columns: repeat(auto-fill, minmax(80px, auto));
   justify-content: center;
   margin-top: -20px;
