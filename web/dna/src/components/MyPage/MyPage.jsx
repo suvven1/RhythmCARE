@@ -22,8 +22,6 @@ const MyPage = () => {
 
   return (
     <MyPageBox>
-      <div>test123</div>
-      <div>test123</div>
       <MypageContent>
         {/* 유저 사진 정보 표시 */}
         <Image />
