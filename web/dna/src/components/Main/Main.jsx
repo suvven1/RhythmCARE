@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-scroll";
 import { useNavigate } from "react-router-dom";
+import { LuArrowUpToLine } from "react-icons/lu"
 import Login from "../Login/Login"
 
 function TopButton() {
@@ -34,15 +35,20 @@ function TopButton() {
           right : "3%",
           bottom : "5%"
         }}>
-        <button onClick={scrollToTop}
+        <LuArrowUpToLine 
+        size={"2em"} 
+        onClick={scrollToTop}
         style={{
           fontWeight: "bold",
           fontSize: "15px",
-          padding : "15px 10px",
+          padding : "15px 15px",
           borderRadius : "50%",
-          backgroundColor : "white",
-          cursor : "pointer"
-        }}>Top</button>
+          backgroundColor : "#2e2288",
+          cursor : "pointer",
+          color : "white"
+        }}/> 
+          
+        
       </div>
     )
   );
