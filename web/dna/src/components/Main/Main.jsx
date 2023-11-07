@@ -1,8 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-scroll";
 import { useNavigate } from "react-router-dom";
-import Login from "../Login/Login";
+import Login from "../Login/Login"
+
+function TopButton() {
+  const [showButton, setShowButton] = useState(false);
+
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  
+  useEffect(() => {
+    const handleShowButton = () => {
+      console.log(window.scrollY);
+      window.scrollY > 500 ? setShowButton(true) : setShowButton(false);
+    };
+    
+    window.addEventListener('scroll', handleShowButton);
+    return () => {
+      window.removeEventListener('scroll', handleShowButton);
+    };
+  }, []);
+  return (
+    showButton && (
+      <div className="scroll__container" 
+        style={{
+          position:"fixed",
+          right : "3%",
+          bottom : "5%"
+        }}>
+        <button onClick={scrollToTop}
+        style={{
+          fontWeight: "bold",
+          fontSize: "15px",
+          padding : "15px 10px",
+          borderRadius : "50%",
+          backgroundColor : "white",
+          cursor : "pointer"
+        }}>Top</button>
+      </div>
+    )
+  );
+}
 
 const Main = () => {
   const navigate = useNavigate();
@@ -13,6 +57,7 @@ const Main = () => {
 
   return (
     <MainBox>
+      <TopButton/>
       <SloganBack>
         <p>
           리듬 속 건강
@@ -221,6 +266,7 @@ const MainBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 `;
 
 // 슬로건 css---------------
@@ -229,6 +275,7 @@ const SloganBack = styled.div`
   width: 100%;
   height: 870px;
   display: flex;
+  z-index: 2;
 
   align-items: center;
   justify-content: space-between;
@@ -447,6 +494,9 @@ const Detail_left = styled.div`
       width: 400px;
       height: 300px;
     }
+    & .blank {
+    width: 0px;
+    }
 
     & div {
       order: 2;
@@ -515,6 +565,9 @@ const Detail_right = styled.div`
       order: 1;
       width: 400px;
       height: 300px;
+    }
+    & .blank {
+    width: 0px;
     }
 
     & div {

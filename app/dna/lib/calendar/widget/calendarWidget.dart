@@ -1,5 +1,5 @@
-import 'package:dna/calendar/widget/sevenRepeat.dart';
-import 'package:dna/calendar/widget/sevenRepeat2.dart';
+import 'package:dna/calendar/widget/printDate.dart';
+import 'package:dna/calendar/widget/printDay.dart';
 import 'package:flutter/material.dart';
 
 calendarWidget() {
