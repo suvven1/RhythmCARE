@@ -1,6 +1,6 @@
 import 'package:dna/member/findSettingPage.dart';
-import 'package:dna/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'mainPage.dart';
 import 'member/findPage.dart';
@@ -10,6 +10,8 @@ import 'member/loginPage.dart';
 
 void main() async {
   await initializeDateFormatting();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
 }
 
@@ -24,23 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: '/',
-        routes: {
-          // member
-          '/login': (_) => loginPage(),
-          '/join': (_) => joinPage(),
-          '/join2': (_) => join2Page(),
-          '/find': (_) => findPage(),
-          '/findpw': (_) => findSettingPage(),
-          // main
-          '/main': (_) => mainPage(),
-          // calendar
-          // hospital
-          // home
-          // blog
-          // mypage
-        },
-        home: splash(),
+        home: loginPage(),
         );
   }
 }

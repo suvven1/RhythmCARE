@@ -1,6 +1,7 @@
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import '../mainPage.dart';
 import '../widget/sizeBox.dart';
 import 'findPage.dart';
@@ -27,6 +28,11 @@ class _loginPageState extends State<loginPage> {
   void initState() {
     isSelected = [isGuard, isUser];
     super.initState();
+    initialization();
+  }
+  void initialization() async {
+    await Future.delayed(Duration(seconds: 3));
+    FlutterNativeSplash.remove();
   }
 
   void printIdPw(bool who, idCon, pwCon){
