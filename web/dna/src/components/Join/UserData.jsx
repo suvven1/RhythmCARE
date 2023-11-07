@@ -33,8 +33,6 @@ const UserData = () => {
   const doJoin = () => {
     if (Object.values(joinData).includes("")) {
       alert("빈칸 없이 입력해주세요.");
-    } else if (!uPhone.includes("-") && !mPhone.includes("-")) {
-      alert("올바른 휴대폰 번호를 입력해주세요.");
     } else {
       axios.post("/user/join", { joinData: joinData }).then((res) => {
         if (res.data.joinResult) {
@@ -82,6 +80,7 @@ const UserData = () => {
         <div>
           <input
             type="text"
+            value={uPhone}
             maxLength={13}
             placeholder="보호자 휴대폰번호  ex) 010-1111-4444"
             onChange={(e) => {
