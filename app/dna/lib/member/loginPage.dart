@@ -1,7 +1,9 @@
+import 'package:dna/member/widget/joinWidget.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
 import '../mainPage.dart';
 import '../widget/sizeBox.dart';
 import 'findPage.dart';
@@ -78,9 +80,7 @@ class _loginPageState extends State<loginPage> {
                           // true : 보호자, false : 사용자
                           printIdPw(isGuard, idCon, pwCon);
                           // 로그인 버튼 클릭 시, 액션을 여기에 넣으면 됨
-                          Navigator.pop(context);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => mainPage()));
+                          Get.off(()=> mainPage());
                         },
                       ),
                       SizeBoxH20,
@@ -89,13 +89,13 @@ class _loginPageState extends State<loginPage> {
                         children: [
                           TextButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>findPage()));
+                                Get.to(()=>findPage());
                               },
                               child: Text('아이디 찾기',
                                   style: TextStyle(color: Colors.black))),
                           TextButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=>findPage()));
+                                Get.to(()=>findPage());
                               },
                               child: Text('비밀번호 찾기',
                                   style: TextStyle(color: Colors.black))),
@@ -103,25 +103,7 @@ class _loginPageState extends State<loginPage> {
                       )
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '아직 계정이 없으신가요?',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => joinPage()));
-                        },
-                        child: Text('회원가입',
-                            style: TextStyle(
-                                color: Color(0xff2e2288),
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
+                  joinWidget(),
                 ],
               ),
             ),

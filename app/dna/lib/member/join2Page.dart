@@ -1,5 +1,7 @@
+import 'package:dna/member/joinPage.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widget/sizeBox.dart';
 import 'loginPage.dart';
@@ -53,10 +55,7 @@ class _join2PageState extends State<join2Page> {
                     child: const Center(child: Text('회원가입')),
                   ),
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/', (route) => false);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => loginPage()));
+                    Get.offAll(()=>loginPage());
                   },
                 ),
                 ElevatedButton(
@@ -68,7 +67,7 @@ class _join2PageState extends State<join2Page> {
                     child: const Center(child: Text('이전 페이지')),
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
               ],

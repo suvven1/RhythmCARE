@@ -1,5 +1,5 @@
 import 'package:dna/mypage/widget/infoContainer.dart';
-import 'package:dna/mypage/widget/profileImge.dart';
+import 'package:dna/mypage/widget/profileImage.dart';
 import 'package:dna/mypage/widget/profileNick.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,6 @@
 import 'package:dna/member/widget/textField.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widget/sizeBox.dart';
 import 'join2Page.dart';
@@ -62,8 +63,7 @@ class _joinPageState extends State<joinPage> {
                     child: const Center(child: Text('다음 페이지')),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => join2Page()));
+                    Get.to(()=>join2Page());
                   },
                 ),
                 SizeBoxH50,

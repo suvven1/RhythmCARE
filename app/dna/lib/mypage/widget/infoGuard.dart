@@ -18,10 +18,10 @@ infoGuard(Map infomationGuard) {
         children: [
           ...List.generate(
               4,
-              (index) => TableRow(children: [
-                    Text('${infomationGuard.keys.toList()[index]}'),
-                    Text('${infomationGuard.values.toList()[index]}'),
-                  ])),
+                  (index) => TableRow(children: [
+                Text('${infomationGuard.keys.toList()[index]}'),
+                Text('${infomationGuard.values.toList()[index]}'),
+              ])),
           TableRow(children: [
             Text('비밀번호'),
             Row(
