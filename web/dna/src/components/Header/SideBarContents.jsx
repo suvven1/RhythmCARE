@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
+import styled from "styled-components";
+
 const SideBarContents = ({ close }) => {
   const userData = useContext(UserContext);
 
@@ -26,14 +27,12 @@ const SideBarContents = ({ close }) => {
         {userData == null ? (
           <>
             <ImgBox>
-              <div className="innerImgBox">
-                <Link to="/login" onClick={closeMenu}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/User.png`}
-                    alt="유저사진"
-                  />
-                </Link>
-              </div>
+              <Link to="/login" onClick={closeMenu}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/User.png`}
+                  alt="유저사진"
+                />
+              </Link>
             </ImgBox>
             <Link to="/login" className="goTOLogin" onClick={closeMenu}>
               로그인이 필요합니다.
@@ -129,25 +128,22 @@ const LoginedUserBox = styled.div`
 `;
 
 const ImgBox = styled.div`
-  display: table;
-  text-align: center;
-  width: 100px;
-  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
   margin: 40px 0 0 40px;
-  border-radius: 50px;
+  border-radius: 50%;
+  border: 1px solid #bdbdbd;
   overflow: hidden;
 
-  & .innerImgBox {
-    display: table-cell;
-    vertical-align: middle;
-  }
   & img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 110px;
+    max-height: 110px;
     cursor: pointer;
   }
 `;
-
 const MenuBox = styled.div`
   margin: 40px 0 0 20px;
   display: flex;

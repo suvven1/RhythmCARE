@@ -78,13 +78,19 @@ const UserDataBox = styled.div`
   }
 
   & button {
-    background-color: #2e2288;
-    color: white;
+    background-color: white;
+    color: #2e2288;
     border-style: none;
+    border: 1px solid #2e2288;
     border-radius: 5px;
     height: 30px;
     width: 80px;
     margin-right: 10px;
+    &:hover {
+      background-color: #2e2288;
+      color: white;
+    }
+    cursor: pointer;
   }
 
   & table {
@@ -131,13 +137,13 @@ const TitleBox = styled.div`
   margin: 50px 0 20px 0;
 
   & .mainTitle {
-    font-size: 17px;
+    font-size: 22px;
     font-weight: bold;
   }
 
   & .subTitle {
     display: flex;
-    font-size: 12px;
+    font-size: 15px;
     @media only screen and (max-width: 380px) {
       flex-direction: column;
     }

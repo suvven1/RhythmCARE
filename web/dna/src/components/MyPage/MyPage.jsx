@@ -92,7 +92,7 @@ const NickBox = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 0 0 30px;
-
+  font-size: 22px;
   & svg {
     cursor: pointer;
     margin: 5px 0 0 10px;
@@ -106,7 +106,7 @@ const TitleBox = styled.div`
   margin: 50px 0 20px 0;
 
   & .mainTitle {
-    font-size: 17px;
+    font-size: 22px;
     font-weight: bold;
   }
 
