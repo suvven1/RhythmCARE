@@ -1,8 +1,6 @@
-import 'package:dna/home/stressPage.dart';
-import 'package:dna/home/tiredPage.dart';
 import 'package:dna/home/widget/grass.dart';
 import 'package:dna/home/widget/heartBeat.dart';
-import 'package:dna/home/widget/stressModel.dart';
+import 'package:dna/home/widget/visualModel.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +19,12 @@ class _homePageState extends State<homePage> {
 
   // 심박수
   int hearBeatNum = 100;
+
+  // 스트레스/피로도
+  bool valueHigh = false;
+
+
+
 
   //잔디심기
   List<int> walkNum = List.filled(35, 0);
@@ -49,7 +53,7 @@ class _homePageState extends State<homePage> {
             // 심박수
             heartBeat(hearBeatNum),
             // 스트레스 모델
-            visualModel(context, "스트레스"),
+            visualModel(context, "스트레스", ),
             SizeBoxH30,
             horisonLine,
             SizeBoxH30,

@@ -1,7 +1,10 @@
+import 'package:dna/member/loginPage.dart';
+import 'package:dna/member/widget/joinWidget.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton2.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'findSettingPage.dart';
 import 'joinPage.dart';
 
@@ -66,33 +69,15 @@ class _findPageState extends State<findPage> {
                         ),
                         onPressed: () {
                           if(isGuard) {
-                            Navigator.pop(context);
+                            Get.offAll(()=>loginPage());
                           } else{
-                            Navigator.push(context, MaterialPageRoute(builder: (_)=>findSettingPage()));
+                            Get.to(()=>findSettingPage());
                           }
                         },
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '아직 계정이 없으신가요?',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => joinPage()));
-                        },
-                        child: Text('회원가입',
-                            style: TextStyle(
-                                color: Color(0xff2e2288),
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
+                  joinWidget(),
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 
+import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 
 import '../stressPage.dart';
@@ -6,6 +7,12 @@ import '../tiredPage.dart';
 
 
 visualModel (context, String what) {
+  // bool valueHigh = false;
+  // if(currentStateValue>50){
+  //   valueHigh = true;
+  // }else{
+  //   valueHigh = false;
+  // }
   return TextButton(
     style: TextButton.styleFrom(
         primary: Colors.black
@@ -16,13 +23,17 @@ visualModel (context, String what) {
             context, MaterialPageRoute(builder: (_) => stressPage()));
       }else{
         Navigator.push(
-        context, MaterialPageRoute(builder: (_) => tiredPage()));
+            context, MaterialPageRoute(builder: (_) => tiredPage()));
       }
     },
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('현재 $what 지수'),
+        Text('현재 $what 지수', style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold
+        ),),
+        SizeBoxH20,
         Stack(
           children: [
             Container(
@@ -33,7 +44,7 @@ visualModel (context, String what) {
                   borderRadius: BorderRadius.circular(50)),
             ),
             Container(
-              margin: EdgeInsets.all(6),
+              margin: EdgeInsets.only(top: 6, left: 15, right: 15),
               width: 40,
               height: 40,
               decoration: BoxDecoration(
@@ -47,14 +58,15 @@ visualModel (context, String what) {
           children: [
             Text(
               '낮음',
-              style: TextStyle(color: Colors.green),
+              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
             ),
             Text(
               '높음',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
           ],
         ),
+        SizeBoxH30,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

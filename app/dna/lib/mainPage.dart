@@ -2,7 +2,6 @@ import 'package:dna/blog/blogPage.dart';
 import 'package:dna/calendar/calendarPage2.dart';
 import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
-import 'package:dna/member/loginPage.dart';
 import 'package:dna/mypage/myPage.dart';
 import 'package:flutter/material.dart';
 
@@ -31,11 +30,6 @@ class _mainPageState extends State<mainPage> {
     setState(() {
       currentPageIndex = index;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
