@@ -216,8 +216,10 @@ const ChangePW = ({ setChangePwOpen }) => {
 
         <Warning>{checkRePWText}</Warning>
       </ChangePwInput>
-      <button onClick={changePW}>변경</button>
-      <button onClick={closeChangePw}>취소</button>
+      <div className="btnBox">
+        <button onClick={changePW}>변경</button>
+        <button onClick={closeChangePw}>취소</button>
+      </div>
     </ChangePWBox>
   );
 };
@@ -245,6 +247,30 @@ const ChangePWBox = styled.div`
   @media only screen and (max-width: 430px) {
     width: 90%;
   }
+  & .btnBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    & button {
+      color: white;
+      font-size: 15px;
+      border-radius: 10px;
+      box-shadow: none;
+      height: 40px;
+      width: 70%;
+      margin: 8px 8px 10px 8px;
+      background-color: #2e2288;
+      border: none;
+      cursor: pointer;
+
+      @media only screen and (max-width: 430px) {
+        width: 80%;
+      }
+    }
+  }
 
   & img {
     width: 90%;
@@ -270,22 +296,6 @@ const ChangePWBox = styled.div`
 
   & input:focus {
     outline: none;
-  }
-
-  & button {
-    color: white;
-    font-size: 15px;
-    border-radius: 10px;
-    box-shadow: none;
-    height: 50px;
-    width: 75%;
-    margin: 8px 8px 10px 8px;
-    background-color: #2e2288;
-    border: none;
-    cursor: pointer;
-    @media only screen and (max-width: 430px) {
-      width: 85%;
-    }
   }
 `;
 

@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import axios from "../../axios";
+import React, { useContext, useEffect, useState } from "react";
 import { VscEdit } from "react-icons/vsc";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
 const Image = () => {
+  // 유저 전체 정보
+  const userData = useContext(UserContext);
+
+  // 이미지 변환시 바로 표시하는 기능
   const [img, setImg] = useState({ pre: "", data: "" });
   const setImage = (e) => {
     if (e.target.files[0]) {
@@ -11,16 +17,59 @@ const Image = () => {
       });
     }
   };
+
+  // 이미지 변환시 데이터 베이스/로컬스토리지에 이미지 저장
+  const sendImg = () => {
+    let formData = new FormData();
+    formData.append("image", img.data);
+    formData.append("id", userData.data.manager_id);
+    axios
+      .post("/user/changeImg", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.chageImgResult) {
+          userData.data.img = res.data.img;
+          localStorage.setItem("userData", JSON.stringify(userData));
+          alert("이미지 변경이 완료되었습니다.");
+          window.location.replace("/mypage");
+        } else {
+          alert("이미지 변경이 실패하였습니다.");
+          window.location.replace("/mypage");
+        }
+      });
+  };
+
+  // 이미지 선택을 새로 하는 경우 이미지 저장 함수 실행
+  useEffect(() => {
+    if (img.data != "") {
+      sendImg();
+    }
+  }, [img]);
+
+  // 로컬 스토리지에서 불러온 이미지 데이터 변환
+  const conImg = btoa(
+    String.fromCharCode(...new Uint8Array(userData.data.img.data))
+  );
+
   return (
     <ImageBox>
       <Img>
         {img.pre ? (
-          <img src={img.pre} alt="유저사진" />
+          <img src={img.pre} alt="새로 등록할 유저사진" />
         ) : (
-          <img
-            src={`${process.env.PUBLIC_URL}/images/User.png`}
-            alt="유저사진"
-          />
+          <>
+            {userData.data.img != null ? (
+              <img src={`data:image/png;base64,${conImg}`} alt="유저사진" />
+            ) : (
+              <img
+                src={`${process.env.PUBLIC_URL}/images/User.png`}
+                alt="기본 유저사진"
+              />
+            )}
+          </>
         )}
       </Img>
       <label htmlFor="file">

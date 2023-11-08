@@ -15,6 +15,11 @@ const SideBarContents = ({ close }) => {
     window.location.replace("/");
   };
 
+  // 로컬 스토리지에서 불러온 이미지 데이터 변환
+  const conImg = btoa(
+    String.fromCharCode(...new Uint8Array(userData.data.img.data))
+  );
+
   return (
     <SideBarContentBox>
       <UserDataBox>
@@ -39,10 +44,17 @@ const SideBarContents = ({ close }) => {
             <ImgBox>
               <div className="innerImgBox" style={{ backgroundColor: "white" }}>
                 <Link to="/mypage" onClick={closeMenu}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/AppLogo.png`}
-                    alt="유저사진"
-                  />
+                  {userData.data.img != null ? (
+                    <img
+                      src={`data:image/png;base64,${conImg}`}
+                      alt="유저사진"
+                    />
+                  ) : (
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/User.png`}
+                      alt="기본 유저사진"
+                    />
+                  )}
                 </Link>
               </div>
             </ImgBox>

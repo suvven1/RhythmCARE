@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const conn = require("../config/database");
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // 회원가입 시작 ------------------------------------------------------------------------------
 router.post("/join", (req, res) => {
@@ -18,7 +22,7 @@ router.post("/join", (req, res) => {
     uGender,
     uPhone,
   } = req.body.joinData;
-  let joinSql = "insert into user values (?,?,?,?,?,?,?,?,?,?,?)";
+  let joinSql = "insert into user values (?,?,?,?,?,?,?,?,?,?,?,null)";
   conn.query(
     joinSql,
     [
@@ -163,4 +167,25 @@ router.post("/delete", (req, res) => {
 });
 // 회원탈퇴 변경 끝 ---------------------------------------------------------------------------------
 
+// 이미지 변경 시작 ---------------------------------------------------------------------------------
+router.post("/changeImg", upload.single("image"), (req, res) => {
+  console.log("changeImg", req.file);
+  console.log("userID", req.body);
+  if (req.file != undefined) {
+    console.log("try setImg");
+    let img = req.file.buffer;
+    let id = req.body.id;
+    let imgSql = "update user set img=? where manager_id=?";
+    conn.query(imgSql, [img, id], (err, rows) => {
+      if (rows) {
+        console.log("이미지 변경 성공!");
+        res.json({ chageImgResult: true, img: img });
+      } else {
+        console.log("이미지 변경 실패!", err);
+        res.json({ chageImgResult: false });
+      }
+    });
+  }
+});
+// 이미지 변경 끝 -----------------------------------------------------------------------------------
 module.exports = router;
