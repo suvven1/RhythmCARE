@@ -7,7 +7,7 @@ grassTable<Widget>(List list) {
       children: [
         ...List.generate(
             5,
-            (propsIndex) => TableRow(children: List.generate(
+                (propsIndex) => TableRow(children: List.generate(
               7,
                   (index) => Container(
                 height: 42,
@@ -16,10 +16,10 @@ grassTable<Widget>(List list) {
                   color: list[index + propsIndex * 7],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                ),
               ),
+            ),
             )
-            )
+        )
       ],
     ),
   );

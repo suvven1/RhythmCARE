@@ -10,19 +10,34 @@ class faceState extends StatelessWidget {
     late String result;
     if(what == '스트레스'){
       if(state){
-        result = '높은';
+        return '높은';
       }else{
-        result = '낮은';
+        return '낮은';
       }
     }else{
       if(state2){
-        result = '높은';
+        return '높은';
       }else{
-        result = '낮은';
+        return '낮은';
       }
     }
-    print(state);
-    return result;
+  }
+
+  faceStateImage (bool state, bool state2){
+    late String result;
+    if(what == '스트레스'){
+      if(state){
+        return 'image/heart_bad.png';
+      }else{
+        return 'image/heart_good.png';
+      }
+    }else{
+      if(state2){
+        return 'image/heart_bad.png';
+      }else{
+        return 'image/heart_good.png';
+      }
+    }
   }
 
   @override
@@ -59,56 +74,14 @@ class faceState extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(
+          width: 10,
+        ),
         Image.asset(
-          'image/heart.gif',
-          height: 50,
+          faceStateImage(controller.stressHigh.value, controller.tiredHigh.value),
+          height: 60,
         ),
       ],
     );
   }
 }
-
-
-
-// faceState (String what, GetxController controller){
-//   late String stateText;
-//   if(controller.)
-//
-//   return Row(
-//     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//     children: [
-//       Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Text(
-//             '현재 $what는',
-//             style: TextStyle(
-//               fontSize: 20,
-//             ),
-//           ),
-//           Row(
-//             children: [
-//               Text(
-//                 '낮은',
-//                 style: TextStyle(
-//                     fontSize: 20,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.red),
-//               ),
-//               Text(
-//                 ' 상태입니다.',
-//                 style: TextStyle(
-//                   fontSize: 20,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//       Image.asset(
-//         'image/heart.gif',
-//         height: 50,
-//       ),
-//     ],
-//   );
-// }

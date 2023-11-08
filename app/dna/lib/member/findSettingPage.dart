@@ -44,9 +44,9 @@ class _findSettingPageState extends State<findSettingPage> {
                               '아이디 찾기',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey
                               ),
                             ),
                           ),

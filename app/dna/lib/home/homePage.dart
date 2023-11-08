@@ -46,36 +46,29 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     Get.put(ReactiveController());
-    return Scaffold(
-      body: SafeArea(
-        child: GetX<ReactiveController>(
-          builder: (controller) {
-            return ListView(
-              children: [
-                heartbeatTestWidget(),
-                // 심박수
-                heartBeat(controller.hearBeatNum.value),
-                // 스트레스 모델
-                visualModel(
-                  context,
-                  "스트레스"
-                ),
-                SizeBoxH30,
-                horisonLine,
-                SizeBoxH30,
-                // 피로도
-                visualModel(context, "피로도"),
-                SizeBoxH30,
-                horisonLine,
-                SizeBoxH30,
-                // 잔디심기
-                grass(grassColor(walkNum)),
-                SizeBoxH30,
-              ],
-            );
-          },
-        ),
-      ),
+    return GetX<ReactiveController>(
+      builder: (controller) {
+        return ListView(
+          children: [
+            heartbeatTestWidget(),
+            // 심박수
+            heartBeat(controller.hearBeatNum.value),
+            // 스트레스 모델
+            visualModel(context, "스트레스"),
+            SizeBoxH30,
+            horisonLine,
+            SizeBoxH30,
+            // 피로도
+            visualModel(context, "피로도"),
+            SizeBoxH30,
+            horisonLine,
+            SizeBoxH30,
+            // 잔디심기
+            grass(grassColor(walkNum)),
+            SizeBoxH30,
+          ],
+        );
+      },
     );
   }
 }

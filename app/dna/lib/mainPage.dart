@@ -1,5 +1,5 @@
 import 'package:dna/blog/blogPage.dart';
-import 'package:dna/calendar/calendarPage2.dart';
+import 'package:dna/calendar/calendarPage.dart';
 import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/mypage/myPage.dart';
@@ -18,7 +18,7 @@ class _mainPageState extends State<mainPage> {
 
   // 바텀 네비게이션으로 이동할 페이지 목록
   final List<Widget> pageIndex = <Widget>[
-    calendarPage2(),
+    calendarPage(),
     hospitalPage(),
     homePage(),
     blogPage(),

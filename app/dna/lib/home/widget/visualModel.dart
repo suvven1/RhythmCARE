@@ -24,8 +24,8 @@ visualModel (context, String what) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('현재 $what 지수', style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold
+            fontSize: 20,
+            fontWeight: FontWeight.bold
         ),),
         SizeBoxH20,
         progressWidget(what: what,),
