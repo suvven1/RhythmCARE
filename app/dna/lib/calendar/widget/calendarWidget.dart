@@ -19,7 +19,7 @@ calendarWidget() {
         // 날짜 출력
         ...List.generate(
             6,
-            (index) => printDay(index, calculateDate(year, month, 1)))
+                (index) => printDay(index, calculateDate(year, month, 1)))
       ],
     ),
   );

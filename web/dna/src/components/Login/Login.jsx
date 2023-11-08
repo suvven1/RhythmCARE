@@ -4,9 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 
 const Login = () => {
+  const today = new Date();
+  const date = {
+    date: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
+  };
   useEffect(() => {
-    if (sessionStorage.getItem("isLogin") == "true") {
-      // nav("/");
+    if (localStorage.getItem("userData")) {
+      nav("/");
     }
   });
 

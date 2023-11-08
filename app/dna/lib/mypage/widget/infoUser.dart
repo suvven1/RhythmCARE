@@ -13,10 +13,10 @@ infoUser(Map informationUser) {
         children: [
           ...List.generate(
               3,
-              (index) => TableRow(children: [
-                    Text('${informationUser.keys.toList()[index]}'),
-                    Text('${informationUser.values.toList()[index]}'),
-                  ])),
+                  (index) => TableRow(children: [
+                Text('${informationUser.keys.toList()[index]}'),
+                Text('${informationUser.values.toList()[index]}'),
+              ])),
         ],
       ),
     ],

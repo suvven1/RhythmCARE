@@ -72,5 +72,9 @@ const DeleteBox = styled.div`
     background-color: white;
     border: 1px solid red;
     cursor: pointer;
+    &:hover {
+      color: white;
+      background-color: red;
+    }
   }
 `;

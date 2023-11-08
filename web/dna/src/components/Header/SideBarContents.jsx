@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
+import styled from "styled-components";
+
 const SideBarContents = ({ close }) => {
   const userData = useContext(UserContext);
 
@@ -15,20 +16,23 @@ const SideBarContents = ({ close }) => {
     window.location.replace("/");
   };
 
+  // 로컬 스토리지에서 불러온 이미지 데이터 변환
+  const conImg = btoa(
+    String.fromCharCode(...new Uint8Array(userData.data.img.data))
+  );
+
   return (
     <SideBarContentBox>
       <UserDataBox>
         {userData == null ? (
           <>
             <ImgBox>
-              <div className="innerImgBox">
-                <Link to="/login" onClick={closeMenu}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/User.png`}
-                    alt="유저사진"
-                  />
-                </Link>
-              </div>
+              <Link to="/login" onClick={closeMenu}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/User.png`}
+                  alt="유저사진"
+                />
+              </Link>
             </ImgBox>
             <Link to="/login" className="goTOLogin" onClick={closeMenu}>
               로그인이 필요합니다.
@@ -39,10 +43,17 @@ const SideBarContents = ({ close }) => {
             <ImgBox>
               <div className="innerImgBox" style={{ backgroundColor: "white" }}>
                 <Link to="/mypage" onClick={closeMenu}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/AppLogo.png`}
-                    alt="유저사진"
-                  />
+                  {userData.data.img != null ? (
+                    <img
+                      src={`data:image/png;base64,${conImg}`}
+                      alt="유저사진"
+                    />
+                  ) : (
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/User.png`}
+                      alt="기본 유저사진"
+                    />
+                  )}
                 </Link>
               </div>
             </ImgBox>
@@ -117,25 +128,22 @@ const LoginedUserBox = styled.div`
 `;
 
 const ImgBox = styled.div`
-  display: table;
-  text-align: center;
-  width: 100px;
-  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
   margin: 40px 0 0 40px;
-  border-radius: 50px;
+  border-radius: 50%;
+  border: 1px solid #bdbdbd;
   overflow: hidden;
 
-  & .innerImgBox {
-    display: table-cell;
-    vertical-align: middle;
-  }
   & img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 110px;
+    max-height: 110px;
     cursor: pointer;
   }
 `;
-
 const MenuBox = styled.div`
   margin: 40px 0 0 20px;
   display: flex;

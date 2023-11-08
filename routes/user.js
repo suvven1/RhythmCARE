@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const conn = require("../config/database");
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-// 회원가입 시작 ------------------------------------------------------------------------------
+// 회원가입 시작 -----------------------------------------------------------------------------------------------
 router.post("/join", (req, res) => {
   console.log("user join", req.body);
   let {
@@ -18,7 +21,7 @@ router.post("/join", (req, res) => {
     uGender,
     uPhone,
   } = req.body.joinData;
-  let joinSql = "insert into user values (?,?,?,?,?,?,?,?,?,?,?)";
+  let joinSql = "insert into user values (?,?,?,?,?,?,?,?,?,?,?,null)";
   conn.query(
     joinSql,
     [
@@ -77,9 +80,14 @@ router.post("/join/nickDupCheck", (req, res) => {
     }
   });
 });
-// 회원가입 끝 -------------------------------------------------------------------------------
-
-// 로그인 시작 -------------------------------------------------------------------------------
+// 회원가입 끝 -------------------------------------------------------------------------------------------------
+//
+//
+//
+//
+//
+//
+// 로그인 시작 -------------------------------------------------------------------------------------------------
 router.post("/login", (req, res) => {
   console.log("user login", req.body);
   let { user, id, pw } = req.body;
@@ -110,26 +118,15 @@ router.post("/login", (req, res) => {
     }
   });
 });
-// 로그인 끝 ---------------------------------------------------------------------------------
-
-// 비밀번호 변경 시작 -------------------------------------------------------------------------------
-router.post("/changePw", (req, res) => {
-  console.log("changePw", req.body);
-  let { id, changePw } = req.body;
-  let changePwSql = "update user set password=? where manager_id=?";
-  conn.query(changePwSql, [changePw, id], (err, rows) => {
-    if (rows) {
-      console.log("비밀번호 변경 성공!");
-      res.json({ changePwResult: true });
-    } else {
-      console.log("비밀번호 변경 실패!");
-      res.json({ changePwResult: false });
-    }
-  });
-});
-// 비밀번호 변경 끝 ---------------------------------------------------------------------------------
-
-// 닉네임 변경 시작 -------------------------------------------------------------------------------
+// 로그인 끝 ---------------------------------------------------------------------------------------------------
+//
+//
+//
+//
+//
+//
+// 내 정보 수정 시작--------------------------------------------------------------------------------------------
+// 닉네임 변경
 router.post("/changeNick", (req, res) => {
   console.log("changeNick", req.body);
   let { id, nick } = req.body;
@@ -144,9 +141,73 @@ router.post("/changeNick", (req, res) => {
     }
   });
 });
-// 닉네임 변경 끝 ---------------------------------------------------------------------------------
 
-// 회원탈퇴 변경 시작 -------------------------------------------------------------------------------
+// 비밀번호 변경
+router.post("/changePw", (req, res) => {
+  console.log("changePw", req.body);
+  let { id, changePw } = req.body;
+  let changePwSql = "update user set password=? where manager_id=?";
+  conn.query(changePwSql, [changePw, id], (err, rows) => {
+    if (rows) {
+      console.log("비밀번호 변경 성공!");
+      res.json({ changePwResult: true });
+    } else {
+      console.log("비밀번호 변경 실패!");
+      res.json({ changePwResult: false });
+    }
+  });
+});
+
+// 이미지 변경
+router.post("/changeImg", upload.single("image"), (req, res) => {
+  console.log("changeImg", req.file);
+  console.log("userID", req.body);
+  if (req.file != undefined) {
+    console.log("try setImg");
+    let img = req.file.buffer;
+    let id = req.body.id;
+    let imgSql = "update user set img=? where manager_id=?";
+    conn.query(imgSql, [img, id], (err, rows) => {
+      if (rows) {
+        console.log("이미지 변경 성공!");
+        res.json({ chageImgResult: true, img: img });
+      } else {
+        console.log("이미지 변경 실패!", err);
+        res.json({ chageImgResult: false });
+      }
+    });
+  }
+});
+// 내 정보 수정 끝----------------------------------------------------------------------------------------------
+//
+//
+//
+//
+//
+//
+// 뱃지 불러오기 시작 ------------------------------------------------------------------------------------------
+router.post("/badge", (req, res) => {
+  console.log("badge", req.body);
+  let { id } = req.body;
+  let deleteSql = "delete from user where manager_id=?";
+  conn.query(deleteSql, [id], (err, rows) => {
+    if (rows) {
+      console.log("[탈퇴] 회원탈퇴 성공!");
+      res.json({ deleteResult: true });
+    } else {
+      console.log("[탈퇴] 회원탈퇴 실패!");
+      res.json({ deleteResult: false });
+    }
+  });
+});
+// 뱃지 불러오기 끝 --------------------------------------------------------------------------------------------
+//
+//
+//
+//
+//
+//
+// 회원탈퇴 변경 시작 ------------------------------------------------------------------------------------------
 router.post("/delete", (req, res) => {
   console.log("delete", req.body);
   let { id } = req.body;
@@ -161,6 +222,6 @@ router.post("/delete", (req, res) => {
     }
   });
 });
-// 회원탈퇴 변경 끝 ---------------------------------------------------------------------------------
+// 회원탈퇴 변경 끝 --------------------------------------------------------------------------------------------
 
 module.exports = router;

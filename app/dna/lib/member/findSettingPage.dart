@@ -1,5 +1,6 @@
 import 'package:dna/member/widget/textField.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widget/sizeBox.dart';
 import 'joinPage.dart';
@@ -43,9 +44,9 @@ class _findSettingPageState extends State<findSettingPage> {
                               '아이디 찾기',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey
                               ),
                             ),
                           ),
@@ -82,10 +83,7 @@ class _findSettingPageState extends State<findSettingPage> {
                           child: Center(child: Text('로그인 하기')),
                         ),
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/', (route) => false);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => loginPage()));
+                          Get.offAll(()=>loginPage());
                         },
                       ),
                     ],
