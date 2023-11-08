@@ -1,11 +1,6 @@
-import 'package:dna/member/findSettingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'mainPage.dart';
-import 'member/findPage.dart';
-import 'member/join2Page.dart';
-import 'member/joinPage.dart';
 import 'member/loginPage.dart';
 
 void main() async {
@@ -48,7 +43,6 @@ class _MyAppState extends State<MyApp> {
       color: Colors.black
     )
   ),
-* 캘린더 라이브러리
-  table_calendar
+
 *
 */

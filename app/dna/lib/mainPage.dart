@@ -2,6 +2,7 @@ import 'package:dna/blog/blogPage.dart';
 import 'package:dna/calendar/calendarPage2.dart';
 import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
+import 'package:dna/member/loginPage.dart';
 import 'package:dna/mypage/myPage.dart';
 import 'package:flutter/material.dart';
 
@@ -32,39 +33,23 @@ class _mainPageState extends State<mainPage> {
     });
   }
 
-  // // willPopScope 사용하기 위한 세팅
-  //
-  // // 리스트 변수 생성
-  // late List<GlobalKey<NavigatorState>> _navigatorKeyList;
-  // // GlobalKey를 사용해서 Navigator의 state를 받아온다.
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   _navigatorKeyList = List.generate(pageIndex.length, (index) => GlobalKey<NavigatorState>());
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // 네비게이터 안의 페이지에서 페이지 이동을 할 때, 기존 페이지가 지워지지 안도록
-    // willPopScope로 Navigator의 state를 보고 pop될 페이지를 잡아낸다.
-    // return WillPopScope(
-    //   onWillPop: () async {
-    //     return !(await _navigatorKeyList[currentPageIndex].currentState!.maybePop());
-    //   },
-    //   child :
     return Scaffold(
-      body: Navigator(
-        onGenerateRoute: (routeSettings) {
-          return MaterialPageRoute(
-              builder: (_) => SafeArea(
-                  child: pageIndex.elementAt(currentPageIndex)));
-        },
-        // 기존대로 아래 코드로 할 경우,
-        // 네비게이션으로 이동된 페이지 내에서 페이지 이동이 안 된다
-        // 이를 Navigator로 감싸주어 이동된 페이지 내에서 이동하게 되는 것.
-        // child: SafeArea(
-        //   child: pageIndex.elementAt(currentPageIndex),
-        // ),
+      body: SafeArea(
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.05,
+                right: MediaQuery.of(context).size.width * 0.05
+            ),
+            child: pageIndex.elementAt(currentPageIndex),
+          )
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Color(0xff2e2288),

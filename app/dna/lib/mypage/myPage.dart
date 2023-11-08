@@ -32,12 +32,12 @@ class _myPageState extends State<myPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.all(20),
+      body: ListView(
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.1),
+            width: double.infinity,
+            color: Colors.grey[200],
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -49,7 +49,7 @@ class _myPageState extends State<myPage> {
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
