@@ -46,20 +46,58 @@ class _mainPageState extends State<mainPage> {
           )
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color(0xff2e2288),
-        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.shifting,
         currentIndex: currentPageIndex,
         onTap: onItemTap,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month), label: '달력'),
+            // 선택된 탭 인덱스(selectedIndex) 값에 따라
+            // 0이면 색칠된 아이콘, 아니라면 회색 아이콘 (3항 연산자)
+              icon: currentPageIndex ==
+                  0 // 선택된 탭은 채워진 아이콘, 나머지는 line 아이콘
+                  ? Image.asset(
+                'image/icon1-1.png',
+              )
+                  : Image.asset(
+                'image/logo.png',
+              ),
+              label: "달력"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.local_hospital), label: '병원'),
-          BottomNavigationBarItem(icon: Icon(Icons.heart_broken), label: '홈'),
+              icon: currentPageIndex == 1
+                  ? Image.asset(
+                'image/navigationBarIcon/icon2-1.png',
+              )
+                  : Image.asset(
+                'image/navigationBarIcon/icon2-2.png',
+              ),
+              label: "병원"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.backup_table_outlined), label: '블로그'),
+              icon: currentPageIndex == 2
+                  ? Image.asset(
+                'image/navigationBarIcon/icon3-1.png',
+              )
+                  : Image.asset(
+                'image/navigationBarIcon/icon3-2.png',
+              ),
+              label: "홈"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: '내 정보'),
+              icon: currentPageIndex == 3
+                  ? Image.asset(
+                'image/navigationBarIcon/icon4-1.png',
+              )
+                  : Image.asset(
+                'image/navigationBarIcon/icon4-2.png',
+              ),
+              label: "블로그"),
+          BottomNavigationBarItem(
+              icon: currentPageIndex == 4
+                  ? Image.asset(
+                'image/navigationBarIcon/icon5-1.png',
+              )
+                  : Image.asset(
+                'image/navigationBarIcon/icon5-2.png',
+              ),
+              label: "내 정보"),
         ],
       ),
       // ), willpop 사용 시, 괄호
