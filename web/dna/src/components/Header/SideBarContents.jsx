@@ -19,7 +19,7 @@ const SideBarContents = ({ close }) => {
   // 로컬 스토리지에서 불러온 이미지 데이터 변환
   const conImg = btoa(
     String.fromCharCode(
-      ...new Uint8Array(userData != null ? userData.data.img.data : undefined)
+      ...new Uint8Array(userData.data.img != null ? userData.data.img.data : "")
     )
   );
 

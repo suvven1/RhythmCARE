@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-scroll";
 import { useNavigate } from "react-router-dom";
-import { LuArrowUpToLine } from "react-icons/lu"
-import Login from "../Login/Login"
+import { LuArrowUpToLine } from "react-icons/lu";
+import Login from "../Login/Login";
 
 function TopButton() {
   const [showButton, setShowButton] = useState(false);
@@ -11,44 +11,44 @@ function TopButton() {
   const scrollToTop = () => {
     window.scroll({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
-  
   useEffect(() => {
     const handleShowButton = () => {
       console.log(window.scrollY);
       window.scrollY > 500 ? setShowButton(true) : setShowButton(false);
     };
-    
-    window.addEventListener('scroll', handleShowButton);
+
+    window.addEventListener("scroll", handleShowButton);
     return () => {
-      window.removeEventListener('scroll', handleShowButton);
+      window.removeEventListener("scroll", handleShowButton);
     };
   }, []);
   return (
     showButton && (
-      <div className="scroll__container" 
+      <div
+        className="scroll__container"
         style={{
-          position:"fixed",
-          right : "3%",
-          bottom : "5%"
-        }}>
-        <LuArrowUpToLine 
-        size={"2em"} 
-        onClick={scrollToTop}
-        style={{
-          fontWeight: "bold",
-          fontSize: "15px",
-          padding : "15px 15px",
-          borderRadius : "50%",
-          backgroundColor : "#2e2288",
-          cursor : "pointer",
-          color : "white"
-        }}/> 
-          
-        
+          position: "fixed",
+          right: "3%",
+          bottom: "5%",
+        }}
+      >
+        <LuArrowUpToLine
+          size={"2em"}
+          onClick={scrollToTop}
+          style={{
+            fontWeight: "bold",
+            fontSize: "15px",
+            padding: "15px 15px",
+            borderRadius: "50%",
+            backgroundColor: "#2e2288",
+            cursor: "pointer",
+            color: "white",
+          }}
+        />
       </div>
     )
   );
@@ -63,7 +63,7 @@ const Main = () => {
 
   return (
     <MainBox>
-      <TopButton/>
+      <TopButton />
       <SloganBack>
         <p>
           리듬 속 건강
@@ -501,7 +501,7 @@ const Detail_left = styled.div`
       height: 300px;
     }
     & .blank {
-    width: 0px;
+      width: 0px;
     }
 
     & div {
@@ -573,7 +573,7 @@ const Detail_right = styled.div`
       height: 300px;
     }
     & .blank {
-    width: 0px;
+      width: 0px;
     }
 
     & div {
