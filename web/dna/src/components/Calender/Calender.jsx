@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -6,6 +6,8 @@ import interactionPlugin from '@fullcalendar/interaction';
 import styled from 'styled-components';
 
 function Calendar() {
+  const calendarRef = useRef(null);
+
   const events = [
     {
       title: '이벤트 1',
@@ -16,6 +18,13 @@ function Calendar() {
     // 다른 이벤트들을 추가할 수 있습니다.
   ];
 
+  // 날짜선택 옵션변경(불가능-> 가능)
+  useEffect(()=> {
+    const calendarApi = calendarRef.current.getApi();
+    calendarApi.setOption('selectable', true);
+    calendarApi.render();
+  }, [])
+
   return (
     <CalendarBox>
       <CalenderBack>
@@ -23,6 +32,7 @@ function Calendar() {
           plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
           initialView="dayGridMonth" // 초기 뷰 설정 (월별)
           events={events}
+          ref={calendarRef}
         />
       </CalenderBack>
       <ScheduleBack>
@@ -76,6 +86,14 @@ border-radius: 20px;
     color: #212e3d;
   }
 
+  & .fc-button{
+    padding: 5px 5px;
+    margin-top: 20px;
+   
+  }
+
+  
+
 
 
 `;
@@ -121,8 +139,6 @@ const ScheduleBack = styled.div`
     margin-top: -40px;
   }
 `;
-
-
 // -----------------------------------------------------------------------
 
 // react-calendar 라이브러리 사용
