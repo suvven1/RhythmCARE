@@ -437,6 +437,7 @@ const Detail_back = styled.div`
     margin: 0 auto;
     text-align: center;
     margin-top: 70px;
+    cursor: pointer;
   }
 
   @media only screen and (max-width: 1040px) {
@@ -447,6 +448,7 @@ const Detail_back = styled.div`
     & button {
       padding: 15px 70px;
       font-size: 20px;
+      cursor: pointer;
     }
   }
 `;
