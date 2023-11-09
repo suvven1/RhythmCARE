@@ -105,7 +105,11 @@ router.post("/login", (req, res) => {
     if (loginRows.length != 0) {
       console.log("로그인 성공!", loginRows[0].manager_nick);
       conn.query(badgeSql, [id], (err, badgeRows) => {
-        badgeData = badgeRows.map((item) => item.badge_id);
+        if (badgeRows.length != 0) {
+          badgeData = badgeRows.map((item) => item.badge_id);
+        } else {
+          badgeData = ["not"];
+        }
         if (user == "manager") {
           console.log(badgeData);
           res.json({

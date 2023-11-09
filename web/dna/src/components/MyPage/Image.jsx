@@ -63,9 +63,12 @@ const Image = () => {
   }, [img]);
 
   // 로컬 스토리지에서 불러온 이미지 데이터 변환
-  const conImg = btoa(
-    String.fromCharCode(...new Uint8Array(userData.data.img.data))
-  );
+  let conImg = "";
+  if (userData != null) {
+    conImg = btoa(
+      String.fromCharCode(...new Uint8Array(userData.data.img.data))
+    );
+  }
 
   return (
     <ImageBox>
