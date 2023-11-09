@@ -22,6 +22,7 @@ router.post("/join", (req, res) => {
     uPhone,
   } = req.body.joinData;
   let joinSql = "insert into user values (?,?,?,?,?,?,?,?,?,?,?,null)";
+  let attendSql = "insert into user_attend values (?, 0, 0, '2000-01-01')";
   conn.query(
     joinSql,
     [
@@ -39,8 +40,14 @@ router.post("/join", (req, res) => {
     ],
     (err, rows) => {
       if (rows) {
-        console.log("회원가입 성공");
-        res.json({ joinResult: true });
+        conn.query(attendSql, [id], (err, rows) => {
+          if (rows) {
+            console.log("회원가입 성공");
+            res.json({ joinResult: true });
+          } else {
+            console.log("출석 데이터 입력 실패", err);
+          }
+        });
       } else {
         console.log("회원가입 실패!", err);
         res.json({ joinResult: false });
@@ -92,26 +99,34 @@ router.post("/login", (req, res) => {
   console.log("user login", req.body);
   let { user, id, pw } = req.body;
   let loginSql = "select * from user where manager_id=? and password=?";
-  conn.query(loginSql, [id, pw], (err, rows) => {
-    if (rows.length != 0) {
-      console.log("로그인 성공!", rows[0].manager_nick);
-      if (user == "manager") {
-        res.json({
-          loginResult: {
-            nick: rows[0].manager_nick,
-            name: rows[0].manager_name,
-            data: rows[0],
-          },
-        });
-      } else {
-        res.json({
-          loginResult: {
-            nick: rows[0].manager_nick,
-            name: rows[0].user_name,
-            data: rows[0],
-          },
-        });
-      }
+  let badgeSql = "select badge_id from user_badge where manager_id =?";
+  let badgeData = [];
+  conn.query(loginSql, [id, pw], (err, loginRows) => {
+    if (loginRows.length != 0) {
+      console.log("로그인 성공!", loginRows[0].manager_nick);
+      conn.query(badgeSql, [id], (err, badgeRows) => {
+        badgeData = badgeRows.map((item) => item.badge_id);
+        if (user == "manager") {
+          console.log(badgeData);
+          res.json({
+            loginResult: {
+              nick: loginRows[0].manager_nick,
+              name: loginRows[0].manager_name,
+              data: loginRows[0],
+              badgeData: badgeData,
+            },
+          });
+        } else {
+          res.json({
+            loginResult: {
+              nick: loginRows[0].manager_nick,
+              name: loginRows[0].user_name,
+              data: loginRows[0],
+              badgeData: badgeData,
+            },
+          });
+        }
+      });
     } else {
       console.log("로그인 실패!");
       res.json({ loginResult: false });

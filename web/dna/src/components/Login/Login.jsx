@@ -4,40 +4,64 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 
 const Login = () => {
-  const today = new Date();
-  const date = {
-    date: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
-  };
+  const nav = useNavigate();
+  const [user, setUser] = useState("manager");
+  const [id, setId] = useState("");
+  const [pw, setPw] = useState("");
+
+  // 로그인 상태시 메인페이지로 우회
   useEffect(() => {
     if (localStorage.getItem("userData")) {
       nav("/");
     }
   });
 
-  const nav = useNavigate();
-  const [user, setUser] = useState("manager");
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
+  // 로그인 함수
   const login = (e) => {
     e.preventDefault();
-    console.log(user);
-    doLogin();
-  };
-
-  const doLogin = () => {
     axios.post("/user/login", { user: user, id: id, pw: pw }).then((res) => {
       if (res.data.loginResult) {
         const userData = {
           data: res.data.loginResult.data,
           name: res.data.loginResult.name,
           nick: res.data.loginResult.nick,
+          badge: res.data.loginResult.badgeData,
         };
+        attendDate();
         alert(`${userData.name}(${userData.nick})님 환영합니다!`);
         localStorage.setItem("userData", JSON.stringify(userData));
         window.location.replace("/");
       } else {
         alert("아이디 또는 비밀번호를 확인해주세요!");
       }
+    });
+  };
+
+  // 출석 체크 날짜 통신
+  const today = new Date();
+  const getDate = () => {
+    if (today.getMonth() + 1 < 10) {
+      return `${today.getFullYear()}-0${
+        today.getMonth() + 1
+      }-${today.getDate()}`;
+    } else if (today.getDate() < 10) {
+      return `${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-0${today.getDate()}`;
+    } else {
+      return `${today.getFullYear()}-${
+        today.getMonth() + 1
+      }-${today.getDate()}`;
+    }
+  };
+  // const date = "2023-11-26";
+
+  const attendDate = () => {
+    axios.post("/attend/dateCal", { id: id, today: getDate() }).then((res) => {
+      console.log(res.data);
+      alert(
+        `누적 출석일수 : ${res.data.total}일\n연속 출석일수 : ${res.data.con}일`
+      );
     });
   };
 

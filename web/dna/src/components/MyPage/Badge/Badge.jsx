@@ -1,120 +1,185 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import BadgeCont from "./BadgeCont";
+import { UserContext } from "../../../context/UserContext";
 
 const Badge = () => {
+  const userData = useContext(UserContext);
+  const [ID, setID] = useState(userData.badge);
   const [walkBadgeData, setWalkBadgeData] = useState([
     {
-      categori: "walk",
-      title: "안녕잔디",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge1.png`,
+      id: "w1",
+      title: ID.includes("w1") != "" ? "안녕잔디" : "????",
+      img:
+        ID.includes("w1") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge1.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "반갑잔디",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge2.png`,
+      id: "w2",
+      title: ID.includes("w2") != "" ? "반갑잔디" : "????",
+      img:
+        ID.includes("w2") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge2.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "고맙잔디",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge3.png`,
+      id: "w3",
+      title: ID.includes("w3") != "" ? "고맙잔디" : "????",
+      img:
+        ID.includes("w3") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge3.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "멋잔디",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge4.png`,
+      id: "w4",
+      title: ID.includes("w4") != "" ? "멋잔디" : "????",
+      img:
+        ID.includes("w4") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge4.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "예쁘잔디",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge5.png`,
+      id: "w5",
+      title: ID.includes("w5") != "" ? "예쁘잔디" : "????",
+      img:
+        ID.includes("w5") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge5.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "초록잔디",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge6.png`,
+      id: "w6",
+      title: ID.includes("w6") != "" ? "초록잔디" : "????",
+      img:
+        ID.includes("w6") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge6.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "첫걸음",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge7.png`,
+      id: "w7",
+      title: ID.includes("w7") != "" ? "첫걸음" : "????",
+      img:
+        ID.includes("w7") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge7.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "발걸음",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge8.png`,
+      id: "w8",
+      title: ID.includes("w8") != "" ? "발걸음" : "????",
+      img:
+        ID.includes("w8") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge8.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "활개걸음",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge9.png`,
+      id: "w9",
+      title: ID.includes("w9") != "" ? "활개걸음" : "????",
+      img:
+        ID.includes("w9") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge9.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "walk",
-      title: "황소걸음",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge10.png`,
+      id: "w10",
+      title: ID.includes("w10") != "" ? "황소걸음" : "????",
+      img:
+        ID.includes("w10") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge10.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
   ]);
+
   const [stressBadgeData, setStressBadgeData] = useState([
     {
-      categori: "stress",
-      title: "안녕스트레스",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge11.png`,
+      id: "s1",
+      title: ID.includes("s1") != "" ? "안녕스트레스" : "????",
+      img:
+        ID.includes("s1") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge11.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "stress",
-      title: "관리대상",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge12.png`,
+      id: "s2",
+      title: ID.includes("s2") != "" ? "관리대상" : "????",
+      img:
+        ID.includes("s2") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge12.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "stress",
-      title: "지킴이",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge13.png`,
+      id: "s3",
+      title: ID.includes("s3") != "" ? "지킴이" : "????",
+      img:
+        ID.includes("s3") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge13.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "stress",
-      title: "롤러코스터",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge14.png`,
+      id: "s4",
+      title: ID.includes("s4") != "" ? "롤러코스터" : "????",
+      img:
+        ID.includes("s4") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge14.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "stress",
-      title: "평온의폭발",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge15.png`,
+      id: "s5",
+      title: ID.includes("s5") != "" ? "평온의폭발" : "????",
+      img:
+        ID.includes("s5") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge15.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
   ]);
   const [tiredBadgeData, setTiredBadgeData] = useState([
     {
-      categori: "tired",
-      title: "안녕피로도",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge16.png`,
+      id: "t1",
+      title: ID.includes("t1") != "" ? "안녕스트레스" : "????",
+      img:
+        ID.includes("t1") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge16.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "tired",
-      title: "관리대상",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge17.png`,
+      id: "t2",
+      title: ID.includes("t2") != "" ? "관리대상" : "????",
+      img:
+        ID.includes("t2") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge17.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "tired",
-      title: "지킴이",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge18.png`,
+      id: "t3",
+      title: ID.includes("t3") != "" ? "지킴이" : "????",
+      img:
+        ID.includes("t3") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge18.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "tired",
-      title: "롤러코스터",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge19.png`,
+      id: "t4",
+      title: ID.includes("t4") != "" ? "롤러코스터" : "????",
+      img:
+        ID.includes("t4") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge19.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
     {
-      categori: "tired",
-      title: "평온의폭발",
-      img: `${process.env.PUBLIC_URL}/images/badges/badge20.png`,
+      id: "t5",
+      title: ID.includes("t5") != "" ? "평온의폭발" : "????",
+      img:
+        ID.includes("t5") != ""
+          ? `${process.env.PUBLIC_URL}/images/badges/badge20.png`
+          : `${process.env.PUBLIC_URL}/images/badges/unknown.png`,
     },
   ]);
+
   return (
     <BadgeBox>
       <div className="title">걸음수</div>
       <Walk>
         {walkBadgeData.map((item) => (
-          <BadgeCont badgeData={item} key={item.title} />
+          <BadgeCont badgeData={item} key={item.id} />
         ))}
       </Walk>
       <hr width="78%" />
@@ -122,7 +187,7 @@ const Badge = () => {
       <div className="title">스트레스</div>
       <Stress>
         {stressBadgeData.map((item) => (
-          <BadgeCont badgeData={item} key={item.title} />
+          <BadgeCont badgeData={item} key={item.id} />
         ))}
       </Stress>
       <hr width="78%" />
@@ -130,7 +195,7 @@ const Badge = () => {
       <div className="title">피로도</div>
       <Tired>
         {tiredBadgeData.map((item) => (
-          <BadgeCont badgeData={item} key={item.title} />
+          <BadgeCont badgeData={item} key={item.id} />
         ))}
       </Tired>
     </BadgeBox>
@@ -144,7 +209,6 @@ const BadgeBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-
   & .title {
     width: 78%;
     margin: -10px 0 30px 0;
@@ -159,6 +223,10 @@ const Walk = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(160px, auto));
   place-items: center;
   margin: -20px 0 0 0;
+
+  @media only screen and (max-width: 430px) {
+    grid-template-columns: repeat(auto-fill, minmax(125px, auto));
+  }
 `;
 
 const Stress = styled.div`
@@ -167,6 +235,9 @@ const Stress = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(160px, auto));
   place-items: center;
   margin: -20px 0 0 0;
+  @media only screen and (max-width: 430px) {
+    grid-template-columns: repeat(auto-fill, minmax(125px, auto));
+  }
 `;
 
 const Tired = styled.div`
@@ -175,4 +246,7 @@ const Tired = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(160px, auto));
   place-items: center;
   margin: -20px 0 0 0;
+  @media only screen and (max-width: 430px) {
+    grid-template-columns: repeat(auto-fill, minmax(125px, auto));
+  }
 `;

@@ -147,6 +147,7 @@ const BadgeBox = styled.div`
       filter: drop-shadow(0 0 0);
       max-width: 300px;
       &:hover {
+        width: 230px;
         max-width: 300px;
       }
     }
