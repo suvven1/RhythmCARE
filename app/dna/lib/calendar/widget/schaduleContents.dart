@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 schaduleContents (BuildContext context, int selectedDay, Map toDoList){
   return Padding(

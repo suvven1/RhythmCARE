@@ -52,6 +52,7 @@ class dayByDay extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              controller.selectedDay.value = day;
             }
         );
       }
