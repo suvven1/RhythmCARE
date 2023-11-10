@@ -99,11 +99,15 @@ function Calendar() {
       <div className='blank' />
       <ScheduleBox>
         <ScheduleBack>
-          <button className="todaySchedule" onClick={() => handleTodayClick(calendarRef.current.getApi())}>오늘 일정 보기</button>
-          <p className='select_month'>{selectedDate ? getMonthName(selectedDate) : ''}</p>
-          <p className='select_day'>{selectedDate ? selectedDate.substring(8) : ''}</p>
-          <p className='schedule_title'>✨일정 리스트✨</p>
-          {renderSelectedDateEvents()}
+          <div>
+            <button className="todaySchedule" onClick={() => handleTodayClick(calendarRef.current.getApi())}>오늘 일정 보기</button>
+            <p className='select_month'>{selectedDate ? getMonthName(selectedDate) : ''}</p>
+            <p className='select_day'>{selectedDate ? selectedDate.substring(8) : ''}</p>
+          </div>
+          <div>
+            <p className='schedule_title'>✨일정 리스트✨</p>
+            {renderSelectedDateEvents()}
+          </div>
         </ScheduleBack>
         <div>
           <button className='addScheduleBtn' onClick={() => setShowModal(true)}>일정 추가하기</button>
@@ -133,6 +137,13 @@ justify-content: center;
   & .blank{
     width: 30px;
   }
+
+  @media only screen and (max-width: 1040px){
+    height : 1200px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 // 캘린더 ----------------
@@ -147,6 +158,18 @@ display: flex;
 align-items: center;
 justify-content: center;
 border-radius: 20px;
+
+@media only screen and (max-width: 1040px){
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -500px;
+  margin-left: 0px;
+  width: 80%;
+  height: 600px;
+
+  
+}
 
 /* calendar css ------------- */
   // fullCalendar 전체
@@ -212,6 +235,17 @@ const ScheduleBox = styled.div`
     margin-top: 30px;
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 1040px) {
+    width: 80%;
+    margin-top:-50px;
+    margin-right: 0px;
+    height: 0px;
+
+    & .addScheduleBtn{
+      padding: 15px 0px;
+    }
+  }
 `;
 
 const ScheduleBack = styled.div`
@@ -226,13 +260,13 @@ const ScheduleBack = styled.div`
   & .todaySchedule {
     background-color: #2e2288;
     color: white;
-    padding: 15px 0px;
+    padding: 15px 50px;
     font-size: 15px;
     border-radius: 40px;
     border: none;
     margin-top : 40px;
     cursor: pointer;
-    width: 50%;
+    width: 100%;
   }
 
   & p {
@@ -258,5 +292,26 @@ const ScheduleBack = styled.div`
     font-weight: bold;
     font-size: 20px;
     margin-top: -40px;
+  }
+
+  @media only screen and (max-width: 1040px){
+    display: flex;
+    flex-direction: row;
+    height: 300px;
+    
+    & div {
+      width: 100%;
+      display: flex;
+      margin-top: 50px;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    & .todaySchedule{
+      padding: 10px 0px;
+      font-size: 13px;
+      width: 80%;
+    }
   }
 `;

@@ -107,6 +107,10 @@ const ModalContainer = styled.div`
   & .blank{
         width: 5px ;
     }
+    
+    @media only screen and (max-width: 1040px){
+        width: 380px;
+    }
 `;
 
 // 일정제목
@@ -127,6 +131,9 @@ const ColorPicker = styled.div`
 
     & .blank{
         width: 13px ;
+    }
+    @media only screen and (max-width: 1040px){
+        padding: 5px;
     }
     
 `;
@@ -158,6 +165,11 @@ const FormContainer = styled.div`
 const InputLabel = styled.label`
   font-size: 20px;
   text-align: left;
+
+  @media only screen and (max-width: 1040px){
+    font-size: 18px;
+    width: 100px;
+  }
 `;
 
 const InputField = styled.input`
@@ -168,6 +180,10 @@ const InputField = styled.input`
   margin-left : 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+
+  @media only screen and (max-width: 1040px){
+    margin-left: 30px;
+  }
 `;
 
 // 버튼 --------------------------
