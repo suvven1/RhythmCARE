@@ -3,16 +3,19 @@ import 'package:get/get.dart';
 class ReactiveController extends GetxController {
   static ReactiveController get to => Get.find();
 
-  // 심박수,
+  // 심박수, 스트레스/피로도 수치
   RxInt hearBeatNum = 100.obs;
   RxInt stressValue = 0.obs;
   RxInt tiredValue = 0.obs;
   RxBool stressHigh = false.obs;
   RxBool tiredHigh = false.obs;
 
-  get stressPercent => stressValue.value / 100;
+  get stressFace => stressHigh.value ? '높은':'낮은';
+  get stressImage => stressHigh.value ? 'image/heart_bad.png':'image/heart_good.png';
 
-  get tiredPercent => tiredValue.value / 100;
+  get tiredFace => tiredHigh.value ? '높은':'낮은';
+  get tiredImage => tiredHigh.value ? 'image/heart_bad.png':'image/heart_good.png';
+
 
   @override
   void onInit() {

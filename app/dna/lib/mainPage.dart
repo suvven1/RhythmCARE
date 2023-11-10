@@ -2,6 +2,7 @@ import 'package:dna/blog/blogPage.dart';
 import 'package:dna/calendar/calendarPage.dart';
 import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
+import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
 import 'package:flutter/material.dart';
 
@@ -45,62 +46,7 @@ class _mainPageState extends State<mainPage> {
             child: pageIndex.elementAt(currentPageIndex),
           )
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: currentPageIndex,
-        onTap: onItemTap,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            // 선택된 탭 인덱스(selectedIndex) 값에 따라
-            // 0이면 색칠된 아이콘, 아니라면 회색 아이콘 (3항 연산자)
-              icon: currentPageIndex ==
-                  0 // 선택된 탭은 채워진 아이콘, 나머지는 line 아이콘
-                  ? Image.asset(
-                'image/icon1-1.png',
-              )
-                  : Image.asset(
-                'image/logo.png',
-              ),
-              label: "달력"),
-          BottomNavigationBarItem(
-              icon: currentPageIndex == 1
-                  ? Image.asset(
-                'image/navigationBarIcon/icon2-1.png',
-              )
-                  : Image.asset(
-                'image/navigationBarIcon/icon2-2.png',
-              ),
-              label: "병원"),
-          BottomNavigationBarItem(
-              icon: currentPageIndex == 2
-                  ? Image.asset(
-                'image/navigationBarIcon/icon3-1.png',
-              )
-                  : Image.asset(
-                'image/navigationBarIcon/icon3-2.png',
-              ),
-              label: "홈"),
-          BottomNavigationBarItem(
-              icon: currentPageIndex == 3
-                  ? Image.asset(
-                'image/navigationBarIcon/icon4-1.png',
-              )
-                  : Image.asset(
-                'image/navigationBarIcon/icon4-2.png',
-              ),
-              label: "블로그"),
-          BottomNavigationBarItem(
-              icon: currentPageIndex == 4
-                  ? Image.asset(
-                'image/navigationBarIcon/icon5-1.png',
-              )
-                  : Image.asset(
-                'image/navigationBarIcon/icon5-2.png',
-              ),
-              label: "내 정보"),
-        ],
-      ),
-      // ), willpop 사용 시, 괄호
+      bottomNavigationBar: myBottomNavi(currentPageIndex, onItemTap),
     );
   }
 }

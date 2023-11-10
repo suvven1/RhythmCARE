@@ -2,43 +2,8 @@ import 'package:dna/GetController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class faceState extends StatelessWidget {
-  const faceState({super.key, required this.what});
-
-  final String what;
-  faceStateText (bool state, bool state2){
-    late String result;
-    if(what == '스트레스'){
-      if(state){
-        return '높은';
-      }else{
-        return '낮은';
-      }
-    }else{
-      if(state2){
-        return '높은';
-      }else{
-        return '낮은';
-      }
-    }
-  }
-
-  faceStateImage (bool state, bool state2){
-    late String result;
-    if(what == '스트레스'){
-      if(state){
-        return 'image/heart_bad.png';
-      }else{
-        return 'image/heart_good.png';
-      }
-    }else{
-      if(state2){
-        return 'image/heart_bad.png';
-      }else{
-        return 'image/heart_good.png';
-      }
-    }
-  }
+class faceTired extends StatelessWidget {
+  const faceTired({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +15,7 @@ class faceState extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '현재 $what는',
+              '현재 스트레스는',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -58,7 +23,7 @@ class faceState extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  faceStateText(controller.stressHigh.value, controller.tiredHigh.value),
+                  controller.tiredFace,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -78,7 +43,7 @@ class faceState extends StatelessWidget {
           width: 10,
         ),
         Image.asset(
-          faceStateImage(controller.stressHigh.value, controller.tiredHigh.value),
+          controller.tiredImage,
           height: 60,
         ),
       ],

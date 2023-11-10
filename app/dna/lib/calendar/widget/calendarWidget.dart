@@ -1,14 +1,17 @@
+import 'package:dna/calendar/widget/dayByDay.dart';
 import 'package:dna/calendar/widget/printDate.dart';
-import 'package:dna/calendar/widget/printDay.dart';
+import 'package:dna/calendar/widget/test.dart';
 import 'package:flutter/material.dart';
 
-calendarWidget() {
-
-  int year = DateTime.now().year;
+calendarWidget(int selectedDay, Map toDoColor) {
+  final int year = DateTime.now().year;
   int month = DateTime.now().month;
   int day = DateTime.now().day;
 
-  print(calculateDate(year, month, 1));
+  List<bool> toDay = List.filled(thirtyOrOne(month), false);
+  toDay[day - 1] = true;
+  List<bool> selectDay = List.filled(thirtyOrOne(month), false);
+  selectDay[selectedDay - 1] = true;
 
   return Center(
     child: Table(
@@ -18,15 +21,70 @@ calendarWidget() {
         printDate(),
         // 날짜 출력
         ...List.generate(
-            6,
-                (index) => printDay(index, calculateDate(year, month, 1)))
+            fiveOrSix(year, month), // 선택된 달이 몇 주인지? (4~7)
+            (index) => TableRow(
+                children: List.generate(
+                    7,
+                    (index2) => dayByDay(
+                        day: index * 7 + index2 - calculateDate(year, month),
+                        toDay: toDay,
+                        selectDay: selectDay,
+                        visible: visible(
+                            index * 7 + index2 - calculateDate(year, month),
+                            thirtyOrOne(month)),
+                        thirtyOrOne: thirtyOrOne(month),
+                        toDoColor: toDoColor[index * 7 +
+                                    index2 -
+                                    calculateDate(year, month)] ==
+                                null
+                            ? Colors.transparent
+                            : toDoColor[index * 7 +
+                            index2 -
+                            calculateDate(year, month)]))))
       ],
     ),
   );
 }
 
-calculateDate (year, month, day){
-  List<String> date = ["일","월","화","수","목","금","토"];
-  int dateNum = (day+((((month+1)*26)/10)~/1)+(year%100)+((year%100)~/4)+((year~/100)~/4)-(2*(year~/100)))%7-2;
+// 1일의 요일 번호 [일:0, 월:1, ..., 토:6]
+int calculateDate(int year, int month) {
+  List<String> date = ["일", "월", "화", "수", "목", "금", "토"];
+  int dateNum = (1 +
+              ((((month + 1) * 26) / 10) ~/ 1) +
+              (year % 100) +
+              ((year % 100) ~/ 4) +
+              ((year ~/ 100) ~/ 4) -
+              (2 * (year ~/ 100))) %
+          7 -
+      2;
   return dateNum;
+}
+
+int fiveOrSix(int year, int month) {
+  List<int> maxDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (year % 4 == 0) {
+    maxDay[2] = 29;
+  }
+  int dateNum = (1 +
+              ((((month + 1) * 26) / 10) ~/ 1) +
+              (year % 100) +
+              ((year % 100) ~/ 4) +
+              ((year ~/ 100) ~/ 4) -
+              (2 * (year ~/ 100))) %
+          7 -
+      1;
+  return (dateNum + maxDay[month - 1] - 1) ~/ 7 + 1;
+}
+
+int thirtyOrOne(int month) {
+  List<int> maxDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return maxDay[month - 1];
+}
+
+String visible(index, thirtyOrOne) {
+  if (index < 1 || index > thirtyOrOne) {
+    return '';
+  } else {
+    return '${index}';
+  }
 }

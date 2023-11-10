@@ -1,5 +1,7 @@
-import 'package:dna/home/widget/faceState.dart';
+import 'package:dna/home/widget/progressBarHighLow.dart';
 import 'package:dna/home/widget/progressWidget.dart';
+import 'package:dna/home/widget/stress/faceStress.dart';
+import 'package:dna/home/widget/stress/faceTired.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,42 +11,52 @@ import '../stressPage.dart';
 import '../tiredPage.dart';
 
 visualModel (context, String what) {
-  return TextButton(
-    style: TextButton.styleFrom(
-        primary: Colors.black
-    ),
-    onPressed: (){
-      if(what == "스트레스") {
-        Get.to(()=>stressPage());
-      }else{
+  if(what == "스트레스"){
+    return TextButton(
+      style: TextButton.styleFrom(
+          primary: Colors.black
+      ),
+      onPressed: (){
+          Get.to(()=>stressPage());
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('현재 스트레스 지수', style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),),
+          SizeBoxH20,
+          progressWidget(what: what,),
+          progressBarHighLow(),
+          SizeBoxH30,
+          faceStress(),
+        ],
+      ),
+    );
+  }else{
+    return TextButton(
+      style: TextButton.styleFrom(
+          primary: Colors.black
+      ),
+      onPressed: (){
         Get.to(()=>tiredPage());
-      }
-    },
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('현재 $what 지수', style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-        ),),
-        SizeBoxH20,
-        progressWidget(what: what,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '낮음',
-              style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              '높음',
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        SizeBoxH30,
-        faceState(what: what),
-      ],
-    ),
-  );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('현재 피로도 지수', style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),),
+          SizeBoxH20,
+          progressWidget(what: what,),
+          progressBarHighLow(),
+          SizeBoxH30,
+          faceTired(),
+        ],
+      ),
+    );
+  }
+
 }
