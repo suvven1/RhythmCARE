@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dna/member/joinPage.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../widget/sizeBox.dart';
 import 'loginPage.dart';
@@ -19,6 +22,31 @@ class _join2PageState extends State<join2Page> {
   final gender2Con = TextEditingController();
   final phone2Con = TextEditingController();
 
+  // 회원가입 서버 통신 함수 구현 예정
+  // void join(bool who, idCon, pwCon) async {
+  //   String url = "http://192.168.70.134:3333/user/login";
+  //   http.Response res = await http.post(
+  //       Uri.parse(url),
+  //       headers: <String, String>{'Content-Type':'application/json'},
+  //       body: jsonEncode(
+  //           {
+  //             'user' : who,
+  //             'id' : idCon.text,
+  //             'pw' : pwCon.text
+  //           }
+  //       )
+  //   );
+  //
+  //   // 로그인 결과를 받아와 변수에 저장
+  //   var resData = jsonDecode(res.body);
+  //   print(resData);
+  //
+  //   setState(() {
+  //     if(resData["loginResult"] != false){
+  //       Get.off(()=> join2Page());
+  //     }
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,10 @@
+import 'package:dna/mypage/GetMyPageController.dart';
 import 'package:dna/mypage/widget/infoContainer.dart';
 import 'package:dna/mypage/widget/profileImage.dart';
 import 'package:dna/mypage/widget/profileNick.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../widget/sizeBox.dart';
 
@@ -13,24 +16,21 @@ class myPage extends StatefulWidget {
 }
 
 class _myPageState extends State<myPage> {
-  // 대표 이미지 and 이름
-  String imageName = "face.jpg";
-  String nickName = "푸르른공원";
-
-  Map<String, dynamic> infomationGuard = {
-    "이름": "하병권",
-    '휴대폰번호': '010-2720-6279',
-    '생년월일': 19950504,
-    '아이디': 'admin',
-  };
-  Map<String, dynamic> informationUser = {
-    '이름': '노약자',
-    '휴대폰번호': '011-1234-1234',
-    '생년월일': 19450101,
-  };
-
+  final MypageController mypage = Get.put(MypageController());
   @override
   Widget build(BuildContext context) {
+
+    Map<String, String> infomationGuard = {
+      "이름": mypage.managerName.value,
+      '휴대폰번호': mypage.managerHP.value,
+      '생년월일': mypage.managerBD.value,
+      '아이디': mypage.managerID.value,
+    };
+    Map<String, String> informationUser = {
+      '이름': mypage.userName.value,
+      '휴대폰번호': mypage.userHP.value,
+      '생년월일': mypage.userBD.value,
+    };
     return Scaffold(
       body: ListView(
         children: [
@@ -41,9 +41,9 @@ class _myPageState extends State<myPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                profileImage(context, imageName),
+                profileImage(context, mypage.imageData),
                 SizeBoxH10,
-                profileNick(nickName),
+                profileNick(mypage.nick.value),
                 SizeBoxH20,
                 infoContainer(infomationGuard, informationUser),
               ],

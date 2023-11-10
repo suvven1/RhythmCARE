@@ -3,10 +3,14 @@ import 'package:dna/mypage/widget/infoGuard.dart';
 import 'package:dna/mypage/widget/infoUser.dart';
 import 'package:dna/mypage/widget/leave.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../widget/sizeBox.dart';
+import '../GetMyPageController.dart';
 
 infoContainer(Map infomationGuard, Map informationUser) {
+
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(15),

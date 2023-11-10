@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:dna/member/widget/joinWidget.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton.dart';
+import 'package:dna/mypage/GetMyPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
+  MypageController mypageController = Get.put(MypageController());
   TextEditingController idCon = TextEditingController();
   TextEditingController pwCon = TextEditingController();
 
@@ -50,6 +52,7 @@ class _loginPageState extends State<loginPage> {
 
   // 로그인 서버 통신 함수
   void login(bool who, idCon, pwCon) async {
+    print("start");
     String url = "http://192.168.70.134:3333/user/login";
     http.Response res = await http.post(
         Uri.parse(url),
@@ -65,6 +68,7 @@ class _loginPageState extends State<loginPage> {
 
     // 로그인 결과를 받아와 변수에 저장
     var resData = jsonDecode(res.body);
+    mypageController.setUserData(resData);
     print(resData);
 
     setState(() {

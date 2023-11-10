@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dna/member/widget/textField.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +22,8 @@ class _joinPageState extends State<joinPage> {
   final birthCon = TextEditingController();
   final genderCon = TextEditingController();
   final phoneCon = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
