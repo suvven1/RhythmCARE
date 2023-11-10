@@ -5,11 +5,14 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import styled from 'styled-components';
 import ScheduleModal from './Schedule_m';
+import DetailModal from './detail_m';
 
 function Calendar() {
   const calendarRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [events, setEvents] = useState([
     {
       title: '',
@@ -46,7 +49,6 @@ function Calendar() {
 
   // 일정추가하기 - 열기
   const handleAddSchedule = ({ title, start, end, color }) => {
-
     const newEvent = {
       title,
       start,
@@ -62,6 +64,7 @@ function Calendar() {
     setShowModal(false)
   }
 
+  // 캘린더에 일정 렌더링하기
   const renderSelectedDateEvents = () => {
     if (!selectedDate) return null;
 
@@ -78,10 +81,36 @@ function Calendar() {
     return (
       <div>
         {selectedDateEvents.map((event) => (
-          <p key={event.title}>{event.title}</p>
+          <EventContainer>
+            <EventColor onClick={() => handleEventClick(event)} color={event.backgroundColor} />
+            <EventTitle onClick={() => handleEventClick(event)} color={event.backgroundColor}>
+              {event.title}
+            </EventTitle>
+          </EventContainer>
         ))}
       </div>
     );
+  };
+
+  const handleEventClick = (event) => {
+    // 선택된 일정 정보를 상태에 저장하고 모달을 엽니다.
+    setSelectedEvent(event);
+    setShowDetailModal(true);
+  };
+
+  // 일정 삭제하기
+  const handleDeleteSchedule = () => {
+    // 선택된 이벤트가 없다면 무시
+    if (!selectedEvent) return;
+
+    // 선택된 이벤트를 제외한 나머지 이벤트들로 배열을 업데이트
+    const updatedEvents = events.filter((event) => event !== selectedEvent);
+
+    // 캘린더 상태 업데이트
+    setEvents(updatedEvents);
+
+    // 상세 모달 닫기
+    setShowDetailModal(false);
   };
 
   return (
@@ -93,6 +122,7 @@ function Calendar() {
           events={events}
           ref={calendarRef}
           dateClick={handleDateClick}
+          eventClick={handleEventClick}
           headerToolbar={{ start: 'prev', center: 'title', end: 'next' }}
         />
       </CalenderBack>
@@ -112,6 +142,11 @@ function Calendar() {
         <div>
           <button className='addScheduleBtn' onClick={() => setShowModal(true)}>일정 추가하기</button>
           {showModal && <ScheduleModal onClose={closeModal} handleAddSchedule={handleAddSchedule} />}
+          {showDetailModal &&
+            <DetailModal
+              onClose={() => setShowDetailModal(false)}
+              event={selectedEvent}
+              onDeleteSchedule={handleDeleteSchedule} />}
         </div>
       </ScheduleBox>
     </CalendarBox>
@@ -314,4 +349,24 @@ const ScheduleBack = styled.div`
       width: 80%;
     }
   }
+`;
+
+const EventContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+
+`;
+
+const EventColor = styled.div`
+  background-color: ${({ color }) => color};
+  width: 15px;
+  height: 15px;
+ 
+`;
+
+const EventTitle = styled.p`
+  cursor: pointer;
+
 `;
