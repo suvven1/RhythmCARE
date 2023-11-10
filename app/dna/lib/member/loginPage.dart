@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:dna/member/widget/joinWidget.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import '../mainPage.dart';
 import '../widget/sizeBox.dart';
 import 'findPage.dart';
@@ -44,6 +48,32 @@ class _loginPageState extends State<loginPage> {
     print(pwCon.text);
   }
 
+  // 로그인 서버 통신 함수
+  void login(bool who, idCon, pwCon) async {
+    String url = "http://192.168.70.134:3333/user/login";
+    http.Response res = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{'Content-Type':'application/json'},
+        body: jsonEncode(
+            {
+              'user' : who,
+              'id' : idCon.text,
+              'pw' : pwCon.text
+            }
+        )
+    );
+
+    // 로그인 결과를 받아와 변수에 저장
+    var resData = jsonDecode(res.body);
+    print(resData);
+
+    setState(() {
+      if(resData["loginResult"] != false){
+        Get.off(()=> mainPage());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +110,8 @@ class _loginPageState extends State<loginPage> {
                           // true : 보호자, false : 사용자
                           printIdPw(isGuard, idCon, pwCon);
                           // 로그인 버튼 클릭 시, 액션을 여기에 넣으면 됨
-                          Get.off(()=> mainPage());
+                          login(isGuard, idCon, pwCon);
+                          // Get.off(()=> mainPage());
                         },
                       ),
                       SizeBoxH20,
