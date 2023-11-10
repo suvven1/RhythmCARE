@@ -3,25 +3,8 @@ import 'package:get/get.dart';
 
 import '../../GetController.dart';
 
-
 class oneDayStress extends StatelessWidget {
   const oneDayStress({super.key});
-
-  faceStateText(bool state){
-    if(state){
-      return '높은';
-    }else{
-      return '낮은';
-    }
-  }
-
-  faceStateImage(bool state){
-    if(state){
-      return 'image/heart_bad.png';
-    }else{
-      return 'image/heart_good.png';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +29,7 @@ class oneDayStress extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              faceStateText(controller.stressHigh.value),
+                              controller.stressText,
                               style: TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold),
@@ -61,7 +44,7 @@ class oneDayStress extends StatelessWidget {
                       width: 10,
                     ),
                     Image.asset(
-                      faceStateImage(controller.stressHigh.value),
+                      controller.stressImage,
                       height: 60,
                     )
                   ],

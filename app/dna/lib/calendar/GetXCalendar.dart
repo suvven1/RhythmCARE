@@ -7,11 +7,11 @@ class GetXCalendar extends GetxController{
 
   RxInt selectedYear = DateTime.now().year.toInt().obs;
   RxInt selectedMonth = DateTime.now().month.toInt().obs;
-  RxInt selectedDay = 9.obs;
+  RxInt selectedDay =   DateTime.now().day.toInt().obs;
 
   String calculateDate (year, month, day){
-    List<String> date = ["일","월","화","수","목","금","토"];
-    int dateNum = (day+((((month+1)*26)/10)~/1)+(year%100)+((year%100)~/4)+((year~/100)~/4)-(2*(year~/100)))%7-2;
+    List<String> date = ["토","일","월","화","수","목","금",];
+    int dateNum = (day+((((month+1)*26)/10)~/1)+(year%100)+((year%100)~/4)+((year~/100)~/4)-(2*(year~/100)))%7;
     return date[dateNum];
   }
 
@@ -21,13 +21,15 @@ class GetXCalendar extends GetxController{
   }
 
   RxMap<int, String> toDoList = {
-    9:'병원 예약'
+    9:'병원 예약',
+    15:'하하하하하핳',
+    16:'어 왜 안 되지?',
   }.obs;
 
   RxMap<int, Color> toDoColor = {
     9:Color(0xff2e2288),
     15:Color(0xff2e2288),
-    16:Color(0xff2e2288)
+    16:Color(0xff2e2288),
   }.obs;
 
   // get selectedDate => '목요일';

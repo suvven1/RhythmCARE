@@ -17,13 +17,17 @@ class calendarPage extends StatelessWidget {
       builder: (_) {
         return ListView(
           children: [
+            // 현재 년/월 표시
             titleWidget("${DateTime.now().year}.${DateTime.now().month}.", 50, 30),
             horisonLine,
+            // 현재 월의 달력 표시
             calendarWidget(controller.selectedDay.value , controller.toDoColor),
             SizeBoxH20,
             horisonLine,
             SizeBoxH10,
+            // 현재 선택된 날의 요일 표시
             scheduleTitle(context, controller.selectedDate),
+            // 현재 선택된 날의 일정 표시
             schaduleContents(context, controller.selectedDay.value, controller.toDoList),
             ElevatedButton(
                 onPressed: () {},
