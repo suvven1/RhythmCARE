@@ -72,6 +72,7 @@ const Main = () => {
           <br />
           위한 최고의 파트너
         </p>
+        <div className="blank"/>
         <SloganImage />
       </SloganBack>
 
@@ -284,12 +285,16 @@ const SloganBack = styled.div`
   z-index: 2;
 
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   & p {
-    margin-left: 21%;
+    margin-left: 300px;
     font-size: 50px;
     font-weight: bold;
+  }
+
+  & .blank{
+    width: 100px;
   }
 
   @media only screen and (max-width: 1040px) {
@@ -303,6 +308,10 @@ const SloganBack = styled.div`
       font-size: 35px;
       text-align: center;
     }
+
+    & .blank {
+      width: 0px;
+    }
   }
 `;
 
@@ -311,7 +320,7 @@ const SloganImage = styled.div`
   height: 550px;
   background-image: url("${process.env.PUBLIC_URL}/images/main/slogan.png");
   background-size: cover;
-  margin-right: 21%;
+  margin-right: 300px;
 
   @media only screen and (max-width: 1040px) {
     justify-content: center;
