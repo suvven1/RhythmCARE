@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { VscEdit } from "react-icons/vsc";
@@ -11,6 +11,13 @@ import Badge from "./Badge/Badge";
 import ChangeNick from "./Change/ChangeNick";
 const MyPage = () => {
   const userData = useContext(UserContext);
+
+  useEffect(() => {
+    if (userData == null) {
+      window.location.replace("/");
+    }
+  }, []);
+
   // 닉네임 변경 모달 띄우기
   const [changeNickOpen, setChangeNickOpen] = useState(false);
 
@@ -28,7 +35,9 @@ const MyPage = () => {
 
         {/* 유저 닉네임 표시 */}
         <NickBox>
-          <div style={{ fontWeight: "bold" }}>{userData.nick}</div>
+          <div style={{ fontWeight: "bold" }}>
+            {userData == null ? "" : userData.nick}
+          </div>
           <VscEdit onClick={showChangeNick} />
         </NickBox>
         {changeNickOpen && <ChangeNick setChangeNickOpen={setChangeNickOpen} />}

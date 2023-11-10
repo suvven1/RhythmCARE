@@ -107,8 +107,6 @@ router.post("/login", (req, res) => {
       conn.query(badgeSql, [id], (err, badgeRows) => {
         if (badgeRows.length != 0) {
           badgeData = badgeRows.map((item) => item.badge_id);
-        } else {
-          badgeData = ["not"];
         }
         if (user == "manager") {
           console.log(badgeData);

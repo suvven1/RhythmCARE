@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const Image = () => {
   // 유저 전체 정보
-  const userData = useContext(UserContext);
+  const userData = useContext(UserContext)?.data;
 
   // 이미지 변환시 바로 표시하는 기능
   const [img, setImg] = useState({ pre: "", data: "" });
@@ -35,7 +35,7 @@ const Image = () => {
   const sendImg = () => {
     let formData = new FormData();
     formData.append("image", img.data);
-    formData.append("id", userData.data.manager_id);
+    formData.append("id", userData.manager_id);
     axios
       .post("/user/changeImg", formData, {
         headers: {
@@ -44,7 +44,7 @@ const Image = () => {
       })
       .then((res) => {
         if (res.data.chageImgResult) {
-          userData.data.img = res.data.img;
+          userData.img = res.data.img;
           localStorage.setItem("userData", JSON.stringify(userData));
           alert("이미지 변경이 완료되었습니다.");
           window.location.replace("/mypage");
@@ -64,9 +64,7 @@ const Image = () => {
 
   // 로컬 스토리지에서 불러온 이미지 데이터 변환
   const conImg = btoa(
-    String.fromCharCode(
-      ...new Uint8Array(userData.data.img != null ? userData.data.img.data : "")
-    )
+    String.fromCharCode(...new Uint8Array(userData?.img.data))
   );
 
   return (
@@ -76,7 +74,7 @@ const Image = () => {
           <img src={img.pre} alt="새로 등록할 유저사진" />
         ) : (
           <>
-            {userData.data.img != null ? (
+            {userData?.img != null ? (
               <img src={`data:image/png;base64,${conImg}`} alt="유저사진" />
             ) : (
               <img
