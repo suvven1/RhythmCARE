@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 
 import '../../GetController.dart';
 
+
 class oneDayStress extends StatelessWidget {
   const oneDayStress({super.key});
-  
+
   faceStateText(bool state){
     if(state){
       return '높은';
