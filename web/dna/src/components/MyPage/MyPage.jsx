@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { VscEdit } from "react-icons/vsc";
 import styled from "styled-components";

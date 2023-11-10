@@ -108,7 +108,7 @@ router.post("/login", (req, res) => {
         if (badgeRows.length != 0) {
           badgeData = badgeRows.map((item) => item.badge_id);
         }
-        if (user == "manager") {
+        if (user) {
           console.log(badgeData);
           res.json({
             loginResult: {

@@ -5,7 +5,7 @@ import axios from "../../axios";
 
 const Login = () => {
   const nav = useNavigate();
-  const [user, setUser] = useState("manager");
+  const [user, setUser] = useState(true);
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
@@ -78,7 +78,7 @@ const Login = () => {
             type="radio"
             id="toggle-switch"
             name="switch"
-            value="manager"
+            value={true}
             defaultChecked
             onChange={(e) => {
               setUser(e.target.value);
@@ -91,7 +91,7 @@ const Login = () => {
             type="radio"
             id="toggle-switch2"
             name="switch"
-            value="user"
+            value={false}
             onChange={(e) => {
               setUser(e.target.value);
             }}
