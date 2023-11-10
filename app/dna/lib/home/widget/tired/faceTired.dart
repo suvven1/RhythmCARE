@@ -2,14 +2,14 @@ import 'package:dna/GetController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class faceStress extends StatelessWidget {
-  const faceStress({super.key});
+class faceTired extends StatelessWidget {
+  const faceTired({super.key});
 
   @override
   Widget build(BuildContext context) {
     final ReactiveController controller = Get.put(ReactiveController());
     return GetX<ReactiveController>(
-      builder: (_){
+      builder: (context) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -17,7 +17,7 @@ class faceStress extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '현재 스트레스는',
+                  '현재 피로도는',
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -25,7 +25,7 @@ class faceStress extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      controller.stressText,
+                      controller.tiredText,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -45,12 +45,12 @@ class faceStress extends StatelessWidget {
               width: 10,
             ),
             Image.asset(
-              controller.stressImage,
+              controller.tiredImage,
               height: 60,
             ),
           ],
         );
-      },
+      }
     );
   }
 }

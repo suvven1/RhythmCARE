@@ -6,22 +6,6 @@ import '../../GetController.dart';
 class oneDayTired extends StatelessWidget {
   const oneDayTired({super.key});
 
-  faceStateText(bool state){
-    if(state){
-      return '높은';
-    }else{
-      return '낮은';
-    }
-  }
-
-  faceStateImage(bool state){
-    if(state){
-      return 'image/heart_bad.png';
-    }else{
-      return 'image/heart_good.png';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final ReactiveController controller = Get.put(ReactiveController());
@@ -45,7 +29,7 @@ class oneDayTired extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              faceStateText(controller.tiredHigh.value),
+                              controller.tiredText,
                               style: TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold),
@@ -60,7 +44,7 @@ class oneDayTired extends StatelessWidget {
                       width: 10,
                     ),
                     Image.asset(
-                      faceStateImage(controller.tiredHigh.value),
+                      controller.tiredImage,
                       height: 60,
                     )
                   ],

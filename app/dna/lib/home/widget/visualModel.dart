@@ -1,7 +1,7 @@
 import 'package:dna/home/widget/progressBarHighLow.dart';
 import 'package:dna/home/widget/progressWidget.dart';
 import 'package:dna/home/widget/stress/faceStress.dart';
-import 'package:dna/home/widget/stress/faceTired.dart';
+import 'package:dna/home/widget/tired/faceTired.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
