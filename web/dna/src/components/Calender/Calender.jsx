@@ -4,26 +4,26 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import styled from 'styled-components';
+import ScheduleModal from './Schedule_m';
 
 function Calendar() {
   const calendarRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(null);
-
-  const events = [
+  const [showModal, setShowModal] = useState(false);
+  const [events, setEvents] = useState([
     {
-      title: '이벤트 1',
-      start: '2023-11-08',
-      end: '2023-11-10',
-      backgroundColor: 'blue', // 이벤트 색상 지정 가능
-    },
-    // 다른 이벤트들을 추가할 수 있습니다.
-  ];
+      title: '',
+      start: '',
+      end: '',
+      backgroundColor: '',
+    }
+  ])
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg.dateStr); // 선택된 날짜를 상태에 저장
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     // 날짜선택 옵션변경(불가능-> 가능)
     const calendarApi = calendarRef.current.getApi();
     calendarApi.setOption('selectable', true);
@@ -35,6 +35,7 @@ function Calendar() {
     setSelectedDate(today.toISOString().split('T')[0]);
   }, [])
 
+  // 오늘 일정보기
   const handleTodayClick = () => {
     const today = new Date();
     const calendarApi = calendarRef.current.getApi();
@@ -43,27 +44,70 @@ function Calendar() {
     setSelectedDate(today.toISOString().split('T')[0]);
   }
 
+  // 일정추가하기 - 열기
+  const handleAddSchedule = ({ title, start, end, color }) => {
+
+    const newEvent = {
+      title,
+      start,
+      end,
+      backgroundColor: color,
+    };
+    setEvents((prevEvents) => [...prevEvents, newEvent])
+    setShowModal(true);
+  }
+
+  // 일정추가하기 - 닫기
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
+  const renderSelectedDateEvents = () => {
+    if (!selectedDate) return null;
+
+    // 선택된 날짜 이후의 날짜 중 가장 늦은 날짜 구하기
+    const endOfSelectedDate = new Date(selectedDate);
+    endOfSelectedDate.setDate(endOfSelectedDate.getDate() + 1); // 다음 날짜로 설정
+
+    // 선택된 날짜 범위 내에 포함되는 이벤트 찾기
+    const selectedDateEvents = events.filter(
+      (event) => event.start <= selectedDate && event.end >= endOfSelectedDate.toISOString().split('T')[0]
+    );
+
+    // 선택된 날짜 범위 내의 이벤트를 각 날짜에 대해 표시
+    return (
+      <div>
+        {selectedDateEvents.map((event) => (
+          <p key={event.title}>{event.title}</p>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <CalendarBox>
       <CalenderBack>
         <FullCalendar
-          plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth" // 초기 뷰 설정 (월별)
           events={events}
           ref={calendarRef}
           dateClick={handleDateClick}
-          headerToolbar = {{start:'prev', center:'title', end:'next'}}
+          headerToolbar={{ start: 'prev', center: 'title', end: 'next' }}
         />
       </CalenderBack>
+      <div className='blank' />
       <ScheduleBox>
         <ScheduleBack>
           <button className="todaySchedule" onClick={() => handleTodayClick(calendarRef.current.getApi())}>오늘 일정 보기</button>
           <p className='select_month'>{selectedDate ? getMonthName(selectedDate) : ''}</p>
           <p className='select_day'>{selectedDate ? selectedDate.substring(8) : ''}</p>
+          <p className='schedule_title'>✨일정 리스트✨</p>
+          {renderSelectedDateEvents()}
         </ScheduleBack>
         <div>
-          <button className='addScheduleBtn'>일정 추가하기</button>
-
+          <button className='addScheduleBtn' onClick={() => setShowModal(true)}>일정 추가하기</button>
+          {showModal && <ScheduleModal onClose={closeModal} handleAddSchedule={handleAddSchedule} />}
         </div>
       </ScheduleBox>
     </CalendarBox>
@@ -82,10 +126,16 @@ export default Calendar;
 
 const CalendarBox = styled.div`
 background-color: #F5F5F5;
+height : 855px;
 display: flex;
-justify-content: space-between;
+justify-content: center;
+
+  & .blank{
+    width: 30px;
+  }
 `;
 
+// 캘린더 ----------------
 const CalenderBack = styled.div`
 width: 50%;
 height: 700px;
@@ -136,14 +186,15 @@ border-radius: 20px;
     border: none;
   }
 
-  & .fc-header-toolbar-title{
-    color : white !important;
-    margin-top : 10px
-  }
+  // 일정 border 지우기
+  .fc-event, .fc-event-container {
+  border: none !important;
+}
 
 
 `;
 
+// 일정-----------------------
 const ScheduleBox = styled.div`
   background-color: #F5F5F5;
   width: 17%;
@@ -200,6 +251,12 @@ const ScheduleBack = styled.div`
     font-size: 90px;
     font-weight: bold;
     color: #2e2288;
+    margin-top: -40px;
+  }
+  
+  & .schedule_title{
+    font-weight: bold;
+    font-size: 20px;
     margin-top: -40px;
   }
 `;
