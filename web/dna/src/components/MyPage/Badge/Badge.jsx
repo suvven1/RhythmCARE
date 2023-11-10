@@ -5,7 +5,7 @@ import { UserContext } from "../../../context/UserContext";
 
 const Badge = () => {
   const userData = useContext(UserContext);
-  const [ID, setID] = useState(userData.badge);
+  const [ID, setID] = useState(userData == null ? [] : userData?.badge);
   const [walkBadgeData, setWalkBadgeData] = useState([
     {
       id: "w1",

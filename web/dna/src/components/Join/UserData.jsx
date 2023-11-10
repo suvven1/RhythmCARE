@@ -4,12 +4,18 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../axios";
 const UserData = () => {
   const nav = useNavigate();
-  const loginData = useLocation().state.loginData;
+  const loginData = useLocation().state?.loginData;
+
+  useEffect(() => {
+    if (loginData == null) {
+      nav("/");
+    }
+  }, []);
   // 데이터 베이스 순서대로 정렬
-  const id = useLocation().state.loginData.id;
-  const pw = useLocation().state.loginData.pw;
+  const id = loginData?.id;
+  const pw = loginData?.pw;
   const [mName, setMName] = useState("");
-  const nick = useLocation().state.loginData.nick;
+  const nick = loginData?.nick;
   const [mBirth, setMBirth] = useState("");
   const [mGender, setMGender] = useState("");
   const [mPhone, setMPhone] = useState("");

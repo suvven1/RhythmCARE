@@ -3,22 +3,22 @@ import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
 
 const UserData = () => {
-  const userData = useContext(UserContext);
+  const userData = useContext(UserContext)?.data;
   return (
     <UserDataBox>
       <table>
         <tbody>
           <tr>
             <th>이름</th>
-            <th>{userData.data.user_name}</th>
+            <th>{userData?.user_name}</th>
           </tr>
           <tr>
             <th>휴대폰번호</th>
-            <th>{userData.data.user_hp}</th>
+            <th>{userData?.user_hp}</th>
           </tr>
           <tr>
             <th>생년월일</th>
-            <th>{userData.data.user_bd}</th>
+            <th>{userData?.user_bd}</th>
           </tr>
         </tbody>
       </table>
