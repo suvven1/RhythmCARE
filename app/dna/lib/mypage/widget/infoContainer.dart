@@ -9,7 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../widget/sizeBox.dart';
 import '../GetMyPageController.dart';
 
-infoContainer(Map infomationGuard, Map informationUser) {
+infoContainer(Map infomationGuard, Map informationUser, context) {
 
   return Container(
     width: double.infinity,
@@ -27,7 +27,7 @@ infoContainer(Map infomationGuard, Map informationUser) {
         SizeBoxH30,
         badgeList(),
         SizeBoxH50,
-        leave(),
+        leave(context),
       ],
     ),
   );

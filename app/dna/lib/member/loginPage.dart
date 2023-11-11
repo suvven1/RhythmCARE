@@ -53,7 +53,7 @@ class _loginPageState extends State<loginPage> {
   // 로그인 서버 통신 함수
   void login(bool who, idCon, pwCon) async {
     print("start");
-    String url = "http://192.168.70.134:3333/user/login";
+    String url = "http://192.168.70.86:3333/user/login";
     http.Response res = await http.post(
         Uri.parse(url),
         headers: <String, String>{'Content-Type':'application/json'},
@@ -74,6 +74,10 @@ class _loginPageState extends State<loginPage> {
     setState(() {
       if(resData["loginResult"] != false){
         Get.off(()=> mainPage());
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${resData["loginResult"]["name"]}(${resData["loginResult"]["nick"]})님 환영합니다.'),
+              duration: const Duration(seconds: 1),)
+        );
       }
     });
   }

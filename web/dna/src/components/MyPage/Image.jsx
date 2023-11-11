@@ -64,7 +64,7 @@ const Image = () => {
 
   // 로컬 스토리지에서 불러온 이미지 데이터 변환
   const conImg = btoa(
-    String.fromCharCode(...new Uint8Array(userData?.img.data))
+    String.fromCharCode(...new Uint8Array(userData?.img?.data))
   );
 
   return (

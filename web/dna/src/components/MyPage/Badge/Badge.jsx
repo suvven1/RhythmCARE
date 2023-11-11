@@ -134,7 +134,7 @@ const Badge = () => {
   const [tiredBadgeData, setTiredBadgeData] = useState([
     {
       id: "t1",
-      title: ID.includes("t1") != "" ? "안녕스트레스" : "????",
+      title: ID.includes("t1") != "" ? "안녕피로도" : "????",
       img:
         ID.includes("t1") != ""
           ? `${process.env.PUBLIC_URL}/images/badges/badge16.png`

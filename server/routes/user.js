@@ -234,7 +234,7 @@ router.post("/delete", (req, res) => {
       console.log("[탈퇴] 회원탈퇴 성공!");
       res.json({ deleteResult: true });
     } else {
-      console.log("[탈퇴] 회원탈퇴 실패!");
+      console.log("[탈퇴] 회원탈퇴 실패!", err);
       res.json({ deleteResult: false });
     }
   });
