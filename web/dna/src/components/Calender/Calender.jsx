@@ -129,12 +129,12 @@ function Calendar() {
       <div className='blank' />
       <ScheduleBox>
         <ScheduleBack>
-          <div>
+          <div className='schedule_div'>
             <button className="todaySchedule" onClick={() => handleTodayClick(calendarRef.current.getApi())}>오늘 일정 보기</button>
             <p className='select_month'>{selectedDate ? getMonthName(selectedDate) : ''}</p>
             <p className='select_day'>{selectedDate ? selectedDate.substring(8) : ''}</p>
           </div>
-          <div>
+          <div className='schedule_div'>
             <p className='schedule_title'>✨일정 리스트✨</p>
             {renderSelectedDateEvents()}
           </div>
@@ -332,9 +332,10 @@ const ScheduleBack = styled.div`
   @media only screen and (max-width: 1040px){
     display: flex;
     flex-direction: row;
+    justify-content: center;
     height: 300px;
     
-    & div {
+    & .schedule_div {
       width: 100%;
       display: flex;
       margin-top: 50px;
@@ -348,6 +349,12 @@ const ScheduleBack = styled.div`
       font-size: 13px;
       width: 80%;
     }
+
+    & .schedule_title{
+    font-weight: bold;
+    font-size: 20px;
+    margin-top:-90px;
+  }
   }
 `;
 
@@ -356,7 +363,12 @@ const EventContainer = styled.div`
   align-items: center;
   justify-content: start;
   gap: 10px;
-
+  
+  @media only screen and (max-width: 1040px){
+  align-items: center;
+  display: flex;
+  align-items: center;
+  }
 `;
 
 const EventColor = styled.div`
