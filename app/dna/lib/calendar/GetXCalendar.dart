@@ -20,16 +20,16 @@ class GetXCalendar extends GetxController{
     return maxDay[month - 1];
   }
 
-  RxMap<int, String> toDoList = {
-    9:'병원 예약',
-    15:'하하하하하핳',
-    16:'어 왜 안 되지?',
+  RxMap<String, String> toDoList = {
+    '2023-11-09':'병원 예약',
+    '2023-11-15':'하하하하하핳',
+    '2023-11-16':'어 왜 안 되지?',
   }.obs;
 
-  RxMap<int, Color> toDoColor = {
-    9:Color(0xff2e2288),
-    15:Color(0xff2e2288),
-    16:Color(0xff2e2288),
+  RxMap<String, Color> toDoColor = {
+    '2023-11-09':Color(0xff2e2288),
+    '2023-11-15':Color(0xff2e2288),
+    '2023-11-16':Color(0xff2e2288),
   }.obs;
 
   // get selectedDate => '목요일';
