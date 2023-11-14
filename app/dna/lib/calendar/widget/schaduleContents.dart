@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-schaduleContents (BuildContext context, int selectedDay, Map toDoList){
+schaduleContents (BuildContext context, int selectedDay, String toDoList){
   return Padding(
     padding: const EdgeInsets.all(10),
     child: Row(
@@ -19,7 +19,7 @@ schaduleContents (BuildContext context, int selectedDay, Map toDoList){
             ),
           ),
         ),
-        Text(toDoList[selectedDay]==null ? "" : toDoList[selectedDay],
+        Text(toDoList,
             style: TextStyle(
               fontSize: 22,
             )),

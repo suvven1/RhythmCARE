@@ -26,21 +26,10 @@ calendarWidget(int selectedDay, Map toDoColor) {
                 children: List.generate(
                     7,
                     (index2) => dayByDay(
+                      // 달력 날짜 버튼 위젯
                         day: index * 7 + index2 - calculateDate(year, month),
                         toDay: toDay,
-                        selectDay: selectDay,
-                        visible: visible(
-                            index * 7 + index2 - calculateDate(year, month),
-                            thirtyOrOne(month)),
-                        thirtyOrOne: thirtyOrOne(month),
-                        toDoColor: toDoColor[index * 7 +
-                                    index2 -
-                                    calculateDate(year, month)] ==
-                                null
-                            ? Colors.transparent
-                            : toDoColor[index * 7 +
-                            index2 -
-                            calculateDate(year, month)]))))
+                        thirtyOrOne: thirtyOrOne(month),))))
       ],
     ),
   );
@@ -79,12 +68,4 @@ int fiveOrSix(int year, int month) {
 int thirtyOrOne(int month) {
   List<int> maxDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return maxDay[month - 1];
-}
-
-String visible(index, thirtyOrOne) {
-  if (index < 1 || index > thirtyOrOne) {
-    return '';
-  } else {
-    return '${index}';
-  }
 }

@@ -96,7 +96,7 @@ class _loginPageState extends State<loginPage> {
                 children: [
                   Column(
                     children: [
-                      Image.asset('image/logo.png'),
+                      TextButton(child: Image.asset('image/logo.png'), onPressed: (){Get.off(()=>mainPage());}),
                       SizeBoxH50,
                       toggleButton(context, isSelected, toggleSelect),
                       SizeBoxH30,

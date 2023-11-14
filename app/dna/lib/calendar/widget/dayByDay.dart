@@ -8,18 +8,12 @@ class dayByDay extends StatelessWidget {
     Key? key,
     required int this.day,
     required List this.toDay,
-    required List this.selectDay,
-    required String this.visible,
     required int this.thirtyOrOne,
-    required Color this.toDoColor,
   }) : super(key: key);
 
   final day;
   final toDay;
-  final selectDay;
-  final visible;
   final thirtyOrOne;
-  final toDoColor;
 
 
   @override
@@ -39,23 +33,39 @@ class dayByDay extends StatelessWidget {
                 children: [
                   Text(
                     // 달력에 일일 날짜 표시
-                    visible,
+                    visible(day,thirtyOrOne),
                     style: TextStyle(fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
                   Container(
                     height: 15,
                     // 일정 있는 날짜에 지정된 색칠하기
-                    color: controller.toDoColor[day],
+                    color: controller.toDoColor[DateTime(controller.selectedYear.value,controller.selectedMonth.value,day).toString().split(' ')[0]],
                   )
                 ],
               ),
             ),
-            onPressed: () {
-              controller.selectedDay.value = day;
+            onPressed: (){
+              if (day > 0 && day <= thirtyOrOne){
+                print(day);
+                controller.selectedDay.value = day;
+              }
             }
         );
       }
     );
   }
+}
+
+
+String visible(index, thirtyOrOne) {
+  if (index < 1 || index > thirtyOrOne) {
+    return '';
+  } else {
+    return '${index}';
+  }
+}
+
+String scheduleColorIndex(int year, int month, int day){
+  return DateTime(year,month,day).toString().split(' ')[0];
 }
