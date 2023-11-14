@@ -1,15 +1,59 @@
+import 'package:dna/calendar/GetXCalendar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-titleWidget (String title, double iconSize, double fontSize){
-  return Padding(
-    padding: const EdgeInsets.all(20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Icon(Icons.chevron_left_sharp, size: iconSize,),
-        Text(title,style: TextStyle(fontSize: fontSize),),
-        Icon(Icons.chevron_right_sharp, size: iconSize,)
-      ],
-    ),
-  );
+class titleWidget extends StatelessWidget {
+  const titleWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final GetXCalendar controller = Get.put(GetXCalendar());
+    return GetX<GetXCalendar>(builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              style: ButtonStyle(
+
+              ),
+              child: Icon(
+                color: Colors.black,
+                Icons.chevron_left_sharp,
+                size: 50,
+              ),
+              onPressed: () {
+                if(controller.selectedMonth == 1){
+                  controller.selectedYear.value--;
+                  controller.selectedMonth.value = 12;
+                }else {
+                  controller.selectedMonth--;
+                }
+              },
+            ),
+            Text(
+              ' ${controller.selectedYear}.${controller.selectedMonth}',
+              style: TextStyle(fontSize: 30),
+            ),
+            TextButton(
+              child: Icon(
+                color: Colors.black,
+                Icons.chevron_right_sharp,
+                size: 50,
+              ),
+              onPressed: () {
+                if(controller.selectedMonth == 12){
+                  controller.selectedYear.value++;
+                  controller.selectedMonth.value = 1;
+                }else {
+                  controller.selectedMonth++;
+                }
+              },
+            )
+          ],
+        ),
+      );
+    });
+  }
 }
