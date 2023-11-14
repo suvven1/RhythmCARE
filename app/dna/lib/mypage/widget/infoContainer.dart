@@ -1,7 +1,7 @@
-import 'package:dna/mypage/widget/badgeList.dart';
-import 'package:dna/mypage/widget/infoGuard.dart';
+import 'package:dna/mypage/widget/badge/badgeList.dart';
+import 'package:dna/mypage/widget/infoGuard/infoGuard.dart';
 import 'package:dna/mypage/widget/infoUser.dart';
-import 'package:dna/mypage/widget/leave.dart';
+import 'package:dna/mypage/widget/leave/leave.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';

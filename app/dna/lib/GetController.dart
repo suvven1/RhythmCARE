@@ -14,9 +14,9 @@ class ReactiveController extends GetxController {
   get tiredText => tiredValue>60 ? '높은':'낮은';
   get tiredImage => tiredValue>60 ? 'image/heart_bad.png':'image/heart_good.png';
 
-
   @override
   void onInit() {
+
     // 1초마다 스트레스 값 확인 후, 콜백함수 실행
     interval(stressValue, (_) {
       if (stressValue > 60) {

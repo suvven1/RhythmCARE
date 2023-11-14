@@ -64,4 +64,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation files('libs/crpblelib-1.4.9.aar')
+}
