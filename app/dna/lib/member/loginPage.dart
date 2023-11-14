@@ -76,7 +76,7 @@ class _loginPageState extends State<loginPage> {
         Get.off(()=> mainPage());
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('${resData["loginResult"]["name"]}(${resData["loginResult"]["nick"]})님 환영합니다.'),
-              duration: const Duration(seconds: 1),)
+              duration: const Duration(seconds: 2),)
         );
       }
     });

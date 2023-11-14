@@ -3,6 +3,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'member/loginPage.dart';
 import 'package:get/get.dart';
 
+
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -19,4 +20,5 @@ class MyApp extends StatelessWidget {
       home: loginPage(),
     );
   }
+
 }
