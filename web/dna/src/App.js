@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Rhythm from "./components/Rhythm/Rhythm";
 import Calender from "./components/Calender/Calender";
 import Hospital from "./components/Hospital/Hospital";
+import Hospitalapp from "./components/Hospital/Hospitalapp";
 import Community from "./components/Community/Community";
 import Login from "./components/Login/Login";
 import Join from "./components/Join/Join";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/rhythm" element={<Rhythm />}></Route>
           <Route path="/calender" element={<Calender />}></Route>
           <Route path="/hospital" element={<Hospital />}></Route>
+          <Route path="/hospitalapp" element={<Hospitalapp />}></Route>
           <Route path="/community" element={<Community />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/findidpw" element={<FindIdPw />}></Route>

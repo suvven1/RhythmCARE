@@ -1,3 +1,4 @@
+import 'package:dna/hospital/webViewPage.dart';
 import 'package:flutter/material.dart';
 
 class hospitalPage extends StatefulWidget {
@@ -11,7 +12,7 @@ class _hospitalPageState extends State<hospitalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('병원 정보입니다.')),
+      body: Center(child: WebViewPage()),
     );
   }
 }
