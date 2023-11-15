@@ -41,9 +41,6 @@ dependencies:
   flutter_blue: ^0.8.0
   permission_handler: ^11.0.1
 
-  rhythm_plugin:
-    path: rhythm_plugin/
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

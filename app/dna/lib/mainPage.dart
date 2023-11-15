@@ -6,6 +6,8 @@ import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
 import 'package:flutter/material.dart';
 
+import 'widget/connection/connect.dart';
+
 class mainPage extends StatefulWidget {
   const mainPage({super.key});
 
@@ -13,7 +15,18 @@ class mainPage extends StatefulWidget {
   State<mainPage> createState() => _mainPageState();
 }
 
+
 class _mainPageState extends State<mainPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        showPopUp(context);
+      });
+    });
+  }
   // 초기 페이지 2번 인덱스(홈)
   int currentPageIndex = 2;
 

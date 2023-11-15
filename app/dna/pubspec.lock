@@ -304,13 +304,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  rhythm_plugin:
-    dependency: "direct main"
-    description:
-      path: rhythm_plugin
-      relative: true
-    source: path
-    version: "0.0.1"
   rxdart:
     dependency: transitive
     description:

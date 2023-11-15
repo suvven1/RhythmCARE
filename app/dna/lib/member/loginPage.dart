@@ -27,10 +27,45 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  static const platform = MethodChannel('rhythm_channel');
-  void test() async {
+  FlutterBlue flutterBlue = FlutterBlue.instance;
+  List<ScanResult> scanResultList = [];
 
+  static const platform = MethodChannel('rhythm_channel');
+
+  Future<void> _getNativeValue() async {
+    String value;
+
+    try{
+      value = await platform.invokeMethod("getBle");
+    } on PlatformException catch (e){
+      value = 'native code error: ${e.message}';
+    }
+
+    setState(() {
+
+    });
   }
+
+  // void initBle() async {
+  //   await _getNativeValue();
+  //   flutterBlue.isScaning.listen((isScanning) {
+  //     setState(() {
+  //
+  //     });
+  //   });
+  // }
+
+  void test() async{
+    bool value;
+
+    try{
+      value = await platform.invokeMethod("getConnect");
+      print(value);
+    } on PlatformException catch (e){
+      print('getCpnnect False.');
+    }
+  }
+
   MypageController mypageController = Get.put(MypageController());
   TextEditingController idCon = TextEditingController();
   TextEditingController pwCon = TextEditingController();
@@ -48,7 +83,7 @@ class _loginPageState extends State<loginPage> {
     initialization();
 
     //ble instance 생성
-    // flutterBlue = FlutterBlue.instance;
+    // initBle();
   }
 
   void initialization() async {
