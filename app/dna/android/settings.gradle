@@ -14,7 +14,7 @@ pluginManagement {
         id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
     }
 }
-
+//include ":app"
 include ":app", ':crpblelib-1.4.9'
 project(':crpblelib-1.4.9').projectDir = new File('app/libs/crpblelib-1.4.9.aar')
 
