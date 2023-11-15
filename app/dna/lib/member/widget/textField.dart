@@ -4,10 +4,11 @@ textField (Con, String idpw){
   return Container(
     padding: EdgeInsets.only(left: 10, right: 10),
     decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(12))
     ),
     child: TextField(
+      style: TextStyle(fontSize: 20),
       controller: Con,
       decoration: InputDecoration(
         hintText: idpw,

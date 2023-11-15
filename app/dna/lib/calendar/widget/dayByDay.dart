@@ -7,65 +7,74 @@ class dayByDay extends StatelessWidget {
   const dayByDay({
     Key? key,
     required int this.day,
-    required List this.toDay,
     required int this.thirtyOrOne,
   }) : super(key: key);
 
   final day;
-  final toDay;
   final thirtyOrOne;
-
 
   @override
   Widget build(BuildContext context) {
     final GetXCalendar controller = Get.put(GetXCalendar());
-    return GetX<GetXCalendar>(
-      builder: (context) {
-        return TextButton(
-            style: TextButton.styleFrom(
-              primary: Colors.black,
-            ),
-            child: Container(
-              color: DateTime.now().day==day ? Colors.green : controller.selectedDay==day ? Colors.blue : Colors.transparent,
-              // color: focusDay[index*7+index2-calculateDate(year, month)-1] ? Colors.green : Colors.white,
-              height: 60, // 달력의 칸 높이
-              child: Column(
-                children: [
-                  Text(
-                    // 달력에 일일 날짜 표시
-                    visible(day,thirtyOrOne),
-                    style: TextStyle(fontSize: 20),
-                    textAlign: TextAlign.center,
-                  ),
-                  Container(
-                    height: 15,
-                    // 일정 있는 날짜에 지정된 색칠하기
-                    color: controller.toDoColor[DateTime(controller.selectedYear.value,controller.selectedMonth.value,day).toString().split(' ')[0]],
-                  )
-                ],
-              ),
-            ),
-            onPressed: (){
-              if (day > 0 && day <= thirtyOrOne){
-                print(day);
-                controller.selectedDay.value = day;
+    return day < 1 || day > thirtyOrOne
+        ? SizedBox(
+            height: 60,
+          )
+        : GetX<GetXCalendar>(builder: (context) {
+            List<Widget> toDoColorContainer() {
+              List<Widget> resultList = [];
+              for (int i = 0; i < controller.todayList[day].length; i++) {
+                Color color = Color(int.parse(controller.todayList[day][i][3]));
+                resultList.add(Container(
+                  height: 10,
+                  margin: EdgeInsets.only(bottom: 2),
+                  color: color,
+                ));
               }
+              return resultList;
             }
-        );
-      }
-    );
+
+            return TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.black,
+                  padding: EdgeInsets.zero,
+                ),
+                child: Container(
+                  padding: EdgeInsets.only(top: 5),
+                  width: double.infinity,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: DateTime.now().day == day &&
+                        DateTime.now().year == controller.selectedYear.value &&
+                        DateTime.now().month == controller.selectedMonth.value
+                        ? Color(0xffcae6ef)
+                        : controller.selectedDay == day &&
+                        controller.viewYear.value == controller.selectedYear.value &&
+                        controller.viewMonth.value == controller.selectedMonth.value
+                        ? Color(0x4e3e9530)
+                        : Colors.transparent,
+                  ),
+                  // 달력의 칸 높이
+                  child: Column(
+                    children: [
+                      Text(
+                        // 달력에 일일 날짜 표시
+                        '$day',
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      Column(
+                        children: toDoColorContainer(),
+                      )
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                    controller.selectedDay.value = day;
+                    controller.viewYear.value = controller.selectedYear.value;
+                    controller.viewMonth.value = controller.selectedMonth.value;
+                });
+          });
   }
-}
-
-
-String visible(index, thirtyOrOne) {
-  if (index < 1 || index > thirtyOrOne) {
-    return '';
-  } else {
-    return '${index}';
-  }
-}
-
-String scheduleColorIndex(int year, int month, int day){
-  return DateTime(year,month,day).toString().split(' ')[0];
 }

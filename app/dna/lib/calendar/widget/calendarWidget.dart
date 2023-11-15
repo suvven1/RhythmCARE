@@ -1,38 +1,47 @@
+import 'package:dna/calendar/GetXCalendar.dart';
 import 'package:dna/calendar/widget/dayByDay.dart';
 import 'package:dna/calendar/widget/printDate.dart';
-import 'package:dna/calendar/widget/test.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-calendarWidget(int selectedDay, Map toDoColor) {
-  final int year = DateTime.now().year;
+class calendarWidget extends StatefulWidget {
+  const calendarWidget({super.key});
+
+  @override
+  State<calendarWidget> createState() => _calendarWidgetState();
+}
+
+class _calendarWidgetState extends State<calendarWidget> {
+
+  int year = DateTime.now().year;
   int month = DateTime.now().month;
   int day = DateTime.now().day;
 
-  List<bool> toDay = List.filled(thirtyOrOne(month), false);
-  toDay[day - 1] = true;
-  List<bool> selectDay = List.filled(thirtyOrOne(month), false);
-  selectDay[selectedDay - 1] = true;
-
-  return Center(
-    child: Table(
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: [
-        // 요일 출력
-        printDate(),
-        // 날짜 출력
-        ...List.generate(
-            fiveOrSix(year, month), // 선택된 달이 몇 주인지? (4~7)
-            (index) => TableRow(
-                children: List.generate(
-                    7,
-                    (index2) => dayByDay(
-                      // 달력 날짜 버튼 위젯
-                        day: index * 7 + index2 - calculateDate(year, month),
-                        toDay: toDay,
-                        thirtyOrOne: thirtyOrOne(month),))))
-      ],
-    ),
-  );
+  @override
+  Widget build(BuildContext context) {
+    final GetXCalendar controller = Get.put(GetXCalendar());
+    return GetX<GetXCalendar>(
+      builder: (context) {
+        return Table(
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: [
+            // 요일 출력
+            printDate(),
+            // 날짜 출력
+            ...List.generate(
+                fiveOrSix(year, month), // 선택된 달이 몇 주인지? (4~7)
+                    (index) => TableRow(
+                    children: List.generate(
+                        7,
+                            (index2) => dayByDay(
+                          // 달력 날짜 버튼 위젯
+                          day: index * 7 + index2 - calculateDate(controller.selectedYear.value, controller.selectedMonth.value),
+                          thirtyOrOne: thirtyOrOne(month),))))
+          ],
+        );
+      }
+    );
+  }
 }
 
 // 1일의 요일 번호 [일:0, 월:1, ..., 토:6]

@@ -6,7 +6,7 @@ scheduleTitle(BuildContext context, String selectedDate){
     child: Row(
       children: [
         Container(
-          width: MediaQuery.of(context).size.width * 0.3,
+          width: MediaQuery.of(context).size.width * 0.25,
           child: Center(
             child: Text(
               selectedDate+"요일",
