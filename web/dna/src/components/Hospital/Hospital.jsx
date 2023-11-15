@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const { kakao } = window;
 
 const Hospital = () => {
+
+  const [markers, setMarkers] = useState([]);
+  const [places, setPlaces] = useState([]);
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const {latitude, longitude} = position.coords;
+        const { latitude, longitude } = position.coords;
         mapscript(latitude, longitude)
       },
       (error) => {
@@ -28,38 +32,122 @@ const Hospital = () => {
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
     const ps = new kakao.maps.services.Places(map)
-    ps.categorySearch('HP8', placesSearchCB, { useMapBounds: true });
-    ps.categorySearch('PM9', placesSearchCB, { useMapBounds: true });
+    searchPlaces()
 
-    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    function searchPlaces() {
+      ps.categorySearch('HP8', placesSearchCB, { useMapBounds: true })
+    }
+
     function placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
-        for (var i = 0; i < data.length; i++) {
-          displayMarker(data[i]);
+        const bounds = new kakao.maps.LatLngBounds()
+        setPlaces(data)
+
+        data.forEach((place, index) => {
+          const placePosition = new kakao.maps.LatLng(place.y, place.x)
+          const marker = addMarker(placePosition)
+          bounds.extend(placePosition)
+
+          kakao.maps.event.addListener(marker, 'click', function () {
+            displayInfoWindow(marker, place.place_name)
+          })
         }
+        )
+        map.setBounds(bounds)
       }
     }
 
-    // 지도에 마커를 표시하는 함수입니다
-    function displayMarker(place) {
-      // 마커를 생성하고 지도에 표시합니다
-      var marker = new kakao.maps.Marker({
-        map: map,
-        position: new kakao.maps.LatLng(place.y, place.x)
-      });
+    function addMarker(position) {
+      const imageSrc = process.env.PUBLIC_URL + '/images/map_marker.png';
+      const imageSize = new kakao.maps.Size(36, 37)
+      const markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize
+      )
 
-      // 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(marker, 'click', function () {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-        infowindow.open(map, marker);
-      });
+      const marker = new kakao.maps.Marker({
+        position: position,
+        image: markerImage
+      })
+
+      marker.setMap(map)
+      setMarkers((prevMarkers) => [...prevMarkers, marker])
+
+      return marker
     }
+
+    function displayInfoWindow(marker, title) {
+      const content = `<div>${title}</div>`
+      infowindow.setContent(content)
+      infowindow.open(map, marker)
+    }
+
+    // // 지도에 마커를 표시하는 함수입니다
+    // function displayMarker(place) {
+    //   // 마커를 생성하고 지도에 표시합니다
+    //   var marker = new kakao.maps.Marker({
+    //     map: map,
+    //     position: new kakao.maps.LatLng(place.y, place.x)
+    //   });
+
+    //   // 마커에 클릭이벤트를 등록합니다
+    //   kakao.maps.event.addListener(marker, 'click', function () {
+    //     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+    //     infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+    //     infowindow.open(map, marker);
+    //   });
+    // }
 
   }
   return (
-    <div id="map" style={{ width: '500px', height: '500px' }}>
-    </div>)
+    <HospitalBox>
+      <ul>
+        {places.map((place, index) => (
+          <li key={index}>
+            <div>
+              <strong>{place.place_name}</strong>
+            </div>
+            <div>{place.road_address_name || place.address_name}</div>
+            <div>{place.phone}</div>
+            <hr/>
+          </li>
+        ))}
+      </ul>
+      <div id="map" />
+    </HospitalBox>
+  )
 };
 
 export default Hospital;
+
+const HospitalBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  gap: 50px;
+  overflow: hidden;
+  height : 855px;
+
+  & #map {
+    width: 800px;
+    height: 700px;
+    border-radius: 20px;
+    border: 1px solid gray;
+  }
+
+
+  & ul {
+    overflow-y: auto; 
+    max-height: 700px; 
+    padding: 0; 
+  }
+
+  & li {
+    background-color: white;
+    padding: 20px;
+    width: 300px;
+    height: 80px;
+  }
+`;
+
