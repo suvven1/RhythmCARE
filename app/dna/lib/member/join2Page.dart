@@ -17,10 +17,14 @@ class join2Page extends StatefulWidget {
 }
 
 class _join2PageState extends State<join2Page> {
+  final nameCon = TextEditingController();
+  final birthCon = TextEditingController();
+  final phoneCon = TextEditingController();
+  int gender = 0;
   final name2Con = TextEditingController();
   final birth2Con = TextEditingController();
-  final gender2Con = TextEditingController();
   final phone2Con = TextEditingController();
+  int gender2 = 0;
 
   // 회원가입 서버 통신 함수 구현 예정
   // void join(bool who, idCon, pwCon) async {
@@ -51,56 +55,179 @@ class _join2PageState extends State<join2Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.1,
-              left: MediaQuery.of(context).size.width * 0.1,
-              right: MediaQuery.of(context).size.width * 0.1),
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset('image/logo_low.png'),
-                Text(
-                  '기기를 사용할 사용자의 정보를 입력해주세요',
-                ),
-                textField(name2Con, '사용자 성명'),
-                SizeBoxH10,
-                textField(birth2Con, '사용자 생년월일 8자리'),
-                SizeBoxH10,
-                textField(gender2Con, '사용자 성별'),
-                SizeBoxH10,
-                textField(phone2Con, '사용자 휴대폰 번호'),
-                SizedBox(
-                  height: 294,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff2e2288)),
-                  child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    child: const Center(child: Text('회원가입')),
+        child: Container(
+          color: Colors.grey[200],
+          child: ListView(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.1,
+                right: MediaQuery.of(context).size.width * 0.1),
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset('image/logo_low.png'),
+                  Text(
+                    '보호자 정보를 입력해주세요',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () {
-                    Get.offAll(()=>loginPage());
-                  },
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey),
-                  child: Container(
-                    width: double.infinity,
-                    height: 25,
-                    child: const Center(child: Text('이전 페이지')),
+                  textField(nameCon, '보호자 성명'),
+                  SizeBoxH10,
+                  textField(birthCon, '보호자 생년월일 8자리'),
+                  SizeBoxH10,
+                  textField(phoneCon, '보호자 휴대폰 번호'),
+                  SizeBoxH10,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            gender = 1;
+                          });
+                        },
+                        child: Text(
+                          '남자',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: gender == 1
+                                  ? Color(0xffffffff)
+                                  : Color(0xff000000)),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: gender == 1
+                                ? Color(0xff2e2288)
+                                : Color(0xffffffff),
+                            elevation: 0,
+                            fixedSize: Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      )),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            gender = 2;
+                          });
+                        },
+                        child: Text(
+                          '여자',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: gender == 2
+                                  ? Color(0xffffffff)
+                                  : Color(0xff000000)),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: gender == 2
+                                ? Color(0xff2e2288)
+                                : Color(0xffffffff),
+                            elevation: 0,
+                            fixedSize: Size(double.infinity, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      )),
+                    ],
                   ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-              ],
-            ),
-          ],
+                  SizeBoxH20,
+                  Text(
+                    '기기를 사용할 사용자의 정보를 입력해주세요',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  textField(name2Con, '사용자 성명'),
+                  SizeBoxH10,
+                  textField(birth2Con, '사용자 생년월일 8자리'),
+                  SizeBoxH10,
+                  textField(phone2Con, '사용자 휴대폰 번호'),
+                  SizeBoxH10,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                gender2 = 1;
+                              });
+                            },
+                            child: Text(
+                              '남자',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: gender2 == 1
+                                      ? Color(0xffffffff)
+                                      : Color(0xff000000)),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: gender2 == 1
+                                    ? Color(0xff2e2288)
+                                    : Color(0xffffffff),
+                                elevation: 0,
+                                fixedSize: Size(double.infinity, 50),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                          )),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                gender2 = 2;
+                              });
+                            },
+                            child: Text(
+                              '여자',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: gender2 == 2
+                                      ? Color(0xffffffff)
+                                      : Color(0xff000000)),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: gender2 == 2
+                                    ? Color(0xff2e2288)
+                                    : Color(0xffffffff),
+                                elevation: 0,
+                                fixedSize: Size(double.infinity, 50),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                          )),
+                    ],
+                  ),
+                  SizeBoxH30,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff2e2288)),
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: const Center(child: Text('회원가입')),
+                    ),
+                    onPressed: () {
+                      Get.offAll(() => loginPage());
+                    },
+                  ),
+                  ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                    child: Container(
+                      width: double.infinity,
+                      height: 25,
+                      child: const Center(child: Text('이전 페이지')),
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
