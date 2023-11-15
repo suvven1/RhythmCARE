@@ -45,19 +45,29 @@ const Hospital = () => {
 
         data.forEach((place, index) => {
           const placePosition = new kakao.maps.LatLng(place.y, place.x)
-          const marker = addMarker(placePosition)
+          const marker = addMarker(placePosition, place.place_name)
           bounds.extend(placePosition)
 
           kakao.maps.event.addListener(marker, 'click', function () {
             displayInfoWindow(marker, place.place_name)
           })
+
+          // 목록 아이템 클릭 시 해당 마커에 중심 위치 이동
+          const listItem = document.getElementById(`place-${index}`)
+          if (listItem) {
+            listItem.addEventListener("click", () => {
+              map.setCenter(placePosition);
+              infowindow.setContent(`<div>${place.place_name}</div>`);
+              infowindow.open(map, marker);
+            });
+          }
         }
         )
         map.setBounds(bounds)
       }
     }
 
-    function addMarker(position) {
+    function addMarker(position, title) {
       const imageSrc = process.env.PUBLIC_URL + '/images/map_marker.png';
       const imageSize = new kakao.maps.Size(36, 37)
       const markerImage = new kakao.maps.MarkerImage(
@@ -67,7 +77,8 @@ const Hospital = () => {
 
       const marker = new kakao.maps.Marker({
         position: position,
-        image: markerImage
+        image: markerImage,
+        title: title
       })
 
       marker.setMap(map)
@@ -81,35 +92,21 @@ const Hospital = () => {
       infowindow.setContent(content)
       infowindow.open(map, marker)
     }
-
-    // // 지도에 마커를 표시하는 함수입니다
-    // function displayMarker(place) {
-    //   // 마커를 생성하고 지도에 표시합니다
-    //   var marker = new kakao.maps.Marker({
-    //     map: map,
-    //     position: new kakao.maps.LatLng(place.y, place.x)
-    //   });
-
-    //   // 마커에 클릭이벤트를 등록합니다
-    //   kakao.maps.event.addListener(marker, 'click', function () {
-    //     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-    //     infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-    //     infowindow.open(map, marker);
-    //   });
-    // }
-
   }
   return (
     <HospitalBox>
       <ul>
         {places.map((place, index) => (
-          <li key={index}>
-            <div>
-              <strong>{place.place_name}</strong>
-            </div>
-            <div>{place.road_address_name || place.address_name}</div>
-            <div>{place.phone}</div>
-            <hr/>
+          <li key={index} id={`place-${index}`}>
+            <ContentWrapper>
+              <div>
+                <strong>{place.place_name}</strong>
+              </div>
+              <div>{place.road_address_name || place.address_name}</div>
+              <div>{place.phone}</div>
+
+            </ContentWrapper>
+            <hr />
           </li>
         ))}
       </ul>
@@ -148,6 +145,17 @@ const HospitalBox = styled.div`
     padding: 20px;
     width: 300px;
     height: 80px;
+    cursor: pointer;
+  }
+
+  & hr {
+    margin-top: 17px;
   }
 `;
 
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+`;
