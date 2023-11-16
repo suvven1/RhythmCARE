@@ -12,7 +12,8 @@ class _hospitalPageState extends State<hospitalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: WebViewPage()),
+      body: Center(
+          child: WebViewPage()),
     );
   }
 }

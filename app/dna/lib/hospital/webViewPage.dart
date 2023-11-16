@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -11,6 +12,18 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewPageState extends State<WebViewPage> {
+
+  // 전화걸기 함수
+  void _call(String phoneNumber) async{
+    final String url = 'tel:'+phoneNumber;
+    if (await canLaunchUrl(Uri(scheme: 'tel', path: phoneNumber))){
+      await launchUrl(Uri(scheme: 'tel', path: phoneNumber));
+    } else {
+      throw 'Could not launch';
+    }
+  }
+
+  // 웹뷰
   late final WebViewController _controller;
 
   @override
@@ -64,12 +77,12 @@ class _WebViewPageState extends State<WebViewPage> {
       ..addJavaScriptChannel(
         'Toaster',
         onMessageReceived: (JavaScriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
+          // react에서 데이터를 받아온 뒤 실행되는 함수
+          print(message.message);
+          _call(message.message);
         },
       )
-      ..loadRequest(Uri.parse('https://naver.com/'));
+      ..loadRequest(Uri.parse('http://192.168.0.250:3000/hospitalapp'));
 
     if (controller.platform is AndroidWebViewController) {
       AndroidWebViewController.enableDebugging(true);
@@ -81,12 +94,15 @@ class _WebViewPageState extends State<WebViewPage> {
     _controller = controller;
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: WebViewWidget(controller: _controller),
+        child: WebViewWidget(
+            controller: _controller,
+        ),
       ),
     );
   }

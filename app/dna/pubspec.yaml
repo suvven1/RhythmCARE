@@ -41,8 +41,9 @@ dependencies:
   flutter_blue: ^0.8.0
   permission_handler: ^11.0.1
   webview_flutter: ^4.4.2 # 웹뷰
-  webview_flutter_android: ^3.12.1
-  webview_flutter_wkwebview: ^3.9.4
+  webview_flutter_android: ^3.12.1 # 웹뷰
+  webview_flutter_wkwebview: ^3.9.4 # 웹뷰
+  url_launcher: ^6.0.9 # 전화걸기 라이브러리
 
 dev_dependencies:
   flutter_test:

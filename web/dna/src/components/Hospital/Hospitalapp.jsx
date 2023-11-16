@@ -97,21 +97,33 @@ const Hospitalapp = () => {
     //     infowindow.open(map, marker);
     //   });
     // }
-
+    
   }
+  
+    // 전화걸기 함수
+    const handleCall = (phoneNumber) => {
+      window.Toaster.postMessage(JSON.stringify(phoneNumber));
+    }
   return (
     <HospitalBox>
-      <div id="map" />
+      <div id="map"/>
       <ul>
         {places.map((place, index) => (
-          <li key={index}>
-            <div>
-              <strong>{place.place_name}</strong>
-            </div>
-            <div>{place.road_address_name || place.address_name}</div>
-            <div>{place.phone}</div>
-            <hr/>
-          </li>
+            <li key={index}>
+              <div id="flexBox">
+                <div>
+                  <div>
+                    <strong>{place.place_name}</strong>
+                  </div>
+                  <div>{place.road_address_name || place.address_name}</div>
+                  <div>{place.phone}</div>
+                </div>
+                <div onClick={() => handleCall(place.phone)}>
+                  <img id="call" src="images/call_icon.png"/>
+                </div>
+              </div>
+              <hr/>
+            </li>
         ))}
       </ul>
     </HospitalBox>
@@ -125,13 +137,13 @@ const HospitalBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   gap: 50px;
   overflow: hidden;
-  height : 855px;
+  height : 100vh;
 
   & #map {
-    width: 90vw;
+    width: 100vw;
     height: 30vh;
     border-radius: 20px;
     border: 1px solid gray;
@@ -146,9 +158,18 @@ const HospitalBox = styled.div`
 
   & li {
     background-color: white;
-    padding: 20px;
-    width: 90vw;
-    height: 21vw;
+    width: 100vw;
+    height: 23vw;
+  }
+
+  & #flexBox {
+    display : flex;
+    justify-content: space-between;
+  }
+
+  & #call {
+    width: 17vw;
+    height: 17vw;
   }
 `;
 
