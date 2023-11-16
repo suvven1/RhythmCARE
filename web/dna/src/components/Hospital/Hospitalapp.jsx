@@ -118,7 +118,7 @@ const Hospitalapp = () => {
   )
 };
 
-export default Hospital;
+export default Hospitalapp;
 
 const HospitalBox = styled.div`
   display: flex;
