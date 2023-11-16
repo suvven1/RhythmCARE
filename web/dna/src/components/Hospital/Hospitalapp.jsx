@@ -93,48 +93,32 @@ const Hospitalapp = () => {
     //     infowindow.open(map, marker);
     //   });
     // }
-<<<<<<< HEAD
-    
-  }
-  
-    // 전화걸기 함수
-    const handleCall = (phoneNumber) => {
-      window.Toaster.postMessage(JSON.stringify(phoneNumber));
-    }
-=======
   };
->>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
+
+  // 전화걸기 함수
+  const handleCall = (phoneNumber) => {
+    window.Toaster.postMessage(JSON.stringify(phoneNumber));
+  };
   return (
     <HospitalBox>
-      <div id="map"/>
+      <div id="map" />
       <ul>
         {places.map((place, index) => (
-<<<<<<< HEAD
-            <li key={index}>
-              <div id="flexBox">
-                <div>
-                  <div>
-                    <strong>{place.place_name}</strong>
-                  </div>
-                  <div>{place.road_address_name || place.address_name}</div>
-                  <div>{place.phone}</div>
-                </div>
-                <div onClick={() => handleCall(place.phone)}>
-                  <img id="call" src="images/call_icon.png"/>
-                </div>
-              </div>
-              <hr/>
-            </li>
-=======
           <li key={index}>
-            <div>
-              <strong>{place.place_name}</strong>
+            <div id="flexBox">
+              <div>
+                <div>
+                  <strong>{place.place_name}</strong>
+                </div>
+                <div>{place.road_address_name || place.address_name}</div>
+                <div>{place.phone}</div>
+              </div>
+              <div onClick={() => handleCall(place.phone)}>
+                <img id="call" src="images/call_icon.png" />
+              </div>
             </div>
-            <div>{place.road_address_name || place.address_name}</div>
-            <div>{place.phone}</div>
             <hr />
           </li>
->>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
         ))}
       </ul>
     </HospitalBox>
@@ -151,11 +135,7 @@ const HospitalBox = styled.div`
   background-color: #ffffff;
   gap: 50px;
   overflow: hidden;
-<<<<<<< HEAD
-  height : 100vh;
-=======
-  height: 855px;
->>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
+  height: 100vh;
 
   & #map {
     width: 100vw;
@@ -177,7 +157,7 @@ const HospitalBox = styled.div`
   }
 
   & #flexBox {
-    display : flex;
+    display: flex;
     justify-content: space-between;
   }
 
