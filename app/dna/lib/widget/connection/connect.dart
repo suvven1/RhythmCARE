@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:dna/member/widget/textField.dart';
+import 'package:flutter_blue/flutter_blue.dart';
+
+void checkBlue  (context) async {
+// 블루투스 활성화 여부 확인
+  bool isBluetoothEnabled =
+  await FlutterBlue.instance.isOn;
+  if (!isBluetoothEnabled) {
+// 블루투스가 비활성화된 경우 활성화 요청
+    await ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(
+      content: Text('블루투스 연결필요'),
+      duration: const Duration(seconds: 2),
+    ));
+  }
+}
+
+
+
+
 
 // 탈퇴 인증 모달장
 showPopUp(context) {
@@ -46,7 +65,9 @@ showPopUp(context) {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        checkBlue(context);
+                      },
                     ),
                     const SizedBox(width: 30),
                     ElevatedButton(

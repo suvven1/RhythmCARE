@@ -5,6 +5,8 @@ import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 import 'widget/connection/connect.dart';
 
@@ -17,6 +19,36 @@ class mainPage extends StatefulWidget {
 
 
 class _mainPageState extends State<mainPage> {
+// 연결 테스트-----------------------------------------------------------------------------
+  List<ScanResult> scanResultList = [];
+
+  static const platform = MethodChannel('rhythm_channel');
+
+  Future<void> _getNativeValue() async {
+    String value;
+
+    try{
+      value = await platform.invokeMethod("getBle");
+    } on PlatformException catch (e){
+      value = 'native code error: ${e.message}';
+    }
+
+    setState(() {
+
+    });
+  }
+
+  void test() async{
+    bool value;
+
+    try{
+      value = await platform.invokeMethod("getConnect");
+      print(value);
+    } on PlatformException catch (e){
+      print('getCpnnect False.');
+    }
+  }
+// 연결 테스트-----------------------------------------------------------------------------
 
   @override
   void initState() {
