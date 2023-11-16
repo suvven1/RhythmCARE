@@ -93,7 +93,6 @@ const Hospitalapp = () => {
     //     infowindow.open(map, marker);
     //   });
     // }
-<<<<<<< HEAD
     
   }
   
@@ -101,15 +100,11 @@ const Hospitalapp = () => {
     const handleCall = (phoneNumber) => {
       window.Toaster.postMessage(JSON.stringify(phoneNumber));
     }
-=======
-  };
->>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
   return (
     <HospitalBox>
       <div id="map"/>
       <ul>
         {places.map((place, index) => (
-<<<<<<< HEAD
             <li key={index}>
               <div id="flexBox">
                 <div>
@@ -125,16 +120,6 @@ const Hospitalapp = () => {
               </div>
               <hr/>
             </li>
-=======
-          <li key={index}>
-            <div>
-              <strong>{place.place_name}</strong>
-            </div>
-            <div>{place.road_address_name || place.address_name}</div>
-            <div>{place.phone}</div>
-            <hr />
-          </li>
->>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
         ))}
       </ul>
     </HospitalBox>
@@ -151,11 +136,7 @@ const HospitalBox = styled.div`
   background-color: #ffffff;
   gap: 50px;
   overflow: hidden;
-<<<<<<< HEAD
   height : 100vh;
-=======
-  height: 855px;
->>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
 
   & #map {
     width: 100vw;
