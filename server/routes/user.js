@@ -96,14 +96,16 @@ router.post("/join/nickDupCheck", (req, res) => {
 //
 // 로그인 시작 -------------------------------------------------------------------------------------------------
 router.post("/login", (req, res) => {
-  console.log("user login", req.body);
+  // console.log("user login", req.body);
   let { user, id, pw } = req.body;
   let loginSql = "select * from user where manager_id=? and password=?";
   let badgeSql = "select badge_id from user_badge where manager_id =?";
   let badgeData = [];
   conn.query(loginSql, [id, pw], (err, loginRows) => {
     if (loginRows.length != 0) {
-      console.log("로그인 성공!", loginRows[0].manager_nick);
+      if (user != undefined) {
+        console.log("로그인 성공!", loginRows[0].manager_nick);
+      }
       conn.query(badgeSql, [id], (err, badgeRows) => {
         if (badgeRows.length != 0) {
           badgeData = badgeRows.map((item) => item.badge_id);
@@ -130,7 +132,9 @@ router.post("/login", (req, res) => {
         }
       });
     } else {
-      console.log("로그인 실패!");
+      if (user != undefined) {
+        console.log("로그인 실패!");
+      }
       res.json({ loginResult: false });
     }
   });
@@ -196,28 +200,6 @@ router.post("/changeImg", upload.single("image"), (req, res) => {
   }
 });
 // 내 정보 수정 끝----------------------------------------------------------------------------------------------
-//
-//
-//
-//
-//
-//
-// 뱃지 불러오기 시작 ------------------------------------------------------------------------------------------
-// router.post("/badge", (req, res) => {
-//   console.log("badge", req.body);
-//   let { id } = req.body;
-//   let badgeSql = "select from user where manager_id=?";
-//   conn.query(badgeSql, [id], (err, rows) => {
-//     if (rows) {
-//       console.log("[뱃지] 뱃지조회 성공!");
-//       res.json({ badgeResult: true });
-//     } else {
-//       console.log("[뱃지] 뱃지조회 실패!");
-//       res.json({ badgeResult: false });
-//     }
-//   });
-// });
-// 뱃지 불러오기 끝 --------------------------------------------------------------------------------------------
 //
 //
 //

@@ -1,48 +1,55 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const DetailModal = ({ onClose, event, onDeleteSchedule }) => {
-    if (!event) return null;
+  if (!event) return null;
 
-    const { title, start, end, backgroundColor } = event;
+  const { title, start, end, backgroundColor } = event;
 
-    // 종료 일자에서 하루를 빼서 표시
-    const endDate = new Date(end);
-    if (isNaN(endDate.getTime())) {
-        console.error("Invalid end date:", end);
-        return null;
-    }
+  // 종료 일자에서 하루를 빼서 표시
+  const endDate = new Date(end);
+  if (isNaN(endDate.getTime())) {
+    // console.error("Invalid end date:", end);
+    return null;
+  }
 
-    // 종료 일자에서 하루를 빼서 표시
-    endDate.setDate(endDate.getDate() - 1);
+  // 종료 일자에서 하루를 빼서 표시
+  endDate.setDate(endDate.getDate() - 1);
 
-    return (
-        <ModalOverlay>
-            <ModalContainer>
-                <ModalTitle>일정 상세 정보</ModalTitle>
-                <EventDetails backgroundColor={backgroundColor}>
-                    <div className='colorBox' />
-                    <div>
-                        <p className='detail_title'>제목</p>
-                        <p>{title}</p>
-                    </div>
-                    <div>
-                        <p className='detail_title'>시작 일자</p>
-                        <p>{start}</p>
-                    </div>
-                    <div>
-                        <p className='detail_title'>종료 일자</p>
-                        <p>{endDate.toISOString().split('T')[0]}</p>
-                    </div>
-                </EventDetails>
-                <ButtonContainer>
-                    <DeleteButton onClick={() => { onDeleteSchedule(); onClose(); }}>일정삭제하기</DeleteButton>
-                    <div className="blank" />
-                    <CloseButton onClick={onClose}>닫기</CloseButton>
-                </ButtonContainer>
-            </ModalContainer>
-        </ModalOverlay>
-    );
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <ModalTitle>일정 상세 정보</ModalTitle>
+        <EventDetails backgroundColor={backgroundColor}>
+          <div className="colorBox" />
+          <div>
+            <p className="detail_title">제목</p>
+            <p>{title}</p>
+          </div>
+          <div>
+            <p className="detail_title">시작 일자</p>
+            <p>{start}</p>
+          </div>
+          <div>
+            <p className="detail_title">종료 일자</p>
+            <p>{endDate.toISOString().split("T")[0]}</p>
+          </div>
+        </EventDetails>
+        <ButtonContainer>
+          <DeleteButton
+            onClick={() => {
+              onDeleteSchedule();
+              onClose();
+            }}
+          >
+            일정삭제하기
+          </DeleteButton>
+          <div className="blank" />
+          <CloseButton onClick={onClose}>닫기</CloseButton>
+        </ButtonContainer>
+      </ModalContainer>
+    </ModalOverlay>
+  );
 };
 
 export default DetailModal;
@@ -75,9 +82,9 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media only screen and (max-width: 1040px){
-        width: 380px;
-    }
+  @media only screen and (max-width: 1040px) {
+    width: 380px;
+  }
 `;
 
 // 일정제목
@@ -93,7 +100,7 @@ const EventDetails = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  
+
   & .colorBox {
     background-color: ${({ backgroundColor }) => backgroundColor};
     width: 5px;
@@ -106,11 +113,11 @@ const EventDetails = styled.div`
     display: flex;
     gap: 20px;
 
-    & .detail_title{
-        font-size: 20px;
-        text-align: center;
-        width: 200px;
-        font-weight: bold;
+    & .detail_title {
+      font-size: 20px;
+      text-align: center;
+      width: 200px;
+      font-weight: bold;
     }
   }
   p {
@@ -124,9 +131,9 @@ const ButtonContainer = styled.div`
   display: flex;
   margin-top: 20px;
 
-  & .blank{
-        width: 13px ;
-    }
+  & .blank {
+    width: 13px;
+  }
 `;
 
 const DeleteButton = styled.button`

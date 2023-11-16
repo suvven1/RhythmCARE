@@ -1,80 +1,133 @@
-import React, { useEffect, useState } from "react";
+import axios from "../../axios";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { UserContext } from "../../context/UserContext";
 
-const ScheduleModal = ({ onClose, handleAddSchedule }) => {
-    const [title, setTitle] = useState('');
-    const [start, setStart] = useState('');
-    const [end, setEnd] = useState('');
-    const [color, setColor] = useState('');
-    const [defaultColor, setDefaultColor] = useState("#eb6867");
+const ScheduleModal = ({ onClose, handleAddSchedule, count, setCount }) => {
+  const [title, setTitle] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [color, setColor] = useState("");
+  const [defaultColor, setDefaultColor] = useState("#eb6867");
 
-    const handleAdd = () => {
-        if (title && start && end && color) {
-
-            const adjustedEnd = new Date(end);
-            adjustedEnd.setDate(adjustedEnd.getDate() + 1)
-            handleAddSchedule({ title, start, end: adjustedEnd.toISOString().split('T')[0], color });
-            // handleAddSchedule({ title, start, end, color });
-            onClose();
+  // 서버에 일정 추가
+  const userData = useContext(UserContext);
+  const updateSchedule = (key, id, title, start, end, color) => {
+    setCount(key);
+    axios
+      .post("/calender/updateSchedule", { key, id, title, start, end, color })
+      .then((res) => {
+        if (res.data.updateScheduleResult) {
+          alert("일정 추가가 완료되었습니다.");
+          onClose();
         } else {
-            alert('모든 필드를 입력하세요.')
+          alert("일정 추가 실패! 일정을 다시 입력해주세요.");
         }
+      });
+  };
+
+  const handleAdd = () => {
+    if (title && start && end && color) {
+      const adjustedEnd = new Date(end);
+      adjustedEnd.setDate(adjustedEnd.getDate() + 1);
+      handleAddSchedule({
+        key: count++,
+        title,
+        start,
+        end: adjustedEnd.toISOString().split("T")[0],
+        color,
+      });
+      updateSchedule(
+        count++,
+        userData.data.manager_id,
+        title,
+        start,
+        end,
+        color
+      );
+    } else {
+      alert("모든 필드를 입력하세요.");
+      console.log(start);
+      console.log(end);
     }
+  };
 
-    useEffect(() => {
-        setColor(defaultColor);
-    }, [defaultColor]);
+  useEffect(() => {
+    setColor(defaultColor);
+  }, [defaultColor]);
 
+  return (
+    <ModalOverlay>
+      <ModalContainer>
+        <ModalTitle>새로운 일정 추가</ModalTitle>
+        <ColorPicker>
+          <InputLabel>일정 색상</InputLabel>
+          <div className="blank" />
+          <ColorButton
+            color="#eb6867"
+            onClick={() => {
+              setColor("#eb6867");
+              setDefaultColor("#eb6867");
+            }}
+            isSelected={color === "#eb6867"}
+          />
+          <ColorButton
+            color="#f39a47"
+            onClick={() => setColor("#f39a47")}
+            isSelected={color === "#f39a47"}
+          />
+          <ColorButton
+            color="#47b794"
+            onClick={() => setColor("#47b794")}
+            isSelected={color === "#47b794"}
+          />
+          <ColorButton
+            color="#1eb2d4"
+            onClick={() => setColor("#1eb2d4")}
+            isSelected={color === "#1eb2d4"}
+          />
+          <ColorButton
+            color="#762fc1"
+            onClick={() => setColor("#762fc1")}
+            isSelected={color === "#762fc1"}
+          />
+        </ColorPicker>
+        <FormContainer>
+          <InputLabel>일정 제목</InputLabel>
+          <InputField
+            type="text"
+            placeholder="일정 제목을 입력하세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </FormContainer>
+        <FormContainer>
+          <InputLabel>시작 일자</InputLabel>
+          <InputField
+            type="date"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+          />
+        </FormContainer>
+        <FormContainer>
+          <InputLabel>종료 일자</InputLabel>
+          <InputField
+            type="date"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+          />
+        </FormContainer>
+        <ButtonContainer>
+          <AddButton onClick={handleAdd}>일정 추가</AddButton>
+          <div className="blank" />
+          <CloseButton onClick={onClose}>닫기</CloseButton>
+        </ButtonContainer>
+      </ModalContainer>
+    </ModalOverlay>
+  );
+};
 
-    return (
-        <ModalOverlay>
-            <ModalContainer>
-                <ModalTitle>새로운 일정 추가</ModalTitle>
-                <ColorPicker>
-                    <InputLabel>일정 색상</InputLabel>
-                    <div className="blank" />
-                    <ColorButton color="#eb6867" onClick={() => { setColor("#eb6867"); setDefaultColor("#eb6867"); }} isSelected={color === "#eb6867"} />
-                    <ColorButton color="#f39a47" onClick={() => setColor("#f39a47")} isSelected={color === "#f39a47"} />
-                    <ColorButton color="#47b794" onClick={() => setColor("#47b794")} isSelected={color === "#47b794"} />
-                    <ColorButton color="#1eb2d4" onClick={() => setColor("#1eb2d4")} isSelected={color === "#1eb2d4"} />
-                    <ColorButton color="#762fc1" onClick={() => setColor("#762fc1")} isSelected={color === "#762fc1"} />
-                </ColorPicker>
-                <FormContainer>
-                    <InputLabel>일정 제목</InputLabel>
-                    <InputField
-                        type="text"
-                        placeholder="일정 제목을 입력하세요"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                </FormContainer>
-                <FormContainer>
-                    <InputLabel>시작 일자</InputLabel>
-                    <InputField
-                        type="date"
-                        value={start}
-                        onChange={(e) => setStart(e.target.value)}
-                    />
-                </FormContainer>
-                <FormContainer>
-                    <InputLabel>종료 일자</InputLabel>
-                    <InputField
-                        type="date"
-                        value={end}
-                        onChange={(e) => setEnd(e.target.value)}
-                    />
-                </FormContainer>
-                <ButtonContainer>
-                    <AddButton onClick={handleAdd}>일정 추가</AddButton>
-                    <div className="blank" />
-                    <CloseButton onClick={onClose}>닫기</CloseButton>
-                </ButtonContainer>
-            </ModalContainer>
-        </ModalOverlay>
-    )
-}
-
-export default ScheduleModal
+export default ScheduleModal;
 
 // 모달 뒷배경
 const ModalOverlay = styled.div`
@@ -104,13 +157,13 @@ const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  & .blank{
-        width: 5px ;
-    }
-    
-    @media only screen and (max-width: 1040px){
-        width: 380px;
-    }
+  & .blank {
+    width: 5px;
+  }
+
+  @media only screen and (max-width: 1040px) {
+    width: 380px;
+  }
 `;
 
 // 일정제목
@@ -121,36 +174,36 @@ const ModalTitle = styled.h2`
 
 // 일정색상-------------------------
 const ColorPicker = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    margin-top: 20px;
-    width : 90%;
-    height: 300;
-    padding-left: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 20px;
+  width: 90%;
+  height: 300;
+  padding-left: 7px;
 
-    & .blank{
-        width: 13px ;
-    }
-    @media only screen and (max-width: 1040px){
-        padding: 5px;
-    }
-    
+  & .blank {
+    width: 13px;
+  }
+  @media only screen and (max-width: 1040px) {
+    padding: 5px;
+  }
 `;
 
 const ColorButton = styled.div`
-    width: 20px;
-    height: 20px;
-    background-color: ${(props) => props.color};
-    border-radius: 10%;
-    margin: 0 10px;
-    cursor: pointer;
-    border: 2px solid transparent;
+  width: 20px;
+  height: 20px;
+  background-color: ${(props) => props.color};
+  border-radius: 10%;
+  margin: 0 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
 
-    ${(props) =>
-        props.isSelected &&
-        `border: 2px solid #000000;` /* 선택된 상태일 때는 검은색 테두리 추가 */
-    };
+  ${
+    (props) =>
+      props.isSelected &&
+      `border: 2px solid #000000;` /* 선택된 상태일 때는 검은색 테두리 추가 */
+  };
 `;
 
 // form 관련 --------------------
@@ -158,15 +211,15 @@ const FormContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width : 90%;
-  margin-top: 20px;   
+  width: 90%;
+  margin-top: 20px;
 `;
 
 const InputLabel = styled.label`
   font-size: 20px;
   text-align: left;
 
-  @media only screen and (max-width: 1040px){
+  @media only screen and (max-width: 1040px) {
     font-size: 18px;
     width: 100px;
   }
@@ -177,11 +230,11 @@ const InputField = styled.input`
   padding: 10px;
   font-size: 16px;
   margin-top: 5px;
-  margin-left : 20px;
+  margin-left: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
 
-  @media only screen and (max-width: 1040px){
+  @media only screen and (max-width: 1040px) {
     margin-left: 30px;
   }
 `;
@@ -201,7 +254,7 @@ const AddButton = styled.button`
   border-radius: 5px;
   margin-top: 20px;
   cursor: pointer;
-  `;
+`;
 
 const CloseButton = styled.button`
   background: #bbbbbb;

@@ -47,7 +47,7 @@ const Header = () => {
         if (res.data.loginResult) {
           const user = {
             data: res.data.loginResult.data,
-            name: res.data.loginResult.name,
+            name: userData.name,
             nick: res.data.loginResult.nick,
             badge: res.data.loginResult.badgeData,
           };
