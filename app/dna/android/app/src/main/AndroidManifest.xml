@@ -20,7 +20,7 @@
     </queries>
     <application
         android:usesCleartextTraffic="true"
-        android:label="dna"
+        android:label="Rhythm Care"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

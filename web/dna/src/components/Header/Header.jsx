@@ -1,12 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useReducer, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { BiMenu } from "react-icons/bi";
 import SideBar from "./SideBar";
 import SideBarContents from "./SideBarContents";
 import { UserContext } from "../../context/UserContext";
+import isEqual from "lodash/isEqual";
+import axios from "../../axios";
 const Header = () => {
   const userData = useContext(UserContext);
+  const locationData = useLocation().pathname;
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
 
   const handelResize = () => {
@@ -30,6 +33,29 @@ const Header = () => {
     alert("로그아웃이 완료되었습니다.");
     window.location.replace("/");
   };
+
+  // 새로고침시 유저 정보 받아오기
+  const [update, setUpdate] = useState(false);
+  useEffect(() => {
+    console.log("update user data");
+    axios
+      .post("/user/login", {
+        id: userData?.data.manager_id,
+        pw: userData?.data.password,
+      })
+      .then((res) => {
+        if (res.data.loginResult) {
+          const user = {
+            data: res.data.loginResult.data,
+            name: res.data.loginResult.name,
+            nick: res.data.loginResult.nick,
+            badge: res.data.loginResult.badgeData,
+          };
+          localStorage.setItem("userData", JSON.stringify(user));
+          if (!isEqual(user, userData)) window.location.replace(locationData);
+        }
+      });
+  }, []);
 
   return (
     <div>

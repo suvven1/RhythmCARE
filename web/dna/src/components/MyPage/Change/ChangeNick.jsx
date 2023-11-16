@@ -52,9 +52,6 @@ const ChangeNick = ({ setChangeNickOpen }) => {
         })
         .then((res) => {
           if (res.data.changeNickResult) {
-            userData.data.manager_nick = nick;
-            userData.nick = nick;
-            localStorage.setItem("userData", JSON.stringify(userData));
             setChangeNickOpen(false);
             alert("닉네임 변경이 완료 되었습니다.");
             window.location.replace("/mypage");

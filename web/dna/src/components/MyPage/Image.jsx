@@ -44,8 +44,6 @@ const Image = () => {
       })
       .then((res) => {
         if (res.data.chageImgResult) {
-          userData.img = res.data.img;
-          localStorage.setItem("userData", JSON.stringify(userData));
           alert("이미지 변경이 완료되었습니다.");
           window.location.replace("/mypage");
         } else {
@@ -70,19 +68,13 @@ const Image = () => {
   return (
     <ImageBox>
       <Img>
-        {img.pre ? (
-          <img src={img.pre} alt="새로 등록할 유저사진" />
+        {userData?.img != null ? (
+          <img src={`data:image/png;base64,${conImg}`} alt="유저사진" />
         ) : (
-          <>
-            {userData?.img != null ? (
-              <img src={`data:image/png;base64,${conImg}`} alt="유저사진" />
-            ) : (
-              <img
-                src={`${process.env.PUBLIC_URL}/images/User.png`}
-                alt="기본 유저사진"
-              />
-            )}
-          </>
+          <img
+            src={`${process.env.PUBLIC_URL}/images/User.png`}
+            alt="기본 유저사진"
+          />
         )}
       </Img>
       <label htmlFor="file">

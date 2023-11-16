@@ -23,11 +23,17 @@ import FindIdPw from "./components/Login/FindIdPw";
 function App() {
   const getUserData = JSON.parse(localStorage.getItem("userData"));
   const [userData, setUserData] = useState(getUserData);
+<<<<<<< HEAD
   console.log(userData);
 
   // AppWebView Header 삭제
   const location = useLocation();
   const logoView = !(location.pathname === '/hospitalapp')
+=======
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+>>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
 
   return (
     <div>
