@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserContext } from "./context/UserContext";
 import axios from "./axios";
@@ -23,14 +23,22 @@ import FindIdPw from "./components/Login/FindIdPw";
 function App() {
   const getUserData = JSON.parse(localStorage.getItem("userData"));
   const [userData, setUserData] = useState(getUserData);
+<<<<<<< HEAD
+  console.log(userData);
+
+  // AppWebView Header 삭제
+  const location = useLocation();
+  const logoView = !(location.pathname === '/hospitalapp')
+=======
   useEffect(() => {
     console.log(userData);
   }, [userData]);
+>>>>>>> a7eb266da60b6407174ab98959edacac81c179bc
 
   return (
     <div>
       <UserContext.Provider value={userData}>
-        <Header />
+        {logoView && <Header />}
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/rhythm" element={<Rhythm />}></Route>
