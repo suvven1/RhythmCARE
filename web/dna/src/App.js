@@ -27,7 +27,7 @@ function App() {
 
   // AppWebView Header 삭제
   const location = useLocation();
-  const logoView = !(location.pathname === '/hospitalapp')
+  const logoView = !(location.pathname === "/hospitalapp");
 
   return (
     <div>

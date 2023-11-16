@@ -93,33 +93,32 @@ const Hospitalapp = () => {
     //     infowindow.open(map, marker);
     //   });
     // }
-    
-  }
-  
-    // 전화걸기 함수
-    const handleCall = (phoneNumber) => {
-      window.Toaster.postMessage(JSON.stringify(phoneNumber));
-    }
+  };
+
+  // 전화걸기 함수
+  const handleCall = (phoneNumber) => {
+    window.Toaster.postMessage(JSON.stringify(phoneNumber));
+  };
   return (
     <HospitalBox>
-      <div id="map"/>
+      <div id="map" />
       <ul>
         {places.map((place, index) => (
-            <li key={index}>
-              <div id="flexBox">
+          <li key={index}>
+            <div id="flexBox">
+              <div>
                 <div>
-                  <div>
-                    <strong>{place.place_name}</strong>
-                  </div>
-                  <div>{place.road_address_name || place.address_name}</div>
-                  <div>{place.phone}</div>
+                  <strong>{place.place_name}</strong>
                 </div>
-                <div onClick={() => handleCall(place.phone)}>
-                  <img id="call" src="images/call_icon.png"/>
-                </div>
+                <div>{place.road_address_name || place.address_name}</div>
+                <div>{place.phone}</div>
               </div>
-              <hr/>
-            </li>
+              <div onClick={() => handleCall(place.phone)}>
+                <img id="call" src="images/call_icon.png" />
+              </div>
+            </div>
+            <hr />
+          </li>
         ))}
       </ul>
     </HospitalBox>
@@ -136,7 +135,7 @@ const HospitalBox = styled.div`
   background-color: #ffffff;
   gap: 50px;
   overflow: hidden;
-  height : 100vh;
+  height: 100vh;
 
   & #map {
     width: 100vw;
@@ -158,7 +157,7 @@ const HospitalBox = styled.div`
   }
 
   & #flexBox {
-    display : flex;
+    display: flex;
     justify-content: space-between;
   }
 

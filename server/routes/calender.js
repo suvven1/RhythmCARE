@@ -48,4 +48,21 @@ router.post("/updateSchedule", (req, res) => {
   );
 });
 
+// 일정 삭제
+router.post("/deleteSchedule", (req, res) => {
+  console.log("deleteSchedule", req.body);
+  let { id, key } = req.body;
+  let deleteSchedule =
+    "delete from schedule where manager_id=? and schedule_key=?";
+  conn.query(deleteSchedule, [id, key], (err, rows) => {
+    if (rows) {
+      console.log("일정 삭제 성공!");
+      res.json({ deleteScheduleResult: true });
+    } else {
+      console.log("일정 삭제 실패!", err);
+      res.json({ deleteScheduleResult: false });
+    }
+  });
+});
+
 module.exports = router;

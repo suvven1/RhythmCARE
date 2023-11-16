@@ -138,6 +138,24 @@ function Calendar() {
     // 선택된 이벤트가 없다면 무시
     if (!selectedEvent) return;
 
+    // 선택한 일정 DB에서 삭제
+    axios
+      .post("/calender/deleteSchedule", {
+        id: userData.data.manager_id,
+        key: selectedEvent.key,
+      })
+      .then((res) => {
+        if (res.data.deleteScheduleResult) {
+          alert("일정을 삭제하였습니다.");
+          deleteSchedule();
+        } else {
+          alert("일정을 삭제하지 못했습니다. 다시 시도해주세요.");
+        }
+      });
+  };
+
+  // 일정 막대 삭제 함수
+  const deleteSchedule = () => {
     // 선택된 이벤트를 제외한 나머지 이벤트들로 배열을 업데이트
     const updatedEvents = events.filter((event) => event !== selectedEvent);
 

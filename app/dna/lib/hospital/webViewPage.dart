@@ -15,7 +15,6 @@ class _WebViewPageState extends State<WebViewPage> {
 
   // 전화걸기 함수
   void _call(String phoneNumber) async{
-    final String url = 'tel:'+phoneNumber;
     if (await canLaunchUrl(Uri(scheme: 'tel', path: phoneNumber))){
       await launchUrl(Uri(scheme: 'tel', path: phoneNumber));
     } else {
@@ -25,6 +24,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
   // 웹뷰
   late final WebViewController _controller;
+  final String hospitalUrl = 'http://115.95.222.206/hospitalapp';
 
   @override
   void initState() {
@@ -82,7 +82,7 @@ class _WebViewPageState extends State<WebViewPage> {
           _call(message.message);
         },
       )
-      ..loadRequest(Uri.parse('http://192.168.0.250:3000/hospitalapp'));
+      ..loadRequest(Uri.parse(hospitalUrl));
 
     if (controller.platform is AndroidWebViewController) {
       AndroidWebViewController.enableDebugging(true);
