@@ -203,20 +203,20 @@ router.post("/changeImg", upload.single("image"), (req, res) => {
 //
 //
 // 뱃지 불러오기 시작 ------------------------------------------------------------------------------------------
-router.post("/badge", (req, res) => {
-  console.log("badge", req.body);
-  let { id } = req.body;
-  let deleteSql = "delete from user where manager_id=?";
-  conn.query(deleteSql, [id], (err, rows) => {
-    if (rows) {
-      console.log("[탈퇴] 회원탈퇴 성공!");
-      res.json({ deleteResult: true });
-    } else {
-      console.log("[탈퇴] 회원탈퇴 실패!");
-      res.json({ deleteResult: false });
-    }
-  });
-});
+// router.post("/badge", (req, res) => {
+//   console.log("badge", req.body);
+//   let { id } = req.body;
+//   let badgeSql = "select from user where manager_id=?";
+//   conn.query(badgeSql, [id], (err, rows) => {
+//     if (rows) {
+//       console.log("[뱃지] 뱃지조회 성공!");
+//       res.json({ badgeResult: true });
+//     } else {
+//       console.log("[뱃지] 뱃지조회 실패!");
+//       res.json({ badgeResult: false });
+//     }
+//   });
+// });
 // 뱃지 불러오기 끝 --------------------------------------------------------------------------------------------
 //
 //

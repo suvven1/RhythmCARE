@@ -10,11 +10,14 @@ import Badge from "./Badge/Badge";
 import ChangeNick from "./Change/ChangeNick";
 const MyPage = () => {
   const userData = useContext(UserContext);
+  // const [userData, setUserData] = useState(data);
 
   useEffect(() => {
     if (userData == null) {
       window.location.replace("/");
     }
+    console.log(userData);
+    // setUserData(data);
   }, []);
 
   // 닉네임 변경 모달 띄우기

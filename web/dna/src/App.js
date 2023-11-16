@@ -23,7 +23,10 @@ import FindIdPw from "./components/Login/FindIdPw";
 function App() {
   const getUserData = JSON.parse(localStorage.getItem("userData"));
   const [userData, setUserData] = useState(getUserData);
-  console.log(userData);
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
   return (
     <div>
       <UserContext.Provider value={userData}>
