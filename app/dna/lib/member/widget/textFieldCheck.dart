@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class textFieldCheck extends StatefulWidget {
-  textFieldCheck({Key? key, required this.Con, required this.idpw, this.checkFt, required this.checkIcon}) : super(key: key);
+  textFieldCheck({Key? key, required this.Con, required this.hint, this.checkFt, required this.checkIcon}) : super(key: key);
 
   final TextEditingController Con;
-  final String idpw;
+  final String hint;
   final Function()? checkFt;
-  final bool checkIcon;
+  final int checkIcon;
 
   @override
   State<textFieldCheck> createState() => _textFieldCheckState();
 }
 
 class _textFieldCheckState extends State<textFieldCheck> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -26,7 +29,7 @@ class _textFieldCheckState extends State<textFieldCheck> {
           style: TextStyle(fontSize: 20),
           controller: widget.Con,
           decoration: InputDecoration(
-            hintText: widget.idpw,
+            hintText: widget.hint,
             border: InputBorder.none,
           ),
         ),
@@ -37,7 +40,11 @@ class _textFieldCheckState extends State<textFieldCheck> {
           Padding(
             padding: const EdgeInsets.all(15),
             child: Image.asset(
-              widget.checkIcon ? 'image/checkTrue.png' : 'image/checkFalse.png',
+              widget.checkIcon==0
+                  ? 'image/checknull.png'
+                  : widget.checkIcon==1
+                  ? 'image/checkTrue.png'
+                  : 'image/checkFalse.png',
               width: 25,
             ),
           ),

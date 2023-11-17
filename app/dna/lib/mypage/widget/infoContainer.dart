@@ -1,6 +1,6 @@
 import 'package:dna/mypage/widget/badge/badgeList.dart';
-import 'package:dna/mypage/widget/infoGuard/infoGuard.dart';
-import 'package:dna/mypage/widget/infoUser.dart';
+import 'package:dna/mypage/widget/infomation/infoGuard.dart';
+import 'package:dna/mypage/widget/infomation/infoUser.dart';
 import 'package:dna/mypage/widget/leave/leave.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

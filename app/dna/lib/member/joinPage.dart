@@ -22,26 +22,52 @@ class _joinPageState extends State<joinPage> {
   final pwCon = TextEditingController();
   final pw2Con = TextEditingController();
 
-  bool useableNick = false;
-  bool useableId = false;
-  bool useablePw = false;
-  bool useablePw2 = false;
+  int useableNick = 0;
+  int useableId = 0;
+  int useablePw = 0;
+  int useablePw2 = 0;
 
   // test용 변수
+  // 중복확인 버튼 클릭 시,
   // 해당 변수와 textField의 string이 같으면 true를 반환함.
   String sameNick = 'test';
   String sameId = 'test';
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    pwCon.addListener(() {
+
+    });
+    pw2Con.addListener(() {
+
+    });
+  }
+
+
   // 닉네임 중복검사 함수
   void _useable(){
     setState(() {
-      NickCon.text == sameNick ? useableNick = true : useableNick = false;
+      NickCon.text == '' ? useableNick = 0 : NickCon.text == sameNick ? useableNick = 1 : useableNick = 2;
     });
   }
   // 아이디 중복검사 함수
   void _useable2(){
     setState(() {
-      idCon.text == sameId ? useableId = true : useableId = false;
+      idCon.text == '' ? useableId = 0 : idCon.text == sameId ? useableId = 1 : useableId = 2;
+    });
+  }
+  // 비밀번호 가능?
+  void _pwState(String check, TextEditingController textCon){
+    setState(() {
+      useablePw = textCon.text=='' ? 0 : textCon.text == check ? 1 : 2;
+    });
+  }
+  // 비밀번호 확인
+  void _pwState2(String check, TextEditingController textCon){
+    setState(() {
+      useablePw2 = textCon.text=='' ? 0 : textCon.text == check ? 1 : 2;
     });
   }
 
@@ -65,17 +91,17 @@ class _joinPageState extends State<joinPage> {
                   ),
                   Text('아이디/비밀번호 입니다.', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                   SizeBoxH10,
-                  textFieldCheck(Con: NickCon, idpw: "닉네임", checkIcon: useableNick, checkFt: _useable, ),
-                  Text(useableNick ? '    *사용가능한 닉네임입니다.' : '', style: TextStyle(color: Colors.green[900]),),
+                  textFieldCheck(Con: NickCon, hint: "닉네임", checkIcon: useableNick, checkFt: _useable, ),
+                  Text(useableNick==0 ? '' : useableNick == 1 ? '    *사용가능한 닉네임입니다.' : '', style: TextStyle(color: Colors.green[900]),),
                   SizeBoxH10,
-                  textFieldCheck(Con: idCon, idpw: "아이디", checkIcon: useableId, checkFt: _useable2),
-                  Text(useableId ? '    *사용가능한 아이디입니다.' : '', style: TextStyle(color: Colors.green[900]),),
+                  textFieldCheck(Con: idCon, hint: "아이디", checkIcon: useableId, checkFt: _useable2),
+                  Text(useableId==0 ? '' : useableId == 1 ? '    *사용가능한 아이디입니다.' : '', style: TextStyle(color: Colors.green[900]),),
                   SizeBoxH10,
-                  textFieldCheck(Con: pwCon, idpw: "비밀번호", checkIcon: useablePw),
-                  Text(useablePw ? '    *사용가능한 비밀번호입니다.' : '', style: TextStyle(color: Colors.green[900]),),
+                  textFieldCheck(Con: pwCon, hint: "비밀번호", checkIcon: useablePw),
+                  Text(useablePw==0 ? '' : useablePw == 1 ? '    *사용가능한 비밀번호입니다.' : '', style: TextStyle(color: Colors.green[900]),),
                   SizeBoxH10,
-                  textFieldCheck(Con: pw2Con, idpw: '비밀번호 확인', checkIcon: useablePw2),
-                  Text(useablePw2 ? '    *같은 비밀번호를 입력하셨습니다.' : '', style: TextStyle(color: Colors.green[900]),),
+                  textFieldCheck(Con: pw2Con, hint: '비밀번호 확인', checkIcon: useablePw2),
+                  Text(useablePw2==0 ? '' : useablePw2 == 1 ? '    *같은 비밀번호를 입력하셨습니다.' : '', style: TextStyle(color: Colors.green[900]),),
                   SizedBox(height: 204,),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
