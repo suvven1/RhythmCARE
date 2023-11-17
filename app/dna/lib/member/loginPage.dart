@@ -27,45 +27,6 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  FlutterBlue flutterBlue = FlutterBlue.instance;
-  List<ScanResult> scanResultList = [];
-
-  static const platform = MethodChannel('rhythm_channel');
-
-  Future<void> _getNativeValue() async {
-    String value;
-
-    try{
-      value = await platform.invokeMethod("getBle");
-    } on PlatformException catch (e){
-      value = 'native code error: ${e.message}';
-    }
-
-    setState(() {
-
-    });
-  }
-
-  // void initBle() async {
-  //   await _getNativeValue();
-  //   flutterBlue.isScaning.listen((isScanning) {
-  //     setState(() {
-  //
-  //     });
-  //   });
-  // }
-
-  void test() async{
-    bool value;
-
-    try{
-      value = await platform.invokeMethod("getConnect");
-      print(value);
-    } on PlatformException catch (e){
-      print('getCpnnect False.');
-    }
-  }
-
   MypageController mypageController = Get.put(MypageController());
   TextEditingController idCon = TextEditingController();
   TextEditingController pwCon = TextEditingController();
@@ -81,9 +42,6 @@ class _loginPageState extends State<loginPage> {
     isSelected = [isGuard, isUser];
     super.initState();
     initialization();
-
-    //ble instance 생성
-    // initBle();
   }
 
   void initialization() async {
@@ -101,7 +59,7 @@ class _loginPageState extends State<loginPage> {
   // 로그인 서버 통신 함수
   void login(bool who, idCon, pwCon) async {
     print("start");
-    String url = "http://192.168.70.230:3333/user/login";
+    String url = "http://115.95.222.206:80/user/login";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'user': who, 'id': idCon.text, 'pw': pwCon.text}));
@@ -161,21 +119,9 @@ class _loginPageState extends State<loginPage> {
                         onPressed: () async {
                           // 로그인 버튼 클릭 시, id pw 를 run 창에 출력
                           // true : 보호자, false : 사용자
-                          // printIdPw(isGuard, idCon, pwCon);
+                          printIdPw(isGuard, idCon, pwCon);
                           // 로그인 버튼 클릭 시, 액션을 여기에 넣으면 됨
-                          // login(isGuard, idCon, pwCon);
-                          test();
-                          // // 블루투스 활성화 여부 확인
-                          // bool isBluetoothEnabled =
-                          //     await FlutterBlue.instance.isOn;
-                          // if (!isBluetoothEnabled) {
-                          //   // 블루투스가 비활성화된 경우 활성화 요청
-                          //   await ScaffoldMessenger.of(context)
-                          //       .showSnackBar(SnackBar(
-                          //     content: Text('블루투스 연결필요'),
-                          //     duration: const Duration(seconds: 2),
-                          //   ));
-                          // }
+                          login(isGuard, idCon, pwCon);
                         },
                       ),
                       SizeBoxH20,

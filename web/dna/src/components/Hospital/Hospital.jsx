@@ -4,16 +4,20 @@ import styled from "styled-components";
 const { kakao } = window;
 
 const Hospital = () => {
+
   const [map, setMap] = useState(null)
 
   const [markers, setMarkers] = useState([]);
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(
     parseInt(localStorage.getItem("selectedPlace"), 10) || null);
+  const [infowindow, setInfowindow] = useState(null)
 
   
 
   const mapscript = (userLatitude, userLongitude) => {
+
+
     const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     const options = { //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(userLatitude, userLongitude), //지도의 중심좌표.
@@ -23,17 +27,9 @@ const Hospital = () => {
     const newMap = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     setMap(newMap)
 
-    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+    const newInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+    setInfowindow(newInfowindow)
 
-
-    const displayInfoWindow = (marker, title) => {
-      infowindow.close()
-
-      const content = `<div>${title}</div>`;
-      infowindow.setContent(content);
-      infowindow.open(newMap, marker);
-    };
-    
     const ps = new kakao.maps.services.Places(newMap)
 
     function searchPlaces() {
@@ -51,8 +47,7 @@ const Hospital = () => {
           bounds.extend(placePosition);
 
           kakao.maps.event.addListener(marker, "click", function () {
-            displayInfoWindow(marker, place.place_name);
-
+            handleMarkerClick(marker, place.place_name, index)
             const listItem = document.getElementById(`place-${index}`);
             if (listItem) {
               listItem.click();
@@ -63,6 +58,7 @@ const Hospital = () => {
         });
 
         setMarkers(newMarkers);
+
         if (map) {
           map.setBounds(bounds);
         } else {
@@ -91,6 +87,17 @@ const Hospital = () => {
     searchPlaces()
   }
 
+  const handleMarkerClick = (marker, title, index) => {
+    infowindow.close();
+
+    const content = `<div>${title}</div>`;
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+
+    setSelectedPlace(index);
+    localStorage.setItem("selectedPlace", index.toString());
+  };
+
   const handleListItemClick = (index) => {
     if(!map) {
       console.error("Map is not avilable")
@@ -100,14 +107,9 @@ const Hospital = () => {
     const marker = markers[index];
     const place = places[index];
     const placePosition = new kakao.maps.LatLng(place.y, place.x);
-    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
     map.setCenter(placePosition);
-    infowindow.setContent(`<div>${place.place_name}</div>`);
-    infowindow.open(map, marker);
-
-    setSelectedPlace(index);
-    localStorage.setItem("selectedPlace", index.toString());
+    handleMarkerClick(marker, place.place_name, index)
   };
 
   useEffect(() => {
@@ -164,6 +166,7 @@ const HospitalBox = styled.div`
     height: 700px;
     border-radius: 20px;
     margin-right: 300px;
+    order: 2;
   }
 
 
@@ -172,6 +175,7 @@ const HospitalBox = styled.div`
     max-height: 700px; 
     padding: 0; 
     margin-left: 300px;
+    order: 1;
   }
 
   & li {
@@ -189,6 +193,33 @@ const HospitalBox = styled.div`
 
   & hr {
     margin-top: 17px;
+  }
+
+  @media only screen and (max-width: 1040px){
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0px;
+
+    & #map{
+      order: 1;
+      width:80% ;
+      height: 400px;
+      margin-right: 0px;
+
+    }
+
+    & ul{
+      margin-top: 20px;
+      order: 2;
+    margin-left: 0px;
+    max-height: 300px; 
+
+    }
+    & li {
+    height: 60px;
+
+    }
   }
 `;
 
