@@ -77,11 +77,11 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
                 style: style,
               ),
               SizeBoxH10,
-              textFieldCheck(Con: pwCon, hint: '기존 비밀번호', checkIcon: pwCheck),
-              SizeBoxH10,
-              textFieldCheck(Con: newPwCon, hint: '변경할 비밀번호', checkIcon: useablePw),
-              SizeBoxH10,
-              textFieldCheck(Con: newPwCon2, hint: '비밀번호 확인', checkIcon: useablePw2),
+              // textFieldCheck(Con: pwCon, hint: '기존 비밀번호', checkIcon: pwCheck),
+              // SizeBoxH10,
+              // textFieldCheck(Con: newPwCon, hint: '변경할 비밀번호', checkIcon: useablePw),
+              // SizeBoxH10,
+              // textFieldCheck(Con: newPwCon2, hint: '비밀번호 확인', checkIcon: useablePw2),
               SizeBoxH30,
               ElevatedButton(onPressed: (){
                 Get.back();

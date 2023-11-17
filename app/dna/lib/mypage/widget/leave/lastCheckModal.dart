@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import '../../../member/loginPage.dart';
-import '../../GetMyPageController.dart';
+import '../../../controller/GetMyPageController.dart';
 import '../../myPage.dart';
 
 

@@ -3,7 +3,7 @@ import 'package:dna/member/widget/textField.dart';
 import 'package:dna/mypage/widget/leave/lastCheckModal.dart';
 
 // 탈퇴 인증 모달장
-showPopUp(context) {
+showLeaveDialog(context) {
 
   TextEditingController idCon = TextEditingController();
   TextEditingController pwCon = TextEditingController();

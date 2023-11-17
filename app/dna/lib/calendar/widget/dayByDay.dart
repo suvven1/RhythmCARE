@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../GetXCalendar.dart';
+import '../../controller/GetXCalendar.dart';
 
 class dayByDay extends StatelessWidget {
   const dayByDay({

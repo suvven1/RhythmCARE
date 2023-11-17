@@ -4,7 +4,8 @@ import 'dart:ffi';
 import 'package:dna/member/widget/joinWidget.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton.dart';
-import 'package:dna/mypage/GetMyPageController.dart';
+import 'package:dna/controller/GetMyPageController.dart';
+import 'package:dna/snackBarMessage/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -66,17 +67,15 @@ class _loginPageState extends State<loginPage> {
 
     // 로그인 결과를 받아와 변수에 저장
     var resData = jsonDecode(res.body);
-    mypageController.setUserData(resData);
     print(resData);
 
     setState(() {
       if (resData["loginResult"] != false) {
+        mypageController.setUserData(resData);
         Get.off(() => mainPage());
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              '${resData["loginResult"]["name"]}(${resData["loginResult"]["nick"]})님 환영합니다.'),
-          duration: const Duration(seconds: 2),
-        ));
+        showSnackBar(context, '${resData["loginResult"]["name"]}(${resData["loginResult"]["nick"]})님 환영합니다.');
+      }else{
+        showSnackBar(context, '아이디 또는 비밀번호가 일치하지 않습니다.');
       }
     });
   }

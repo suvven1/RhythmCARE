@@ -55,7 +55,7 @@ class _mainPageState extends State<mainPage> {
     super.initState();
     Future.delayed(Duration.zero, () {
       setState(() {
-        showPopUp(context);
+        showConnectDialog(context);
       });
     });
   }

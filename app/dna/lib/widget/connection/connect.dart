@@ -21,7 +21,7 @@ void checkBlue  (context) async {
 
 
 // 탈퇴 인증 모달장
-showPopUp(context) {
+showConnectDialog(context) {
   showDialog(
     context: context,
     builder: (context) {

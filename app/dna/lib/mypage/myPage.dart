@@ -1,4 +1,4 @@
-import 'package:dna/mypage/GetMyPageController.dart';
+import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/mypage/widget/infoContainer.dart';
 import 'package:dna/mypage/widget/profileImage.dart';
 import 'package:dna/mypage/widget/profileNick.dart';
