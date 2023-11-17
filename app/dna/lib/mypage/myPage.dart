@@ -46,6 +46,7 @@ class _myPageState extends State<myPage> {
                 profileNick(mypage.nick.value),
                 SizeBoxH20,
                 infoContainer(infomationGuard, informationUser, context),
+                SizeBoxH30,
               ],
             ),
           ),
