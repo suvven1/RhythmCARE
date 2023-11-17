@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:dna/member/widget/textField.dart';
-import 'package:dna/mypage/widget/leave/lastCheckModal.dart';
 
-// 탈퇴 인증 모달장
-showLeaveDialog(context) {
+import '../../../member/widget/textFieldCheck.dart';
+import '../../../widget/sizeBox.dart';
 
-  TextEditingController idCon = TextEditingController();
-  TextEditingController pwCon = TextEditingController();
+// 비밀번호 변경 모달장
+showChangePwDialog(context) {
+
+  final pwCon = TextEditingController();
+  final pw2Con = TextEditingController();
+  bool useablePw = false;
+  bool useablePw2 = false;
+
+  // 비밀번호 유효성 체크 함수
+  void checkPwUseable(String text){
+
+  }
+
+  // 비밀번호확인 유효성 체크 함수
+  void checkPw2Useable(String text){
+
+  }
+
 
   showDialog(
     context: context,
@@ -31,15 +46,11 @@ showLeaveDialog(context) {
                   width: MediaQuery.of(context).size.width * 0.65,
                 ),
                 const SizedBox(height: 25),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-                  child: textField(idCon, "아이디"),
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-                  child: textField(pwCon, "비밀번호"),
-                ),
+                textFieldCheck(Con: pwCon, idpw: "비밀번호", checkIcon: useablePw, checkUseable: checkPwUseable,),
+                Text(useablePw ? '    *사용가능한 비밀번호입니다.' : '', style: TextStyle(color: Colors.green[900]),),
+                SizeBoxH10,
+                textFieldCheck(Con: pw2Con, idpw: '비밀번호 확인', checkIcon: useablePw2, checkUseable: checkPw2Useable,),
+                Text(useablePw2 ? '    *같은 비밀번호를 입력하셨습니다.' : '', style: TextStyle(color: Colors.green[900]),),
                 const SizedBox(height: 30),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -59,7 +70,7 @@ showLeaveDialog(context) {
                     ),
                   ),
                   onPressed: () {
-                    showFinalCheck(context, idCon, pwCon);
+                    // showFinalCheck(context, idCon, pwCon);
                   },
                 ),
               ],

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../widget/sizeBox.dart';
-import '../GetMyPageController.dart';
+import '../../controller/GetMyPageController.dart';
 
 infoContainer(Map infomationGuard, Map informationUser, context) {
 
@@ -21,7 +21,7 @@ infoContainer(Map infomationGuard, Map informationUser, context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        infoGuard(infomationGuard),
+        infoGuard(infomationGuard, context),
         SizeBoxH30,
         infoUser(informationUser),
         SizeBoxH30,

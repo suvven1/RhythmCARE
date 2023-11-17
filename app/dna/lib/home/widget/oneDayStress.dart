@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../GetController.dart';
+import '../../controller/GetController.dart';
 
 class oneDayStress extends StatelessWidget {
   const oneDayStress({super.key});

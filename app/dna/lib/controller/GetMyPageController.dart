@@ -38,6 +38,7 @@ class MypageController extends GetxController {
     print(badgeData);
   }
   void setUserData(Map data) {
+
     // 유저 전체 데이터
     userData.value = data["loginResult"];
 

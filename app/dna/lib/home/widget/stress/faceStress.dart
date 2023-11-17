@@ -1,4 +1,4 @@
-import 'package:dna/GetController.dart';
+import 'package:dna/controller/GetController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

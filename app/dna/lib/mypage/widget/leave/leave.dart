@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 
-import '../../GetMyPageController.dart';
+import '../../../controller/GetMyPageController.dart';
 import '../../myPage.dart';
 import 'package:dna/mypage/widget/leave/leaveModal.dart';
 
@@ -23,7 +23,7 @@ leave(context) {
           Text('회원탈퇴'),
           ElevatedButton(
             onPressed: () {
-              showPopUp(context);
+              showLeaveDialog(context);
             },
             child: Text('탈퇴하기'),
             style: ButtonStyle(),

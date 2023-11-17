@@ -1,4 +1,4 @@
-import 'package:dna/GetController.dart';
+import 'package:dna/controller/GetController.dart';
 import 'package:dna/home/widget/grass.dart';
 import 'package:dna/home/widget/heartBeat.dart';
 import 'package:dna/home/widget/testWidget.dart';

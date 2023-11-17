@@ -1,4 +1,4 @@
-import 'package:dna/calendar/GetXCalendar.dart';
+import 'package:dna/controller/GetXCalendar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class textFieldCheck extends StatefulWidget {
-  textFieldCheck({Key? key, required this.Con, required this.idpw, this.checkFt, required this.checkIcon}) : super(key: key);
+  textFieldCheck({Key? key, required this.Con, required this.idpw, this.checkDup, required this.checkIcon, required this.checkUseable}) : super(key: key);
 
   final TextEditingController Con;
   final String idpw;
-  final Function()? checkFt;
+  final Function()? checkDup;
+  final Function(String)? checkUseable;
   final bool checkIcon;
 
   @override
@@ -23,6 +24,7 @@ class _textFieldCheckState extends State<textFieldCheck> {
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(12))),
         child: TextField(
+          onChanged: (text){ widget.checkUseable!(text);},
           style: TextStyle(fontSize: 20),
           controller: widget.Con,
           decoration: InputDecoration(
@@ -41,7 +43,7 @@ class _textFieldCheckState extends State<textFieldCheck> {
               width: 25,
             ),
           ),
-          widget.checkFt == null
+          widget.checkDup == null
               ? SizedBox()
               : TextButton(
             style: TextButton.styleFrom(
@@ -61,7 +63,7 @@ class _textFieldCheckState extends State<textFieldCheck> {
                 color: Color(0xff2e2288),
               ),
             ),
-            onPressed: widget.checkFt,
+            onPressed: widget.checkDup,
           )
         ],
       ),

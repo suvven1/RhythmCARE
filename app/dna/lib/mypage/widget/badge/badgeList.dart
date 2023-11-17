@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../GetMyPageController.dart';
+import '../../../controller/GetMyPageController.dart';
 
 badgeList() {
   MypageController userData = Get.put(MypageController());

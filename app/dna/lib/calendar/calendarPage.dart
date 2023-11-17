@@ -1,4 +1,4 @@
-import 'package:dna/calendar/GetXCalendar.dart';
+import 'package:dna/controller/GetXCalendar.dart';
 import 'package:dna/calendar/widget/calendarWidget.dart';
 import 'package:dna/calendar/widget/schaduleContents.dart';
 import 'package:dna/calendar/widget/scheduleDialog.dart';
