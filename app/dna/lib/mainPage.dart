@@ -83,7 +83,7 @@ class _mainPageState extends State<mainPage> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-            color: Colors.white,
+            color: currentPageIndex == 4 ? Colors.grey[200] : Colors.white,
             padding: EdgeInsets.only(
                 left: MediaQuery.of(context).size.width * 0.05,
                 right: MediaQuery.of(context).size.width * 0.05
