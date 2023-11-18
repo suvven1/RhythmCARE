@@ -1,9 +1,9 @@
 import React from "react";
-import ReactApexChart from 'react-apexcharts';
+import ReactApexChart from "react-apexcharts";
 import styled from "styled-components";
 
 const Rhythm = () => {
-  var heartbeat = 80
+  var heartbeat = 80;
   var stress = 62;
   var fatigue = 50;
 
@@ -11,14 +11,14 @@ const Rhythm = () => {
   const StressBar = () => {
     const options = {
       chart: {
-        type: 'bar',
+        type: "bar",
         height: 350,
       },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '60%',
-          endingShape: 'rounded',
+          columnWidth: "60%",
+          endingShape: "rounded",
         },
       },
       dataLabels: {
@@ -27,14 +27,39 @@ const Rhythm = () => {
       stroke: {
         show: true,
         width: 2,
-        colors: ['transparent'],
+        colors: ["transparent"],
       },
       xaxis: {
-        categories: ['AM 12', ' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8', ' 9', ' 10', ' 11', 'PM 12', ' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8', ' 9', ' 10', ' 11'],
+        categories: [
+          "AM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
+          "PM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
+        ],
       },
       yaxis: {
         max: 100,
-        tickAmount: 4
+        tickAmount: 4,
       },
       // fill: {
       //   opacity: 1,
@@ -46,26 +71,30 @@ const Rhythm = () => {
       //     },
       //   },
       // },
-      colors: ['#4bb56d']
+      colors: ["#4bb56d"],
     };
 
     const series = [
       {
-        name: 'Stress',
+        name: "Stress",
         data: [44, 55, 57, 56, 61, 58, 63, 60, 80],
       },
     ];
 
     return (
       <div id="chart">
-        <ReactApexChart options={options} series={series} type="bar" height={350} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="bar"
+          height={350}
+        />
       </div>
     );
   };
 
   // 스트레스 라인 그래프-------------
   const StressLine = () => {
-
     const today = new Date();
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
@@ -73,23 +102,22 @@ const Rhythm = () => {
     const formatDate = (date) => {
       const month = date.getMonth() + 1;
       const day = date.getDate();
-      return `${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+      return `${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
     };
-
 
     const options = {
       chart: {
         height: 350,
-        type: 'line',
+        type: "line",
         zoom: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: 'smooth'
+        curve: "smooth",
       },
       // grid: {
       //   row: {
@@ -107,37 +135,42 @@ const Rhythm = () => {
       yaxis: {
         min: 0,
         max: 100,
-        tickAmount: 4
+        tickAmount: 4,
       },
-      colors: ['#4bb56d']
-    }
+      colors: ["#4bb56d"],
+    };
 
     const series = [
       {
         name: "Stress",
-        data: [10, 41, 35, 51, 49, 62, 6]
-      }
-    ]
+        data: [10, 41, 35, 51, 49, 62, 6],
+      },
+    ];
 
     return (
       <div id="lineChart">
-        <ReactApexChart options={options} series={series} type="line" height={350} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="line"
+          height={350}
+        />
       </div>
     );
-  }
+  };
 
   // 피로도 바 그래프----------------
   const FatigueBar = () => {
     const options = {
       chart: {
-        type: 'bar',
+        type: "bar",
         height: 350,
       },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '60%',
-          endingShape: 'rounded',
+          columnWidth: "60%",
+          endingShape: "rounded",
         },
       },
       dataLabels: {
@@ -146,14 +179,39 @@ const Rhythm = () => {
       stroke: {
         show: true,
         width: 2,
-        colors: ['transparent'],
+        colors: ["transparent"],
       },
       xaxis: {
-        categories: ['AM 12', ' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8', ' 9', ' 10', ' 11', 'PM 12', ' 1', ' 2', ' 3', ' 4', ' 5', ' 6', ' 7', ' 8', ' 9', ' 10', ' 11'],
+        categories: [
+          "AM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
+          "PM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
+        ],
       },
       yaxis: {
         max: 100,
-        tickAmount: 4
+        tickAmount: 4,
       },
       fill: {
         opacity: 1,
@@ -165,26 +223,30 @@ const Rhythm = () => {
           },
         },
       },
-      colors: ['#5c95d0']
+      colors: ["#5c95d0"],
     };
 
     const series = [
       {
-        name: 'Fatigue',
+        name: "Fatigue",
         data: [44, 55, 57, 56, 61, 58, 63, 60, 80],
       },
     ];
 
     return (
       <div id="chart">
-        <ReactApexChart options={options} series={series} type="bar" height={350} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="bar"
+          height={350}
+        />
       </div>
     );
   };
 
   // 피로도 라인 그래프--------------
   const FatigueLine = () => {
-
     const today = new Date();
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
@@ -192,23 +254,22 @@ const Rhythm = () => {
     const formatDate = (date) => {
       const month = date.getMonth() + 1;
       const day = date.getDate();
-      return `${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+      return `${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
     };
-
 
     const options = {
       chart: {
         height: 350,
-        type: 'line',
+        type: "line",
         zoom: {
-          enabled: false
-        }
+          enabled: false,
+        },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: 'smooth'
+        curve: "smooth",
       },
       // grid: {
       //   row: {
@@ -226,28 +287,37 @@ const Rhythm = () => {
       yaxis: {
         min: 0,
         max: 100,
-        tickAmount: 4
+        tickAmount: 4,
       },
-      colors: ['#5c95d0']
-    }
+      colors: ["#5c95d0"],
+    };
 
     const series = [
       {
         name: "Fatigue",
-        data: [10, 41, 35, 51, 49, 62, 6]
-      }
-    ]
+        data: [10, 41, 35, 51, 49, 62, 6],
+      },
+    ];
 
     return (
       <div id="lineChart">
-        <ReactApexChart options={options} series={series} type="line" height={350} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="line"
+          height={350}
+        />
       </div>
     );
-  }
+  };
 
   return (
     <div>
       <HeartBeat>
+        <img
+          src={`${process.env.PUBLIC_URL}/images/rhythm/web_heartbeat.gif`}
+          alt=""
+        />
         <p id="hb">{heartbeat}</p>
         <p>bpm</p>
       </HeartBeat>
@@ -271,9 +341,16 @@ const Rhythm = () => {
           <NowStatus>
             <p>
               현재 스트레스는 <br />
-              <span>{stress > 60 ? '높은' : '낮은'}</span> 상태 입니다
+              <span>{stress > 60 ? "높은" : "낮은"}</span> 상태 입니다
             </p>
-            <img src={process.env.PUBLIC_URL + `/images/rhythm/${stress > 60 ? 'bad_status.png' : 'nice_status.png'}`} />
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                `/images/rhythm/${
+                  stress > 60 ? "bad_status.png" : "nice_status.png"
+                }`
+              }
+            />
           </NowStatus>
 
           {/* 하루 */}
@@ -284,7 +361,6 @@ const Rhythm = () => {
           <Title>한 주 스트레스</Title>
           <StressLine />
         </StressBox>
-
 
         <FatigueBox>
           <Title>현재 피로도 지수</Title>
@@ -304,9 +380,16 @@ const Rhythm = () => {
           <NowStatus>
             <p>
               현재 피로도는 <br />
-              <span>{fatigue > 60 ? '높은' : '낮은'}</span> 상태 입니다
+              <span>{fatigue > 60 ? "높은" : "낮은"}</span> 상태 입니다
             </p>
-            <img src={process.env.PUBLIC_URL + `/images/rhythm/${fatigue > 60 ? 'bad_status.png' : 'nice_status.png'}`} />
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                `/images/rhythm/${
+                  fatigue > 60 ? "bad_status.png" : "nice_status.png"
+                }`
+              }
+            />
           </NowStatus>
 
           {/* 하루 */}
@@ -315,21 +398,16 @@ const Rhythm = () => {
 
           {/* 한 주 */}
           <Title>한 주 피로도</Title>
-          <FatigueLine/>
-
+          <FatigueLine />
         </FatigueBox>
       </MeasurementBox>
       <RaderBox>
         <p>
-          건강 그래프<br/>
-          한 눈에 보기
+          건강 그래프
+          <br />한 눈에 보기
         </p>
-        <div>
-          그래프가 들어갈 공간 
-        </div>
+        <div>그래프가 들어갈 공간</div>
       </RaderBox>
-
-
     </div>
   );
 };
@@ -340,12 +418,19 @@ export default Rhythm;
 const HeartBeat = styled.div`
   margin-top: 50px;
   width: 100%;
-  height: 460PX;
-  background-image:  url("${process.env.PUBLIC_URL}/images/rhythm/web_heartbeat.gif");
+  height: 460px;
+  /* background-image: url("${process.env
+    .PUBLIC_URL}/images/rhythm/web_heartbeat.gif"); */
   background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  & img {
+    position: absolute;
+    z-index: -1;
+    width: 130%;
+  }
 
   & #hb {
     margin-top: 150px;
@@ -358,11 +443,11 @@ const HeartBeat = styled.div`
     font-size: 40px;
     font-weight: bold;
   }
-`
+`;
 
 const Title = styled.h2`
   font-size: 28px;
-`
+`;
 
 // 스트레스 피로도 전체 div---------
 const MeasurementBox = styled.div`
@@ -377,7 +462,7 @@ const MeasurementBox = styled.div`
 const StressBox = styled.div`
   width: 50%;
   margin-left: 300px;
-  `;
+`;
 
 // 피로도 div
 const FatigueBox = styled.div`
@@ -389,20 +474,20 @@ const FatigueBox = styled.div`
 const CircleBack = styled.div`
   width: 100%;
   height: 90px;
-  background-image:  url("${process.env.PUBLIC_URL}/images/rhythm/status.png");
+  background-image: url("${process.env.PUBLIC_URL}/images/rhythm/status.png");
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 30px;
-  `;
+`;
 
 // circle을 위한 div(0% or 100% 위치해 있을 때 여백을 주기위한 용도)
 const CircleBack2 = styled.div`
   width: 80%;
   height: 90px;
   position: relative;
-  `
+`;
 
 const Circle = styled.div`
   width: 60px;
@@ -427,13 +512,13 @@ const RowHighText = styled.div`
   }
 
   & .row {
-    color : #4bb56d
+    color: #4bb56d;
   }
 
   & .high {
     color: #da4b3c;
   }
-`
+`;
 
 // 현재 상태
 const NowStatus = styled.div`
@@ -444,11 +529,11 @@ const NowStatus = styled.div`
 
   & p {
     font-size: 22px;
-    font-weight : bold;
+    font-weight: bold;
     color: #212e3d;
-    
+
     & span {
-      color: #ec7271
+      color: #ec7271;
     }
   }
 
@@ -456,7 +541,7 @@ const NowStatus = styled.div`
     width: 100px;
     height: 100px;
   }
-`
+`;
 // 방사형 그래프
 const RaderBox = styled.div`
   width: 100%;
