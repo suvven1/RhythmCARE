@@ -7,8 +7,9 @@ infoUser(Map informationUser) {
     children: [
       Text(
         "기기 사용자 정보",
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
       ),
+      SizeBoxH10,
       horisonLine,
       Table(
         border: TableBorder.symmetric(inside: BorderSide()),
@@ -20,7 +21,7 @@ infoUser(Map informationUser) {
                   (index) => TableRow(children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${informationUser.keys.toList()[index]}'),
+                  child: Center(child: Text('${informationUser.keys.toList()[index]}', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
