@@ -23,11 +23,7 @@ class GetXCalendar extends GetxController{
     return maxDay[month - 1];
   }
 
-  RxList<List<String>> toDoList = [
-    ['병원 예약', '2023-11-09', '2023-11-12', '0xffeb6867'],
-    ['하하하하하핳', '2023-11-15', '2023-11-16', '0xffeb6867'],
-    ['어 왜 안 되지?', '2023-11-16', '2023-11-17', '0xff47b794'],
-  ].obs;
+  RxList<List<String>> toDoList = RxList<List<String>>();
 
 
 
@@ -39,8 +35,8 @@ class GetXCalendar extends GetxController{
     DateTime lastDate = DateTime.now();
     DateTime currentDate = DateTime.now();
     while(i<toDoList.length){
-      startDate = DateTime.parse(toDoList[i]![1]);
-      lastDate = DateTime.parse(toDoList[i]![2]);
+      startDate = DateTime.parse(toDoList[i]![3]);
+      lastDate = DateTime.parse(toDoList[i]![4]);
       while(j<thirtyOrOne(month)+1){
         currentDate = DateTime(year, month, j);
         if(!startDate.isAfter(currentDate) && !lastDate.isBefore(currentDate)){
@@ -62,4 +58,26 @@ class GetXCalendar extends GetxController{
   // void selectedTrue(int select){
   //   selectedDay = select.obs;
   // }
+
+  // 켈린더 정보 초기화
+  void setCalenderData(List data){
+
+    for(int i = 0; i < data.length; i++){
+      List<String> stringList = List<String>.from(data[i].values.toList());
+      if(stringList[5] == "#eb6867"){
+        stringList[5] = '0xffeb6867';
+      }else if(stringList[5] == "#f39a47"){
+        stringList[5] = '0xfff39a47';
+      }else if(stringList[5] == "#47b794"){
+        stringList[5] = '0xff47b794';
+      }else if(stringList[5] == "#1eb2d4"){
+        stringList[5] = '0xff1eb2d4';
+      }else{
+        stringList[5] = '0xff762fc1';
+      }
+      toDoList.add(stringList);
+    }
+
+    print(toDoList);
+  }
 }

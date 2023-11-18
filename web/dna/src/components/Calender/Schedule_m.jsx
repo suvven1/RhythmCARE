@@ -3,23 +3,27 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
 
-const ScheduleModal = ({ onClose, handleAddSchedule, count, setCount }) => {
+const ScheduleModal = ({ onClose, handleAddSchedule, events }) => {
   const [title, setTitle] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [color, setColor] = useState("");
   const [defaultColor, setDefaultColor] = useState("#eb6867");
-
   // 서버에 일정 추가
-  const userData = useContext(UserContext);
-  const updateSchedule = (key, id, title, start, end, color) => {
-    setCount(key);
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
+  const updateSchedule = (id, title, start, end, color) => {
     axios
-      .post("/calender/updateSchedule", { key, id, title, start, end, color })
+      .post("/calender/updateSchedule", {
+        id,
+        title,
+        start,
+        end,
+        color,
+      })
       .then((res) => {
         if (res.data.updateScheduleResult) {
           alert("일정 추가가 완료되었습니다.");
-          onClose();
+          window.location.replace("/calender");
         } else {
           alert("일정 추가 실패! 일정을 다시 입력해주세요.");
         }
@@ -28,27 +32,9 @@ const ScheduleModal = ({ onClose, handleAddSchedule, count, setCount }) => {
 
   const handleAdd = () => {
     if (title && start && end && color) {
-      const adjustedEnd = new Date(end);
-      adjustedEnd.setDate(adjustedEnd.getDate() + 1);
-      handleAddSchedule({
-        key: count++,
-        title,
-        start,
-        end: adjustedEnd.toISOString().split("T")[0],
-        color,
-      });
-      updateSchedule(
-        count++,
-        userData.data.manager_id,
-        title,
-        start,
-        end,
-        color
-      );
+      updateSchedule(loginData.id, title, start, end, color);
     } else {
       alert("모든 필드를 입력하세요.");
-      console.log(start);
-      console.log(end);
     }
   };
 

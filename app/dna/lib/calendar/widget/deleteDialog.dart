@@ -32,7 +32,7 @@ class deleteDialog extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color(int.parse(todayList![3]))),
+                  color: Color(int.parse(todayList![5]))),
             ),
             SizeBoxH10,
             Row(
@@ -49,7 +49,7 @@ class deleteDialog extends StatelessWidget {
                       width: double.infinity,
                       child: Center(
                         child: Text(
-                          todayList![0],
+                          todayList![2],
                           style: TextStyle(fontSize: 25),
                         ),
                       )),
@@ -71,7 +71,7 @@ class deleteDialog extends StatelessWidget {
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            todayList![1],
+                            todayList![3],
                             style: TextStyle(fontSize: 25),
                           ),
                         ))),
@@ -92,7 +92,7 @@ class deleteDialog extends StatelessWidget {
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            todayList![2],
+                            todayList![4],
                             style: TextStyle(fontSize: 25),
                           ),
                         ))),

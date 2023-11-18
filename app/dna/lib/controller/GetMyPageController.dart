@@ -23,11 +23,6 @@ class MypageController extends GetxController {
   // 뱃지 정보
   RxList<String> badgeData = <String>[].obs;
 
-  // get stressText => stressValue>60 ? '높은':'낮은';
-  // get stressImage => stressValue>60 ? 'image/heart_bad.png':'image/heart_good.png';
-  //
-  // get tiredText => tiredValue>60 ? '높은':'낮은';
-  // get tiredImage => tiredValue>60 ? 'image/heart_bad.png':'image/heart_good.png';
   void setImgData(List<int> imgData ) {
     imageData.assignAll(imgData);
 
@@ -68,19 +63,5 @@ class MypageController extends GetxController {
     userName.value = userData["data"]["user_name"];
     userHP.value = userData["data"]["user_hp"];
     userBD.value = userData["data"]["user_bd"];
-  }
-
-  @override
-  void onInit() {
-    // // 1초마다 피로도 값 확인 후, 콜백함수 실행
-    // interval(tiredValue, (_) {
-    //   if (tiredValue > 60) {
-    //     print('피로도 높음');
-    //   } else {
-    //     print('피로도 낮음');
-    //   }
-    // },
-    //   time: Duration(seconds: 1),
-    // );
   }
 }

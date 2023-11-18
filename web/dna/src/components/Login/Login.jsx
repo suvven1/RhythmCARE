@@ -5,7 +5,7 @@ import axios from "../../axios";
 
 const Login = () => {
   const nav = useNavigate();
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState("mem");
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
@@ -20,19 +20,17 @@ const Login = () => {
   const login = (e) => {
     e.preventDefault();
     axios.post("/user/login", { user: user, id: id, pw: pw }).then((res) => {
-      if (res.data.loginResult) {
-        const userData = {
-          data: res.data.loginResult.data,
-          name: res.data.loginResult.name,
-          nick: res.data.loginResult.nick,
-          badge: res.data.loginResult.badgeData,
-        };
+      const loginData = res.data.loginResult;
+      if (typeof loginData == "object") {
+        loginData.id = id;
         attendDate();
-        alert(`${userData.name}(${userData.nick})님 환영합니다!`);
-        localStorage.setItem("userData", JSON.stringify(userData));
+        alert(`${loginData.name}(${loginData.nick})님 환영합니다!`);
+        localStorage.setItem("loginData", JSON.stringify(loginData));
         window.location.replace("/");
-      } else {
+      } else if (loginData) {
         alert("아이디 또는 비밀번호를 확인해주세요!");
+      } else {
+        alert("알 수 없는 이유로 오류가 발생하였습니다.");
       }
     });
   };
@@ -54,14 +52,16 @@ const Login = () => {
       }-${today.getDate()}`;
     }
   };
-  // const date = "2023-11-26";
+  // const date = "2023-11-22";
 
   const attendDate = () => {
     axios.post("/attend/dateCal", { id: id, today: getDate() }).then((res) => {
-      console.log(res.data);
-      alert(
-        `누적 출석일수 : ${res.data.total}일\n연속 출석일수 : ${res.data.con}일`
-      );
+      const attendResult = res.data.attendResult;
+      if (attendResult) {
+        alert(
+          `누적 출석일수 : ${attendResult.total}일\n연속 출석일수 : ${attendResult.continue}일`
+        );
+      }
     });
   };
 
@@ -78,7 +78,7 @@ const Login = () => {
             type="radio"
             id="toggle-switch"
             name="switch"
-            value={true}
+            value={"mem"}
             defaultChecked
             onChange={(e) => {
               setUser(e.target.value);
@@ -91,7 +91,7 @@ const Login = () => {
             type="radio"
             id="toggle-switch2"
             name="switch"
-            value={false}
+            value={"user"}
             onChange={(e) => {
               setUser(e.target.value);
             }}

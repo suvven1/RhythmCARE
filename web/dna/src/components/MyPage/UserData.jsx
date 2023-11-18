@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { UserContext } from "../../context/UserContext";
 
 const UserData = () => {
-  const userData = useContext(UserContext)?.data;
+  const userData = useContext(UserContext);
   return (
     <UserDataBox>
       <table>
@@ -14,11 +14,11 @@ const UserData = () => {
           </tr>
           <tr>
             <th>휴대폰번호</th>
-            <th>{userData?.user_hp}</th>
+            <th>{userData?.user_phone}</th>
           </tr>
           <tr>
             <th>생년월일</th>
-            <th>{userData?.user_bd}</th>
+            <th>{userData?.user_birthdate}</th>
           </tr>
         </tbody>
       </table>

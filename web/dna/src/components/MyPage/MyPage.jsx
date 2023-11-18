@@ -10,14 +10,11 @@ import Badge from "./Badge/Badge";
 import ChangeNick from "./Change/ChangeNick";
 const MyPage = () => {
   const userData = useContext(UserContext);
-  // const [userData, setUserData] = useState(data);
 
   useEffect(() => {
     if (userData == null) {
       window.location.replace("/");
     }
-    console.log(userData);
-    // setUserData(data);
   }, []);
 
   // 닉네임 변경 모달 띄우기
@@ -38,7 +35,7 @@ const MyPage = () => {
         {/* 유저 닉네임 표시 */}
         <NickBox>
           <div style={{ fontWeight: "bold" }}>
-            {userData == null ? "" : userData.nick}
+            {userData == null ? "" : userData.mem_nick}
           </div>
           <VscEdit onClick={showChangeNick} />
         </NickBox>

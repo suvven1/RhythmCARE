@@ -8,19 +8,6 @@ import styled from "styled-components";
 const LoginData = () => {
   const nav = useNavigate();
 
-  // 이전 버튼으로 다시 돌아왔을때 기존 입력 데이터 유지
-  const returnData = useLocation().state;
-  useEffect(() => {
-    if (returnData != null) {
-      setId(returnData.loginData.id);
-      setNick(returnData.loginData.nick);
-      setPw(returnData.loginData.pw);
-      setRePw(returnData.loginData.pw);
-      checkDupID();
-      checkDupNick();
-    }
-  }, []);
-
   // 아이디 관련 변수
   const [id, setId] = useState("");
   const [passID, setPassID] = useState();
@@ -144,6 +131,24 @@ const LoginData = () => {
       alert("회원가입 정보를 올바르게 입력해주세요.");
     }
   };
+
+  // 이전 버튼으로 다시 돌아왔을때 기존 입력 데이터 유지
+  const returnData = useLocation().state;
+  useEffect(() => {
+    if (returnData != null) {
+      setId(returnData.loginData.id);
+      setNick(returnData.loginData.nick);
+      setPw(returnData.loginData.pw);
+      setRePw(returnData.loginData.pw);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (returnData != null) {
+      checkDupID();
+      checkDupNick();
+    }
+  }, [id, nick]);
 
   return (
     <LoginDataBox>

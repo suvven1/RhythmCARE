@@ -1,3 +1,4 @@
+import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,8 @@ class scheduleDialog extends StatefulWidget {
 }
 
 class _scheduleDialogState extends State<scheduleDialog> {
+  MypageController mypageController = Get.put(MypageController());
+
   TextEditingController schaduleCon = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
@@ -31,6 +34,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
 
   String selectedColor = '0xffeb6867';
   int selectedColorBorder = 1;
+
+  void uploadSchedule(){
+
+    Get.back();
+  }
 
   @override
   void initState() {
@@ -313,6 +321,8 @@ class _scheduleDialogState extends State<scheduleDialog> {
                       startDayAdd = startDay!;
                       lastDayAdd = lastDay!;
                       widget.toDoList.add([
+                        "key",
+                        mypageController.managerID.value,
                         schaduleCon.text,
                         startDayAdd.toString().split(' ')[0],
                         lastDayAdd.toString().split(' ')[0],
@@ -323,6 +333,8 @@ class _scheduleDialogState extends State<scheduleDialog> {
                       startDayAdd = selectedDate;
                       lastDayAdd = selectedDate;
                       widget.toDoList.add([
+                        "key",
+                        mypageController.managerID.value,
                         schaduleCon.text,
                         startDayAdd.toString().split(' ')[0],
                         lastDayAdd.toString().split(' ')[0],
@@ -339,12 +351,14 @@ class _scheduleDialogState extends State<scheduleDialog> {
                           ? startDayAdd = selectedDate
                           : lastDayAdd = selectedDate;
                       widget.toDoList.add([
+                        "key",
+                        mypageController.managerID.value,
                         schaduleCon.text,
                         startDayAdd.toString().split(' ')[0],
                         lastDayAdd.toString().split(' ')[0],
                         selectedColor
                       ]);
-                      Get.back();
+                      uploadSchedule();
                     } else {
                       Get.dialog(AlertDialog(
                         title: Text(

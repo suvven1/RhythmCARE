@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const SideBarContents = ({ close }) => {
   const userData = useContext(UserContext);
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
 
   const closeMenu = () => {
     close(true);
@@ -18,13 +19,13 @@ const SideBarContents = ({ close }) => {
 
   // 로컬 스토리지에서 불러온 이미지 데이터 변환
   const conImg = btoa(
-    String.fromCharCode(...new Uint8Array(userData?.data.img?.data))
+    String.fromCharCode(...new Uint8Array(userData?.mem_profile_img?.data))
   );
 
   return (
     <SideBarContentBox>
       <UserDataBox>
-        {userData == null ? (
+        {loginData == null ? (
           <>
             <ImgBox>
               <Link to="/login" onClick={closeMenu}>
@@ -43,7 +44,7 @@ const SideBarContents = ({ close }) => {
             <ImgBox>
               <div className="innerImgBox" style={{ backgroundColor: "white" }}>
                 <Link to="/mypage" onClick={closeMenu}>
-                  {userData.data.img != null ? (
+                  {userData.mem_profile_img != null ? (
                     <img
                       src={`data:image/png;base64,${conImg}`}
                       alt="유저사진"
@@ -59,7 +60,7 @@ const SideBarContents = ({ close }) => {
             </ImgBox>
             <LoginedUserBox>
               <Link to="/mypage" className="goTOmypage" onClick={closeMenu}>
-                {userData.name}({userData.nick})
+                {loginData.name}({loginData.nick})
               </Link>
               <Link to="/" onClick={logout}>
                 로그아웃

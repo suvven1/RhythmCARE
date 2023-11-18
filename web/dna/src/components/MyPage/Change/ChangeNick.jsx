@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "../../../axios";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import styled from "styled-components";
-import { UserContext } from "../../../context/UserContext";
 
 const ChangeNick = ({ setChangeNickOpen }) => {
-  const userData = useContext(UserContext);
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   // 닉네임 관련 변수
   const [nick, setNick] = useState("");
   const [passNick, setPassNick] = useState();
@@ -47,7 +46,7 @@ const ChangeNick = ({ setChangeNickOpen }) => {
     if (passDupNick) {
       axios
         .post("/user/changeNick", {
-          id: userData.data.manager_id,
+          id: loginData.id,
           nick: nick,
         })
         .then((res) => {

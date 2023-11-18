@@ -8,7 +8,8 @@ import { UserContext } from "../../context/UserContext";
 import isEqual from "lodash/isEqual";
 import axios from "../../axios";
 const Header = () => {
-  const userData = useContext(UserContext);
+  const oldUserData = useContext(UserContext);
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   const locationData = useLocation().pathname;
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
 
@@ -37,24 +38,21 @@ const Header = () => {
   // 새로고침시 유저 정보 받아오기
   const [update, setUpdate] = useState(false);
   useEffect(() => {
-    console.log("update user data");
-    axios
-      .post("/user/login", {
-        id: userData?.data.manager_id,
-        pw: userData?.data.password,
-      })
-      .then((res) => {
-        if (res.data.loginResult) {
-          const user = {
-            data: res.data.loginResult.data,
-            name: userData.name,
-            nick: res.data.loginResult.nick,
-            badge: res.data.loginResult.badgeData,
-          };
-          localStorage.setItem("userData", JSON.stringify(user));
-          if (!isEqual(user, userData)) window.location.replace(locationData);
-        }
-      });
+    if (loginData != undefined) {
+      axios
+        .post("/user/getUserData", {
+          id: loginData.id,
+        })
+        .then((res) => {
+          const newUserData = res.data.userData;
+          if (newUserData) {
+            localStorage.setItem("userData", JSON.stringify(newUserData));
+            if (!isEqual(newUserData, oldUserData)) {
+              window.location.replace(locationData);
+            }
+          }
+        });
+    }
   }, []);
 
   return (
@@ -89,7 +87,7 @@ const Header = () => {
                   <Link to="/community">커뮤니티</Link>
                 </div>
               </ContentBox>
-              {userData == null ? (
+              {loginData == null ? (
                 <UserContainer>
                   로그인이 필요합니다.
                   <UserBox>
@@ -103,7 +101,7 @@ const Header = () => {
                 </UserContainer>
               ) : (
                 <UserContainer>
-                  {userData.name}({userData.nick})
+                  {loginData.name}({loginData.nick})
                   <UserBox>
                     <div>
                       <Link onClick={logout}>로그아웃</Link>

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dna/controller/GetXCalendar.dart';
 import 'package:dna/calendar/widget/calendarWidget.dart';
 import 'package:dna/calendar/widget/schaduleContents.dart';
@@ -7,6 +9,9 @@ import 'package:dna/calendar/widget/title.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+import '../controller/GetMyPageController.dart';
 
 class calendarPage extends StatefulWidget {
   const calendarPage({super.key});
@@ -16,6 +21,8 @@ class calendarPage extends StatefulWidget {
 }
 
 class _calendarPageState extends State<calendarPage> {
+  final MypageController mypageController = Get.put(MypageController());
+  final GetXCalendar controller = Get.put(GetXCalendar());
   late List<List<List<String>>> toDoList;
   late List<List<Color>> toDoColor;
 
@@ -24,9 +31,35 @@ class _calendarPageState extends State<calendarPage> {
     return maxDay[month - 1];
   }
 
+  // 캘린더 정보 조회 함수
+  void getCalendarData() async {
+    controller.toDoList.clear();
+    String url = "http://115.95.222.206:80/calender/getSchedule";
+    http.Response res = await http.post(Uri.parse(url),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode({"id": mypageController.managerID.value}));
+
+    // 로그인 결과를 받아와 변수에 저장
+    var resData = jsonDecode(res.body)["scheduleData"];
+
+    setState(() {
+      if (resData != false) {
+        controller.setCalenderData(resData);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("this is calender page!");
+    getCalendarData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final GetXCalendar controller = Get.put(GetXCalendar());
+
     return GetX<GetXCalendar>(builder: (_) {
       // controller.toDoColor.add(toDoColor);
       return ListView(

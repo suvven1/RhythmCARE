@@ -5,7 +5,6 @@ import axios from "../../axios";
 const UserData = () => {
   const nav = useNavigate();
   const loginData = useLocation().state?.loginData;
-
   useEffect(() => {
     if (loginData == null) {
       nav("/");

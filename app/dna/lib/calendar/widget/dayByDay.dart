@@ -24,7 +24,7 @@ class dayByDay extends StatelessWidget {
             List<Widget> toDoColorContainer() {
               List<Widget> resultList = [];
               for (int i = 0; i < controller.todayList[day].length; i++) {
-                Color color = Color(int.parse(controller.todayList[day][i][3]));
+                Color color = Color(int.parse(controller.todayList[day][i][5]));
                 resultList.add(Container(
                   height: 10,
                   margin: EdgeInsets.only(bottom: 2),

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,45 +7,32 @@ import styled from "styled-components";
 import ScheduleModal from "./Schedule_m";
 import DetailModal from "./detail_m";
 import axios from "../../axios";
-import { UserContext } from "../../context/UserContext";
 
 function Calendar() {
-  const userData = useContext(UserContext);
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   const calendarRef = useRef(null);
-  const [count, setCount] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [events, setEvents] = useState([
-    {
-      key: "",
-      title: "",
-      start: "",
-      end: "",
-      backgroundColor: "",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
 
   // 일정 정보 불러오기
   useEffect(() => {
-    axios
-      .post("/calender/getSchedule", { id: userData.data.manager_id })
-      .then((res) => {
-        if (res.data.scheduleData) {
-          setCount(res.data.scheduleCount);
-          res.data.scheduleData.map((schedule) => {
-            const newEvent = {
-              key: schedule.schedule_key,
-              title: schedule.schedule_title,
-              start: schedule.schedule_start,
-              end: schedule.schedule_end,
-              backgroundColor: schedule.schedule_color,
-            };
-            setEvents((prevEvents) => [...prevEvents, newEvent]);
-          });
-        }
-      });
+    axios.post("/calender/getSchedule", { id: loginData.id }).then((res) => {
+      if (res.data.scheduleData) {
+        res.data.scheduleData.map((schedule) => {
+          const newEvent = {
+            key: schedule.sche_idx,
+            title: schedule.sche_title,
+            start: schedule.started_at.split("T")[0],
+            end: schedule.ended_at.split("T")[0],
+            backgroundColor: schedule.sche_color,
+          };
+          setEvents((prevEvents) => [...prevEvents, newEvent]);
+        });
+      }
+    });
   }, []);
 
   const handleDateClick = (arg) => {
@@ -71,19 +58,6 @@ function Calendar() {
     calendarApi.gotoDate(today);
     calendarApi.select(today);
     setSelectedDate(today.toISOString().split("T")[0]);
-  };
-
-  // 일정추가하기 - 열기
-  const handleAddSchedule = ({ key, title, start, end, color }) => {
-    const newEvent = {
-      key,
-      title,
-      start,
-      end,
-      backgroundColor: color,
-    };
-    setEvents((prevEvents) => [...prevEvents, newEvent]);
-    setShowModal(true);
   };
 
   // 일정추가하기 - 닫기
@@ -141,29 +115,17 @@ function Calendar() {
     // 선택한 일정 DB에서 삭제
     axios
       .post("/calender/deleteSchedule", {
-        id: userData.data.manager_id,
+        id: loginData.id,
         key: selectedEvent.key,
       })
       .then((res) => {
         if (res.data.deleteScheduleResult) {
           alert("일정을 삭제하였습니다.");
-          deleteSchedule();
+          window.location.replace("/calender");
         } else {
           alert("일정을 삭제하지 못했습니다. 다시 시도해주세요.");
         }
       });
-  };
-
-  // 일정 막대 삭제 함수
-  const deleteSchedule = () => {
-    // 선택된 이벤트를 제외한 나머지 이벤트들로 배열을 업데이트
-    const updatedEvents = events.filter((event) => event !== selectedEvent);
-
-    // 캘린더 상태 업데이트
-    setEvents(updatedEvents);
-
-    // 상세 모달 닫기
-    setShowDetailModal(false);
   };
 
   return (
@@ -205,14 +167,7 @@ function Calendar() {
           <button className="addScheduleBtn" onClick={() => setShowModal(true)}>
             일정 추가하기
           </button>
-          {showModal && (
-            <ScheduleModal
-              onClose={closeModal}
-              handleAddSchedule={handleAddSchedule}
-              setCount={setCount}
-              count={count}
-            />
-          )}
+          {showModal && <ScheduleModal onClose={closeModal} events={events} />}
           {showDetailModal && (
             <DetailModal
               onClose={() => setShowDetailModal(false)}

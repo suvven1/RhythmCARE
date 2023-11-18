@@ -27,19 +27,19 @@ const ManagerData = () => {
         <tbody>
           <tr>
             <th>이름</th>
-            <th>{userData?.name}</th>
+            <th>{userData?.mem_name}</th>
           </tr>
           <tr>
             <th>휴대폰번호</th>
-            <th>{userData?.data.manager_hp}</th>
+            <th>{userData?.mem_phone}</th>
           </tr>
           <tr>
             <th>생년월일</th>
-            <th>{userData?.data.manager_bd}</th>
+            <th>{userData?.mem_birthdate}</th>
           </tr>
           <tr>
             <th>아이디</th>
-            <th>{userData?.data.manager_id}</th>
+            <th>{userData?.mem_id}</th>
           </tr>
           <tr>
             <th>비밀번호</th>

@@ -12,7 +12,7 @@ schaduleContents(
           padding: EdgeInsets.zero,
         ),
         child: Text(
-          todayList[i][0],
+          todayList[i][2],
           style: TextStyle(
             fontSize: 25,
           ),

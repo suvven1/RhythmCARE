@@ -1,11 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { UserContext } from "../../../context/UserContext";
 import CheckDelete from "./CheckDelete";
 
 const Delete = () => {
-  const userData = useContext(UserContext);
-
   // 모달창
   const [deleteOpen, setDeleteOpen] = useState(false);
   const showDelete = () => {

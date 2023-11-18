@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const Image = () => {
   // 유저 전체 정보
-  const userData = useContext(UserContext)?.data;
+  const userData = useContext(UserContext);
 
   // 이미지 변환시 바로 표시하는 기능
   const [img, setImg] = useState({ pre: "", data: "" });
@@ -35,7 +35,7 @@ const Image = () => {
   const sendImg = () => {
     let formData = new FormData();
     formData.append("image", img.data);
-    formData.append("id", userData.manager_id);
+    formData.append("id", userData.mem_id);
     axios
       .post("/user/changeImg", formData, {
         headers: {
@@ -62,13 +62,13 @@ const Image = () => {
 
   // 로컬 스토리지에서 불러온 이미지 데이터 변환
   const conImg = btoa(
-    String.fromCharCode(...new Uint8Array(userData?.img?.data))
+    String.fromCharCode(...new Uint8Array(userData?.mem_profile_img?.data))
   );
 
   return (
     <ImageBox>
       <Img>
-        {userData?.img != null ? (
+        {userData?.mem_profile_img != null ? (
           <img src={`data:image/png;base64,${conImg}`} alt="유저사진" />
         ) : (
           <img

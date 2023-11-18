@@ -6,7 +6,7 @@ import styled from "styled-components";
 import axios from "../../../axios";
 
 const ChangePW = ({ setChangePwOpen }) => {
-  const userData = useContext(UserContext);
+  const userData = JSON.parse(localStorage.getItem("loginData"));
 
   // 비밀번호 유효성 검사 함수 시작 ------------------------------------------------------------------------------------
   // 기존 비밀번호 관련 변수
@@ -14,20 +14,35 @@ const ChangePW = ({ setChangePwOpen }) => {
   const [passPW, setPassPW] = useState();
   const [checkPWText, setCheckPWText] = useState("");
   const checkPW = () => {
-    if (pw == userData.data.password) {
-      setPassPW(true);
-      setCheckPWText("* 비밀번호가 일치합니다.  변경할 비밀번호를 입력하세요.");
-    } else if (pw == "") {
+    if (pw == "") {
       setPassPW();
       setCheckPWText();
     } else {
-      setPassPW(false);
-      setCheckPWText("* 비밀번호가 일치하지않습니다.");
     }
   };
   useEffect(() => {
     checkPW();
   }, [pw]);
+
+  // 로그인 함수
+  const checkOldPw = (e) => {
+    e.preventDefault();
+    axios
+      .post("/user/login", { user: "mem", id: userData.id, pw: pw })
+      .then((res) => {
+        const loginData = res.data.loginResult;
+        if (typeof loginData == "object") {
+          setPassPW(true);
+          setCheckPWText("* 비밀번호가 일치합니다.");
+          changePW();
+        } else if (loginData) {
+          setPassPW(false);
+          setCheckPWText("* 비밀번호가 일치하지않습니다.");
+        } else {
+          alert("알 수 없는 이유로 오류가 발생하였습니다.");
+        }
+      });
+  };
 
   // 변경할 비밀번호 관련 변수
   const [changePw, setChangePw] = useState("");
@@ -75,16 +90,14 @@ const ChangePW = ({ setChangePwOpen }) => {
 
   // 비밀번호 변경 함수 시작----------------------------------------------------------------------------
   const changePW = () => {
-    if (passChangePW && passPW && passRePW) {
+    if (passChangePW && passRePW) {
       axios
         .post("/user/changePw", {
-          id: userData.data.manager_id,
+          id: userData.id,
           changePw: changePw,
         })
         .then((res) => {
           if (res.data.changePwResult) {
-            userData.data.password = changePw;
-            localStorage.setItem("userData", JSON.stringify(userData));
             setChangePwOpen(false);
             alert("비밀번호 변경이 완료 되었습니다.");
           }
@@ -217,7 +230,7 @@ const ChangePW = ({ setChangePwOpen }) => {
         <Warning>{checkRePWText}</Warning>
       </ChangePwInput>
       <div className="btnBox">
-        <button onClick={changePW}>변경</button>
+        <button onClick={checkOldPw}>변경</button>
         <button onClick={closeChangePw}>취소</button>
       </div>
     </ChangePWBox>

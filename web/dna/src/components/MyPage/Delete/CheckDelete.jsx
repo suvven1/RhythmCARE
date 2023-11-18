@@ -1,11 +1,10 @@
 import axios from "../../../axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../../../context/UserContext";
 
 const CheckDelete = ({ setDeleteOpen }) => {
-  const userData = useContext(UserContext);
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
@@ -20,18 +19,18 @@ const CheckDelete = ({ setDeleteOpen }) => {
     }
   };
   const deleteUser = () => {
-    if (userData.data.manager_id == id && userData.data.password == pw) {
-      axios.post("/user/delete", { id: id }).then((res) => {
+    if (loginData.id == id) {
+      axios.post("/user/delete", { id: id, pw: pw }).then((res) => {
         if (res.data.deleteResult) {
           alert("탈퇴가 완료되었습니다.");
           localStorage.clear();
           window.location.replace("/");
         } else {
-          alert("알수없는 이유로 탈퇴를 실패하였습니다.");
+          alert("아이디 비밀번호가 일치하지 않습니다.");
         }
       });
     } else {
-      alert("아이디 비밀번호가 일치하지 않습니다.");
+      alert("현재 로그인한 계정의 아이디 비밀번호를 입력해주세요.");
     }
   };
 
