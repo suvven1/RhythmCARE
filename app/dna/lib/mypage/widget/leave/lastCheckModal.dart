@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:dna/snackBarMessage/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../member/loginPage.dart';
 import '../../../controller/GetMyPageController.dart';
 import '../../myPage.dart';
@@ -11,32 +13,32 @@ import '../../myPage.dart';
 
 //탈퇴 여부 최종 확인 모달창
 showFinalCheck(context, idCon, pwCon) {
-  MypageController mypage = Get.put(MypageController());
-
   // 회원탈퇴 서버 통신 함수
   void delete(idCon, pwCon) async {
-    if(idCon.text == mypage.managerID.value && pwCon.text == mypage.managerPW.value){
-      String url = "http://192.168.70.134:3333/user/delete";
+    final loginDataStorage = await SharedPreferences.getInstance();
+    final id = loginDataStorage.getString('id') ?? '';
+
+    if(id == idCon.text){
+      String url = "http://192.168.1.106:3333/user/delete";
       http.Response res = await http.post(Uri.parse(url),
           headers: <String, String>{'Content-Type': 'application/json'},
-          body: jsonEncode({'id': idCon.text}));
+          body: jsonEncode({'id': idCon.text, 'pw': pwCon.text}));
 
       // 탈퇴 결과를 받아와 변수에 저장
-      var resData = jsonDecode(res.body);
-      if(resData["deleteResult"]){
+      var deleteResult = jsonDecode(res.body)["deleteResult"];
+      if(deleteResult){
+        loginDataStorage.clear();
         Get.off(()=> loginPage());
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('탈퇴가 완료되었습니다.'),
-              duration: const Duration(seconds: 1),)
-        );
+        showSnackBar(context, '탈퇴가 완료되었습니다.', 3);
+      }else{
+        Get.off(()=> myPage());
+        showSnackBar(context, '아이디 또는 비밀번호가 일치하지 않습니다.', 3);
       }
     }else{
       Get.off(()=> myPage());
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('아이디 또는 비밀번호가 일치하지 않습니다.'),
-            duration: const Duration(seconds: 3),)
-      );
+      showSnackBar(context, '현재 로그인된 계정의 아이디를 입력해주세요.', 3);
     }
+
   }
   showDialog(
     context: context,

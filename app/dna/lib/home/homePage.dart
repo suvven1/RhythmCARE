@@ -7,6 +7,8 @@ import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../snackBarMessage/snackBar.dart';
+
 class homePage extends StatefulWidget {
   const homePage({super.key});
 
@@ -48,25 +50,32 @@ class _homePageState extends State<homePage> {
     Get.put(ReactiveController());
     return GetX<ReactiveController>(
       builder: (controller) {
-        return ListView(
-          children: [
-            heartbeatTestWidget(),
-            // 심박수
-            heartBeat(controller.hearBeatNum.value),
-            // 스트레스 모델
-            visualModel(context, "스트레스"),
-            SizeBoxH30,
-            horisonLine,
-            SizeBoxH30,
-            // 피로도
-            visualModel(context, "피로도"),
-            SizeBoxH30,
-            horisonLine,
-            SizeBoxH30,
-            // 잔디심기
-            grass(grassColor(walkNum)),
-            SizeBoxH30,
-          ],
+        return RefreshIndicator(
+          onRefresh: () async {
+            setState(() {
+              showSnackBar(context, "화면새로고침 완료", 2);
+            });
+          },
+          child: ListView(
+            children: [
+              heartbeatTestWidget(),
+              // 심박수
+              heartBeat(controller.hearBeatNum.value),
+              // 스트레스 모델
+              visualModel(context, "스트레스"),
+              SizeBoxH30,
+              horisonLine,
+              SizeBoxH30,
+              // 피로도
+              visualModel(context, "피로도"),
+              SizeBoxH30,
+              horisonLine,
+              SizeBoxH30,
+              // 잔디심기
+              grass(grassColor(walkNum)),
+              SizeBoxH30,
+            ],
+          ),
         );
       },
     );

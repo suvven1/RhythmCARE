@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../controller/GetMyPageController.dart';
+import 'badgeDetailDialog.dart';
 
 badgeList() {
   MypageController userData = Get.put(MypageController());
   List<String> badgeData = [];
   List<dynamic> badgeImg = [];
   List<String> badgeName = [];
-  if (userData.userData["badgeData"] != null) {
-    badgeData = List<String>.from(userData.userData["badgeData"]);
-    for(int i = badgeData.length; i < 20; i++){
-      badgeData.add("s");
-    }
-    print("제발좀 : ${badgeData}");
+  badgeData = List<String>.from(userData.badgeData);
+  for (int i = badgeData.length; i < 20; i++) {
+    badgeData.add("?");
   }
   for (int i = 0; i < 20; i++) {
     if (i < 10) {
@@ -64,7 +62,6 @@ badgeList() {
         badgeName.add("????");
       }
     } else if (i < 20) {
-
       if (badgeData.contains("t${i - 14}")) {
         badgeImg.add("badge${i + 1}");
         if (i == 15) {
@@ -84,7 +81,6 @@ badgeList() {
       }
     }
   }
-print(badgeName);
   return Table(
     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
     children: [
@@ -93,21 +89,31 @@ print(badgeName);
           (propsIndex) => TableRow(
                   children: List.generate(
                 4,
-                (index) => Container(
-                  height: 80,
-                  margin: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                          'image/badge/${badgeImg[index + propsIndex * 4]}.png',
-                          height: 60),
-                      Text(
-                        badgeName[index + propsIndex * 4],
-                        style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                (index) => GestureDetector(
+                  onTap: (){
+                    Get.dialog(
+                        badgeDetailDialog(
+                            badgeImg: 'image/badge/${badgeImg[index + propsIndex * 4]}.png',
+                            badgeName: badgeName[index + propsIndex * 4]
+                        )
+                    );
+                  },
+                  child: Container(
+                    height: 80,
+                    margin: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                            'image/badge/${badgeImg[index + propsIndex * 4]}.png',
+                            height: 60),
+                        Text(
+                          badgeName[index + propsIndex * 4],
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )))

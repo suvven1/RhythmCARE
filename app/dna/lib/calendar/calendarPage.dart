@@ -10,6 +10,7 @@ import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controller/GetMyPageController.dart';
 
@@ -33,13 +34,15 @@ class _calendarPageState extends State<calendarPage> {
 
   // 캘린더 정보 조회 함수
   void getCalendarData() async {
+    final loginDataStorage = await SharedPreferences.getInstance();
+    final id = loginDataStorage.getString('id') ?? '';
     controller.toDoList.clear();
-    String url = "http://115.95.222.206:80/calender/getSchedule";
+    String url = "http://192.168.1.106:3333/calender/getSchedule";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
-        body: jsonEncode({"id": mypageController.managerID.value}));
+        body: jsonEncode({"id": id}));
 
-    // 로그인 결과를 받아와 변수에 저장
+    // 일정 조회 결과를 받아와 변수에 저장
     var resData = jsonDecode(res.body)["scheduleData"];
 
     setState(() {
@@ -62,45 +65,53 @@ class _calendarPageState extends State<calendarPage> {
 
     return GetX<GetXCalendar>(builder: (_) {
       // controller.toDoColor.add(toDoColor);
-      return ListView(
-        children: [
-          // 현재 년/월 표시
-          titleWidget(),
-          horisonLine,
-          // 현재 달력 표시
-          calendarWidget(),
-          SizeBoxH20,
-          horisonLine,
-          SizeBoxH10,
-          // 현재 선택된 날의 요일 표시
-          scheduleTitle(context, controller.selectedDate),
-          // 현재 선택된 날의 일정 표시
-          schaduleContents(
-              context,
-              controller.selectedDay.value,
-              controller.todayList[controller.selectedDay.value],
-              controller.toDoList),
-          ElevatedButton(
-            child: Text(
-              "일정 추가하기",
-              style: TextStyle(fontSize: 20),
+      return RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            getCalendarData();
+          });
+        },
+        child: ListView(
+          children: [
+            // 현재 년/월 표시
+            titleWidget(),
+            horisonLine,
+            // 현재 달력 표시
+            calendarWidget(),
+            SizeBoxH20,
+            horisonLine,
+            SizeBoxH10,
+            // 현재 선택된 날의 요일 표시
+            scheduleTitle(context, controller.selectedDate),
+            // 현재 선택된 날의 일정 표시
+            schaduleContents(
+                context,
+                controller.selectedDay.value,
+                controller.todayList[controller.selectedDay.value],
+                controller.toDoList, getCalendarData),
+            ElevatedButton(
+              child: Text(
+                "일정 추가하기",
+                style: TextStyle(fontSize: 20),
+              ),
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)),
+                backgroundColor: MaterialStateProperty.all(Color(0xff2e2288)),
+                shape: MaterialStateProperty.all(StadiumBorder()),
+              ),
+              onPressed: () {
+                Get.dialog(
+                    scheduleDialog(
+                  selectedYear: controller.selectedYear.value,
+                  selectedMonth: controller.selectedMonth.value,
+                  selectedDay: controller.selectedDay.value,
+                  toDoList: controller.toDoList,
+                ),).then((value){if(value)getCalendarData();});
+              },
             ),
-            style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)),
-              backgroundColor: MaterialStateProperty.all(Color(0xff2e2288)),
-              shape: MaterialStateProperty.all(StadiumBorder()),
-            ),
-            onPressed: () {
-              Get.dialog(scheduleDialog(
-                selectedYear: controller.selectedYear.value,
-                selectedMonth: controller.selectedMonth.value,
-                selectedDay: controller.selectedDay.value,
-                toDoList: controller.toDoList,
-              ));
-            },
-          ),
-          SizeBoxH30,
-        ],
+            SizeBoxH30,
+          ],
+        ),
       );
     });
   }

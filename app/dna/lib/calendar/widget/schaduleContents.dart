@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 schaduleContents(
-    BuildContext context, int selectedDay, List<List<String>> todayList, List<List<String>> toDoList) {
+    BuildContext context, int selectedDay, List<List<String>> todayList, List<List<String>> toDoList, getCalendarData) {
   List<Widget> toDoText() {
     late List<Widget> toDoTextChild = [];
     for (int i = 0; i < todayList.length; i++) {
@@ -18,7 +18,10 @@ schaduleContents(
           ),
         ),
         onPressed: () {
-          Get.dialog(deleteDialog(todayList: todayList[i], toDoList: toDoList,));
+          Get.dialog(deleteDialog(todayList: todayList[i], toDoList: toDoList, context: context,))
+              .then((value){
+                if(value)getCalendarData();
+          });
         },
       ));
     }

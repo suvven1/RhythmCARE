@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-void showSnackBar(context, String msg) {
+void showSnackBar(context, String msg, int sec) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(msg),
-    duration: const Duration(seconds: 2),
+    duration: Duration(seconds: sec),
   ));
 }

@@ -52,9 +52,9 @@ class _join2PageState extends State<join2Page> {
     gender == "null" || gender2 == "null2" ||
     mBirth == "보호자 생년월일" || uBirth == "사용자 생년월일"
     ){
-      showSnackBar(context, '회원가입 정보를 빈칸없이 입력해주세요.');
+      showSnackBar(context, '회원가입 정보를 빈칸없이 입력해주세요.', 2);
     }else if(checkPhoneNumber()){
-      showSnackBar(context, '휴대폰 번호는 숫자로만 입력해주세요.');
+      showSnackBar(context, '휴대폰 번호는 숫자로만 입력해주세요.', 2);
     }else{
       join();
     }
@@ -73,7 +73,7 @@ class _join2PageState extends State<join2Page> {
 
   // 회원가입 서버 통신 함수 구현 예정
   void join() async {
-    String url = "http://115.95.222.206:80/user/join";
+    String url = "http://192.168.1.106:3333/user/join";
     http.Response res = await http.post(
         Uri.parse(url),
         headers: <String, String>{'Content-Type':'application/json'},
@@ -101,7 +101,9 @@ class _join2PageState extends State<join2Page> {
     setState(() {
       if(resData["joinResult"]){
         Get.offAll(() => loginPage());
-        showSnackBar(context, "회원가입이 완료되었습니다.");
+        showSnackBar(context, "회원가입이 완료되었습니다.", 2);
+      }else{
+        showSnackBar(context, "네트워크 에러 : 회원가입이 실패 하였습니다.", 2);
       }
     });
   }

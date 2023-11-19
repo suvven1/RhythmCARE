@@ -3,65 +3,69 @@ import 'package:get/get.dart';
 class MypageController extends GetxController {
   static MypageController get to => Get.find();
 
-  RxMap userData = {}.obs;
-  // 사용자 이미지, 닉네임 정보
-  RxList<int> imageData = RxList<int>();
-  RxString nick = "nick".obs;
+  // 프로필 사진 정보
+  RxList<int> imageData = <int>[].obs;
+
+  // 닉네임 정보
+  RxString nick = "RhythmCARE".obs;
 
   // 보호자 정보
-  RxString managerName = "manager".obs;
-  RxString managerHP = "010-1111-2222".obs;
-  RxString managerBD = "2000-01-01".obs;
-  RxString managerID = "mana".obs;
-  RxString managerPW = "********".obs;
+  // RxString mem_name = "김보호".obs;
+  // RxString mem_phone = "010-2354-1234".obs;
+  // RxString mem_birthdate = "1990-02-04".obs;
+  // RxString mem_id = "mana".obs;
+  // RxString mem_pw = "********".obs;
+  RxMap<String, String> infomationGuard = <String, String>{
+    "이름": "김보호",
+    '휴대폰번호': "010-2354-1234" ,
+    '생년월일': "1990-02-04",
+    '아이디': "RhythmCARE",
+    '비밀번호': "********"
+  }.obs;
 
   // 기기 사용자 정보
-  RxString userName = "user".obs;
-  RxString userHP = "010-3333-4444".obs;
-  RxString userBD = "2000-01-01".obs;
+  // RxString user_name = "이사용".obs;
+  // RxString user_phone = "010-2345-4321".obs;
+  // RxString user_birthdate = "1958-05-04".obs;
+  RxMap<String, String> informationUser = <String, String>{
+    "이름": "이사용",
+    '휴대폰번호': "010-2345-4321" ,
+    '생년월일': "1958-05-04",
+  }.obs;
 
   // 뱃지 정보
   RxList<String> badgeData = <String>[].obs;
 
-  void setImgData(List<int> imgData ) {
-    imageData.assignAll(imgData);
 
-  }
+  void setUserData(Map userData) {
 
-  void setBadgeData(List<String>badData){
-    badgeData.assignAll(badData);
-    print(badgeData);
-  }
-  void setUserData(Map data) {
-
-    // 유저 전체 데이터
-    userData.value = data["loginResult"];
-
-    // 이미지, 닉네임
-    if(userData["data"]["img"] != null){
-      List<int> img = List<int>.from(userData["data"]["img"]["data"]);
-      setImgData(img);
+      // 프로필 사진 정보
+    List<int> img = [];
+    if(userData["mem_profile_img"]?["data"] != null){
+      img = List<int>.from(userData["mem_profile_img"]["data"]);
     }
+      imageData.assignAll(img);
 
-    if(userData["data"]["badgeData"] != null){
-      List<String> badge = List<String>.from(userData["badgeData"]);
-      setBadgeData(badge);
-    }
+      // 닉네임 정보
+      nick.value = userData["mem_nick"];
 
-    print("first Data : ${badgeData}");
-    print("imgData : ${imageData}");
-    nick.value = userData["nick"];
+      // 보호자 정보
+      infomationGuard.value = {
+        "이름": userData["mem_name"].toString(),
+        '휴대폰번호': userData["mem_phone"].toString(),
+        '생년월일': userData["mem_birthdate"].toString(),
+        '아이디': userData["mem_id"].toString(),
+      };
 
-    // 보호자 정보
-    managerName.value = userData["data"]["manager_name"];
-    managerHP.value = userData["data"]["manager_hp"];
-    managerBD.value = userData["data"]["manager_bd"];
-    managerID.value = userData["data"]["manager_id"];
-    managerPW.value = userData["data"]["password"];
+      // 기기사용자 정보
+      informationUser.value= {
+        '이름': userData["user_name"].toString(),
+        '휴대폰번호': userData["user_phone"].toString() ,
+        '생년월일': userData["user_birthdate"].toString(),
+      };
 
-    // 기기사용자 정보
-    userName.value = userData["data"]["user_name"];
-    userHP.value = userData["data"]["user_hp"];
-    userBD.value = userData["data"]["user_bd"];
+      // 뱃지 정보
+      List<String> badge = List<String>.from(userData["badge"]);
+      badgeData.assignAll(badge);
   }
 }

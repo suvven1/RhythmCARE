@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:dna/calendar/calendarPage.dart';
 import 'package:dna/controller/GetMyPageController.dart';
+import 'package:dna/snackBarMessage/snackBar.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 class scheduleDialog extends StatefulWidget {
   const scheduleDialog({
     super.key,
@@ -35,9 +40,51 @@ class _scheduleDialogState extends State<scheduleDialog> {
   String selectedColor = '0xffeb6867';
   int selectedColorBorder = 1;
 
-  void uploadSchedule(){
+  String id = "";
 
-    Get.back();
+  void uploadSchedule() async {
+    getColor();
+
+    String url = "http://192.168.1.106:3333/calender/updateSchedule";
+    http.Response res = await http.post(Uri.parse(url),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "id": id,
+          "title":schaduleCon.text,
+          "start":startDayAdd.toString().split(' ')[0],
+          "end":lastDayAdd.toString().split(' ')[0],
+          "color":selectedColor
+        }));
+
+    // 일정 조회 결과를 받아와 변수에 저장
+    var resData = jsonDecode(res.body)["updateScheduleResult"];
+
+    setState(() {
+      if (resData) {
+        Get.back(result: true);
+        showSnackBar(context, "일정 등록이 완료 되었습니다.", 2);
+      }
+    });
+
+  }
+
+  void getId() async {
+    final loginDataStorage = await SharedPreferences.getInstance();
+    id = loginDataStorage.getString('id') ?? '';
+  }
+
+  void getColor(){
+    if(selectedColor == "0xffeb6867"){
+      selectedColor = '#eb6867';
+    }else if(selectedColor == "0xfff39a47"){
+      selectedColor = '#f39a47';
+    }else if(selectedColor == "0xff47b794"){
+      selectedColor = '#47b794';
+    }else if(selectedColor == "0xff1eb2d4"){
+      selectedColor = '#1eb2d4';
+    }else{
+      selectedColor = '#762fc1';
+    }
   }
 
   @override
@@ -45,6 +92,7 @@ class _scheduleDialogState extends State<scheduleDialog> {
     super.initState();
     selectedDate =
         DateTime(widget.selectedYear, widget.selectedMonth, widget.selectedDay);
+    getId();
   }
 
   @override
@@ -320,27 +368,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
                     if (startDay != null && lastDay != null) {
                       startDayAdd = startDay!;
                       lastDayAdd = lastDay!;
-                      widget.toDoList.add([
-                        "key",
-                        mypageController.managerID.value,
-                        schaduleCon.text,
-                        startDayAdd.toString().split(' ')[0],
-                        lastDayAdd.toString().split(' ')[0],
-                        selectedColor
-                      ]);
-                      Get.back();
+                      uploadSchedule();
                     } else if (startDay == null && lastDay == null) {
                       startDayAdd = selectedDate;
                       lastDayAdd = selectedDate;
-                      widget.toDoList.add([
-                        "key",
-                        mypageController.managerID.value,
-                        schaduleCon.text,
-                        startDayAdd.toString().split(' ')[0],
-                        lastDayAdd.toString().split(' ')[0],
-                        selectedColor
-                      ]);
-                      Get.back();
+                      uploadSchedule();
                     } else if (startDay == null
                         ? lastDay!.isBefore(selectedDate) == false
                         : startDay!.isAfter(selectedDate) == false) {
@@ -350,14 +382,6 @@ class _scheduleDialogState extends State<scheduleDialog> {
                       startDay == null
                           ? startDayAdd = selectedDate
                           : lastDayAdd = selectedDate;
-                      widget.toDoList.add([
-                        "key",
-                        mypageController.managerID.value,
-                        schaduleCon.text,
-                        startDayAdd.toString().split(' ')[0],
-                        lastDayAdd.toString().split(' ')[0],
-                        selectedColor
-                      ]);
                       uploadSchedule();
                     } else {
                       Get.dialog(AlertDialog(
@@ -380,7 +404,7 @@ class _scheduleDialogState extends State<scheduleDialog> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.back();
+                    Get.back(result: false);
                   },
                   child: SizedBox(
                     height: 45,

@@ -4,9 +4,11 @@ import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
+import 'package:dna/snackBarMessage/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widget/connection/connect.dart';
 
@@ -19,6 +21,7 @@ class mainPage extends StatefulWidget {
 
 
 class _mainPageState extends State<mainPage> {
+  DateTime? currentBackPressTime;
 // 연결 테스트-----------------------------------------------------------------------------
   List<ScanResult> scanResultList = [];
 
@@ -59,6 +62,7 @@ class _mainPageState extends State<mainPage> {
       });
     });
   }
+
   // 초기 페이지 2번 인덱스(홈)
   int currentPageIndex = 2;
 
@@ -81,17 +85,34 @@ class _mainPageState extends State<mainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Container(
-            color: currentPageIndex == 4 ? Colors.grey[200] : Colors.white,
-            padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.05,
-                right: MediaQuery.of(context).size.width * 0.05
-            ),
-            child: pageIndex.elementAt(currentPageIndex),
-          )
+      body: WillPopScope(
+        onWillPop: onWillPop,
+        child: SafeArea(
+            child: Container(
+              color: currentPageIndex == 4 ? Colors.grey[200] : Colors.white,
+              padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.05,
+                  right: MediaQuery.of(context).size.width * 0.05
+              ),
+              child: pageIndex.elementAt(currentPageIndex),
+            )
+        ),
       ),
       bottomNavigationBar: myBottomNavi(currentPageIndex, onItemTap),
     );
   }
+
+  // 뒤로가기 두번 누를 시 앱 종료
+  Future<bool> onWillPop(){
+    DateTime now = DateTime.now();
+    if(currentBackPressTime == null ||
+       now.difference(currentBackPressTime!) > Duration(seconds: 2)){
+      currentBackPressTime = now;
+      final _msg = "뒤로 버튼을 한 번 더 누르시면 종료됩니다.";
+      showSnackBar(context, _msg, 2);
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
 }

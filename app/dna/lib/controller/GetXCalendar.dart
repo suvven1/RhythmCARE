@@ -61,9 +61,10 @@ class GetXCalendar extends GetxController{
 
   // 켈린더 정보 초기화
   void setCalenderData(List data){
-
     for(int i = 0; i < data.length; i++){
       List<String> stringList = List<String>.from(data[i].values.toList());
+      stringList[3] = stringList[3].split("T")[0];
+      stringList[4] = stringList[4].split("T")[0];
       if(stringList[5] == "#eb6867"){
         stringList[5] = '0xffeb6867';
       }else if(stringList[5] == "#f39a47"){
@@ -78,6 +79,6 @@ class GetXCalendar extends GetxController{
       toDoList.add(stringList);
     }
 
-    print(toDoList);
+    print("toDoList : ${toDoList}");
   }
 }

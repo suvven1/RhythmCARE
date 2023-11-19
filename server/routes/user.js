@@ -159,10 +159,11 @@ router.post("/login", (req, res) => {
                       on mem.mem_id = user.mem_id
                    where mem.mem_id = ? and mem.mem_pw =sha2(?,384)`;
   conn.query(loginSql, [id, pw], (err, loginRows) => {
+    console.log(loginRows);
     if (err) {
       console.log("[LOGIN ERROR] : ", err);
       res.json({ loginResult: false });
-    } else if (loginRows.affectedRows != 0) {
+    } else if (loginRows.length != 0) {
       console.log("Success Login!", loginRows[0]);
       res.json({
         loginResult: {
@@ -220,8 +221,8 @@ router.post("/getUserData", (req, res) => {
       console.log("Fail getUserData!", err);
       res.json({ userData: false });
     } else {
-      console.log("Success getUserData!", userDataRows);
-      console.log("Success getBadgeData!", badgeData);
+      console.log("Success getUserData!");
+      console.log("Success getBadgeData!");
       // 뱃지 데이터 초기화
       userDataRows[0].badge = badgeData;
 

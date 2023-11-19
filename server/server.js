@@ -11,7 +11,7 @@ const cors = require("cors");
 // CORS 오류 해결을 위한 미들웨어
 app.use(cors());
 app.use(express.json());
-app.set("port", process.env.PORT || 80);
+app.set("port", process.env.PORT || 3333);
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/attend", attendRouter);

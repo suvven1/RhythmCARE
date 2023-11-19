@@ -54,14 +54,19 @@ class _joinPageState extends State<joinPage> {
 
   // 닉네임 중복검사 함수
   void checkNickDup() async {
-    String url = "http://115.95.222.206:80/user/join/nickDupCheck";
+    String url = "http://192.168.1.106:3333/user/join/nickDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'nick': nickCon.text}));
     // 닉네임 중복검사 결과를 받아와 변수에 저장
-    var resData = jsonDecode(res.body);
+    var resData = jsonDecode(res.body)["nickDupResult"];
     setState(() {
-      useableNick = resData["nickDupResult"];
+      if(resData){
+        useableNick = resData;
+      }else{
+        useableNick = resData;
+        useableNickText = '    * 중복된 닉네임 입니다.';
+      }
     });
   }
 
@@ -83,14 +88,19 @@ class _joinPageState extends State<joinPage> {
 
   // 아이디 중복검사 함수
   void checkIdDup() async {
-    String url = "http://115.95.222.206:80/user/join/idDupCheck";
+    String url = "http://192.168.1.106:3333/user/join/idDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': idCon.text}));
     // 닉네임 중복검사 결과를 받아와 변수에 저장
-    var resData = jsonDecode(res.body);
+    var resData = jsonDecode(res.body)["idDupResult"];
     setState(() {
-      useableId = resData["idDupResult"];
+      if(resData){
+        useableId = resData;
+      }else{
+        useableId = resData;
+        useableIdText = '    * 중복된 아이디 입니다.';
+      }
     });
   }
 
@@ -132,7 +142,7 @@ class _joinPageState extends State<joinPage> {
       joinController.setLoginData(loginData);
       Get.to(() => join2Page());
     }else{
-      showSnackBar(context, '회원가입 정보를 올바르게 입력해주세요.');
+      showSnackBar(context, '회원가입 정보를 올바르게 입력해주세요.', 2);
     }
 
   }

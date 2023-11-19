@@ -1,16 +1,42 @@
+import 'dart:convert';
+
+import 'package:dna/snackBarMessage/snackBar.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class deleteDialog extends StatelessWidget {
   const deleteDialog({
     Key? key,
     this.todayList,
     this.toDoList,
+    this.context
   }) : super(key: key);
 
   final List<String>? todayList;
   final toDoList;
+  final context;
+  void deleteSchedule() async {
+    print(todayList);
+
+    String url = "http://192.168.1.106:3333/calender/deleteSchedule";
+    http.Response res = await http.post(Uri.parse(url),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode({"id": todayList?[1], "key": todayList?[0]}));
+    // 일정 삭제 결과를 받아와 변수에 저장
+    var resData = jsonDecode(res.body)["deleteScheduleResult"];
+
+
+      if (resData) {
+        showSnackBar(context,"일정이 삭제되었습니다.", 2);
+        Get.back(result: true);
+      }else{
+        showSnackBar(context,"일정을 삭제하지 못 했습니다.", 2);
+      }
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +130,7 @@ class deleteDialog extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    toDoList.remove(todayList);
-                    Get.back();
+                    deleteSchedule();
                   },
                   child: SizedBox(
                     height: 45,
@@ -126,7 +151,7 @@ class deleteDialog extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.back();
+                    Get.back(result: false);
                   },
                   child: SizedBox(
                     height: 45,
