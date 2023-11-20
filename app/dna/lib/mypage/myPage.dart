@@ -78,9 +78,8 @@ class _myPageState extends State<myPage> {
                 children: [
                   Container(alignment: Alignment.centerRight, child: ElevatedButton(onPressed: (){logout();}, child: Text("로그아웃"))),
                   profileImage(context, userDataCon.imageData.value),
-                  SizeBoxH10,
                   profileNick(userDataCon.nick.value),
-                  SizeBoxH20,
+                  SizeBoxH10,
                   infoContainer(userDataCon.infomationGuard.value, userDataCon.informationUser.value, context),
                   SizeBoxH30,
                 ],
