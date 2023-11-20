@@ -1,6 +1,6 @@
 import 'dart:convert';
-
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,10 +30,10 @@ class deleteDialog extends StatelessWidget {
 
 
       if (resData) {
-        showSnackBar(context,"일정이 삭제되었습니다.", 2);
+        showToast("일정이 삭제되었습니다.");
         Get.back(result: true);
       }else{
-        showSnackBar(context,"일정을 삭제하지 못 했습니다.", 2);
+        showToast("일정을 삭제하지 못 했습니다.");
       }
 
 

@@ -19,6 +19,15 @@ class _badgeDetailDialogState extends State<badgeDetailDialog> {
   bool _isMounted = false; // 추가: mounted 상태를 추적하기 위한 변수
 
   void chageColor() async {
+    // 주기적으로 변수 값을 바꾸기 위한 함수 호출
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (_isMounted) {
+        setState(() {
+            _color =  Colors.black;
+            timer.cancel();
+        });
+      }
+    });
 
     // 주기적으로 변수 값을 바꾸기 위한 함수 호출
     Timer.periodic(Duration(seconds: 2), (timer) async {

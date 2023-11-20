@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:dna/member/widget/textFieldCheck.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import '../../../snackBarMessage/snackBar.dart';
 
 class pwChangeDialog extends StatefulWidget {
   const pwChangeDialog({super.key});
@@ -122,9 +121,9 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
       checknull = false;
       useablePw = true;
       Get.back();
-      showSnackBar(context, '비밀번호 변경이 완료되었습니다.', 2);
+      showToast('비밀번호 변경이 완료되었습니다.');
     } else {
-      showSnackBar(context, '네트워크 에러 : 비밀번호를 변경하지 못했습니다.', 2);
+      showToast('네트워크 에러 : 비밀번호를 변경하지 못했습니다.');
     }
   }
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dna/calendar/calendarPage.dart';
 import 'package:dna/controller/GetMyPageController.dart';
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,7 +62,7 @@ class _scheduleDialogState extends State<scheduleDialog> {
     setState(() {
       if (resData) {
         Get.back(result: true);
-        showSnackBar(context, "일정 등록이 완료 되었습니다.", 2);
+        showToast("일정 등록이 완료 되었습니다.");
       }
     });
 

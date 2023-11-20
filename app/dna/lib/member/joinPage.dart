@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dna/controller/GetJoinController.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/textFieldCheck.dart';
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
@@ -142,7 +142,7 @@ class _joinPageState extends State<joinPage> {
       joinController.setLoginData(loginData);
       Get.to(() => join2Page());
     }else{
-      showSnackBar(context, '회원가입 정보를 올바르게 입력해주세요.', 2);
+      showToast('회원가입 정보를 올바르게 입력해주세요.');
     }
 
   }

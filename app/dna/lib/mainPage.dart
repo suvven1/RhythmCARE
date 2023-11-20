@@ -4,13 +4,15 @@ import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'widget/connection/connect.dart';
+import 'connection/connect.dart';
 
 class mainPage extends StatefulWidget {
   const mainPage({super.key});
@@ -22,43 +24,14 @@ class mainPage extends StatefulWidget {
 
 class _mainPageState extends State<mainPage> {
   DateTime? currentBackPressTime;
-// 연결 테스트-----------------------------------------------------------------------------
-  List<ScanResult> scanResultList = [];
-
-  static const platform = MethodChannel('rhythm_channel');
-
-  Future<void> _getNativeValue() async {
-    String value;
-
-    try{
-      value = await platform.invokeMethod("getBle");
-    } on PlatformException catch (e){
-      value = 'native code error: ${e.message}';
-    }
-
-    setState(() {
-
-    });
-  }
-
-  void test() async{
-    bool value;
-
-    try{
-      value = await platform.invokeMethod("getConnect");
-      print(value);
-    } on PlatformException catch (e){
-      print('getCpnnect False.');
-    }
-  }
-// 연결 테스트-----------------------------------------------------------------------------
 
   @override
   void initState() {
     super.initState();
+    loginToast();
     Future.delayed(Duration.zero, () {
       setState(() {
-        showConnectDialog(context);
+        Get.dialog(connectDialog());
       });
     });
   }
@@ -80,6 +53,14 @@ class _mainPageState extends State<mainPage> {
     setState(() {
       currentPageIndex = index;
     });
+  }
+
+  // 로그인 환영 토스트 메세지
+  void loginToast() async {
+    final loginDataStorage = await SharedPreferences.getInstance();
+    final name = loginDataStorage.getString('name') ?? '';
+    final nick = loginDataStorage.getString('nick') ?? '';
+    showToast('${name}(${nick})님 환영합니다.');
   }
 
   @override
@@ -109,7 +90,7 @@ class _mainPageState extends State<mainPage> {
        now.difference(currentBackPressTime!) > Duration(seconds: 2)){
       currentBackPressTime = now;
       final _msg = "뒤로 버튼을 한 번 더 누르시면 종료됩니다.";
-      showSnackBar(context, _msg, 2);
+      showToast(_msg);
       return Future.value(false);
     }
     return Future.value(true);

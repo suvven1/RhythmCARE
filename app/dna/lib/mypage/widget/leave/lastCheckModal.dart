@@ -1,13 +1,11 @@
 import 'dart:convert';
-
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../member/loginPage.dart';
-import '../../../controller/GetMyPageController.dart';
 import '../../myPage.dart';
 
 
@@ -29,14 +27,14 @@ showFinalCheck(context, idCon, pwCon) {
       if(deleteResult){
         loginDataStorage.clear();
         Get.off(()=> loginPage());
-        showSnackBar(context, '탈퇴가 완료되었습니다.', 3);
+        showToast('탈퇴가 완료되었습니다.');
       }else{
         Get.off(()=> myPage());
-        showSnackBar(context, '아이디 또는 비밀번호가 일치하지 않습니다.', 3);
+        showToast('아이디 또는 비밀번호가 일치하지 않습니다.');
       }
     }else{
       Get.off(()=> myPage());
-      showSnackBar(context, '현재 로그인된 계정의 아이디를 입력해주세요.', 3);
+      showToast('현재 로그인된 계정의 아이디를 입력해주세요.');
     }
 
   }

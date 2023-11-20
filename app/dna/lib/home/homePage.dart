@@ -3,11 +3,10 @@ import 'package:dna/home/widget/grass.dart';
 import 'package:dna/home/widget/heartBeat.dart';
 import 'package:dna/home/widget/testWidget.dart';
 import 'package:dna/home/widget/visualModel.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../snackBarMessage/snackBar.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -53,7 +52,7 @@ class _homePageState extends State<homePage> {
         return RefreshIndicator(
           onRefresh: () async {
             setState(() {
-              showSnackBar(context, "화면새로고침 완료", 2);
+              showToast("화면새로고침 완료");
             });
           },
           child: ListView(
