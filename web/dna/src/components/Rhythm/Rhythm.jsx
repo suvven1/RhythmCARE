@@ -1,5 +1,5 @@
 import React from "react";
-import ReactApexChart from "react-apexcharts";
+import ReactApexChart from 'react-apexcharts';
 import styled from "styled-components";
 
 const Rhythm = () => {
@@ -350,6 +350,8 @@ const Rhythm = () => {
     )
   }
 
+ 
+
   return (
     <div>
       <HeartBeat>
@@ -445,11 +447,11 @@ const Rhythm = () => {
           건강 그래프
           <br />한 눈에 보기
         </p>
+      </RaderBox>
         <RaderContainer>
           <HealthRadar/>
         </RaderContainer>
-      </RaderBox>
-    </div>
+Z    </div>
   );
 };
 
