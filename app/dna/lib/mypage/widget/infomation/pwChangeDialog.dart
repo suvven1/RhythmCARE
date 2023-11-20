@@ -87,7 +87,7 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://192.168.1.106:3333/user/login";
+    String url = "http://115.95.222.206:80/user/login";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'user': "mem", 'id': id, 'pw': pwCon.text}));
@@ -111,7 +111,7 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://192.168.1.106:3333/user/changePw";
+    String url = "http://115.95.222.206:80/user/changePw";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': id, 'changePw': newPwCon.text}));

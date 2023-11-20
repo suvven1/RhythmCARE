@@ -17,10 +17,11 @@ class deleteDialog extends StatelessWidget {
   final List<String>? todayList;
   final toDoList;
   final context;
+
   void deleteSchedule() async {
     print(todayList);
 
-    String url = "http://192.168.1.106:3333/calender/deleteSchedule";
+    String url = "http://115.95.222.206:80/calender/deleteSchedule";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({"id": todayList?[1], "key": todayList?[0]}));

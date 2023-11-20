@@ -41,7 +41,7 @@ class _myPageState extends State<myPage> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://192.168.1.106:3333/user/getUserData";
+    String url = "http://115.95.222.206:80/user/getUserData";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': id}));

@@ -45,7 +45,7 @@ class _scheduleDialogState extends State<scheduleDialog> {
   void uploadSchedule() async {
     getColor();
 
-    String url = "http://192.168.1.106:3333/calender/updateSchedule";
+    String url = "http://115.95.222.206:80/calender/updateSchedule";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({

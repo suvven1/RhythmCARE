@@ -73,7 +73,7 @@ class _join2PageState extends State<join2Page> {
 
   // 회원가입 서버 통신 함수 구현 예정
   void join() async {
-    String url = "http://192.168.1.106:3333/user/join";
+    String url = "http://115.95.222.206:80/user/join";
     http.Response res = await http.post(
         Uri.parse(url),
         headers: <String, String>{'Content-Type':'application/json'},

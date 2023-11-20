@@ -54,7 +54,7 @@ class _joinPageState extends State<joinPage> {
 
   // 닉네임 중복검사 함수
   void checkNickDup() async {
-    String url = "http://192.168.1.106:3333/user/join/nickDupCheck";
+    String url = "http://115.95.222.206:80/user/join/nickDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'nick': nickCon.text}));
@@ -88,7 +88,7 @@ class _joinPageState extends State<joinPage> {
 
   // 아이디 중복검사 함수
   void checkIdDup() async {
-    String url = "http://192.168.1.106:3333/user/join/idDupCheck";
+    String url = "http://115.95.222.206:80/user/join/idDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': idCon.text}));
