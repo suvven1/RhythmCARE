@@ -15,7 +15,6 @@ import '../widget/sizeBox.dart';
 import 'findPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
 
@@ -28,6 +27,9 @@ class _loginPageState extends State<loginPage> {
   MypageController mypageController = Get.put(MypageController());
   TextEditingController idCon = TextEditingController();
   TextEditingController pwCon = TextEditingController();
+
+  // 자동로그인 유무 변수
+  bool autoLogin = false;
 
   // toggle 변수
   bool isGuard = true;
@@ -52,16 +54,17 @@ class _loginPageState extends State<loginPage> {
   void login(bool who, idCon, pwCon) async {
     String loginUser = "mem";
 
-    if(who){
+    if (who) {
       loginUser = "mem";
-    }else{
+    } else {
       loginUser = "user";
     }
 
     String url = "http://115.95.222.206:80/user/login";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
-        body: jsonEncode({'user': loginUser, 'id': idCon.text, 'pw': pwCon.text}));
+        body: jsonEncode(
+            {'user': loginUser, 'id': idCon.text, 'pw': pwCon.text}));
 
     // 로그인 결과를 받아와 변수에 저장
     var loginData = jsonDecode(res.body)["loginResult"];
@@ -76,12 +79,12 @@ class _loginPageState extends State<loginPage> {
         loginDataStorage.setString('name', loginData["name"]);
         loginDataStorage.setString('nick', loginData["nick"]);
 
-
         Get.off(() => mainPage());
-        showSnackBar(context, '${loginData["name"]}(${loginData["nick"]})님 환영합니다.', 2);
-      }else if(loginData){
+        showSnackBar(
+            context, '${loginData["name"]}(${loginData["nick"]})님 환영합니다.', 2);
+      } else if (loginData) {
         showSnackBar(context, '아이디 또는 비밀번호가 일치하지 않습니다.', 2);
-      }else{
+      } else {
         showSnackBar(context, '알 수 없는 이유로 오류가 발생하였습니다.', 2);
       }
     });
@@ -92,7 +95,7 @@ class _loginPageState extends State<loginPage> {
     final id = loginDataStorage.getString('id') ?? '';
     final name = loginDataStorage.getString('name') ?? '';
     final nick = loginDataStorage.getString('nick') ?? '';
-    if(id != ''){
+    if (id != '') {
       Get.off(() => mainPage());
       showSnackBar(context, '${name}(${nick})님 환영합니다.', 5);
     }
@@ -113,6 +116,7 @@ class _loginPageState extends State<loginPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextButton(
                             child: Image.asset('image/logo.png'),
@@ -125,7 +129,36 @@ class _loginPageState extends State<loginPage> {
                         textField(idCon, "아이디"),
                         SizeBoxH10,
                         textField(pwCon, "비밀번호"),
-                        SizeBoxH40,
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              autoLogin = !autoLogin;
+                            });
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                autoLogin
+                                    ? 'image/checkTrue.png'
+                                    : 'image/checknull.png',
+                                width: 25,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '로그인 유지',
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: autoLogin ? FontWeight.bold : null,
+                                    color: autoLogin ? Colors.green : Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizeBoxH10,
                         // FlaltButton 은 화면 위에 떠있는 동그란 버튼
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -186,10 +219,10 @@ class _loginPageState extends State<loginPage> {
   }
 
   // 뒤로가기 두번 누를 시 앱 종료
-  Future<bool> onWillPop(){
+  Future<bool> onWillPop() {
     DateTime now = DateTime.now();
-    if(currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)){
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       final _msg = "뒤로 버튼을 한 번 더 누르시면 종료됩니다.";
       showSnackBar(context, _msg, 2);

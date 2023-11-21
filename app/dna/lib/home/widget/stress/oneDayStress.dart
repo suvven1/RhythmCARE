@@ -1,10 +1,17 @@
+import 'package:dna/home/widget/stress/oneDayStressChart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/GetController.dart';
+import '../../../controller/GetController.dart';
 
-class oneDayStress extends StatelessWidget {
+class oneDayStress extends StatefulWidget {
   const oneDayStress({super.key});
+
+  @override
+  State<oneDayStress> createState() => _oneDayStressState();
+}
+
+class _oneDayStressState extends State<oneDayStress> {
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,7 @@ class oneDayStress extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             GetX<ReactiveController>(
-              builder: (_){
+              builder: (_) {
                 return Row(
                   children: [
                     Column(
@@ -53,7 +60,7 @@ class oneDayStress extends StatelessWidget {
             )
           ],
         ),
-        Image.asset('image/visualModel_Day.png'),
+        oneDayStressChart(),
       ],
     );
   }

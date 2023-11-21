@@ -45,6 +45,10 @@ dependencies:
   webview_flutter_wkwebview: ^3.9.4 # 웹뷰
   url_launcher: ^6.0.9 # 전화걸기 라이브러리
   shared_preferences: ^2.2.2
+  image_picker: ^1.0.4 # 마이페이지 이미지 가져오기
+  flutter_image_compress: ^2.1.0 # 이미지 압축 라이브러리
+  fl_chart: ^0.64.0 # 차트 라이브러리
+
 
 dev_dependencies:
   flutter_test:

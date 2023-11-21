@@ -77,7 +77,7 @@ class _myPageState extends State<myPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(alignment: Alignment.centerRight, child: ElevatedButton(onPressed: (){logout();}, child: Text("로그아웃"))),
-                  profileImage(context, userDataCon.imageData.value),
+                  profileImage(imageData: userDataCon.imageData.value),
                   profileNick(userDataCon.nick.value),
                   SizeBoxH10,
                   infoContainer(userDataCon.infomationGuard.value, userDataCon.informationUser.value, context),

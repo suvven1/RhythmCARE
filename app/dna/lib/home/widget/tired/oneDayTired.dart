@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controller/GetController.dart';
+import '../../../controller/GetController.dart';
 
 class oneDayTired extends StatelessWidget {
   const oneDayTired({super.key});

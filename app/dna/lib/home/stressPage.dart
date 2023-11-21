@@ -1,5 +1,5 @@
-import 'package:dna/home/widget/oneDayStress.dart';
-import 'package:dna/home/widget/oneWeekStress.dart';
+import 'package:dna/home/widget/stress/oneDayStress.dart';
+import 'package:dna/home/widget/stress/oneWeekStress.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 
