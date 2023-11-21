@@ -4,7 +4,10 @@ import 'package:dna/member/widget/joinWidget.dart';
 import 'package:dna/member/widget/textField.dart';
 import 'package:dna/member/widget/toggleButton.dart';
 import 'package:dna/controller/GetMyPageController.dart';
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
+import 'package:dna/toastMessage/toast.dart';
+import 'package:dna/toastMessage/toast.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -80,12 +83,19 @@ class _loginPageState extends State<loginPage> {
         loginDataStorage.setString('nick', loginData["nick"]);
 
         Get.off(() => mainPage());
+<<<<<<< HEAD
         showSnackBar(
             context, '${loginData["name"]}(${loginData["nick"]})님 환영합니다.', 2);
       } else if (loginData) {
         showSnackBar(context, '아이디 또는 비밀번호가 일치하지 않습니다.', 2);
       } else {
         showSnackBar(context, '알 수 없는 이유로 오류가 발생하였습니다.', 2);
+=======
+      }else if(loginData){
+        showToast('아이디 또는 비밀번호가 일치하지 않습니다.');
+      }else{
+        showToast('알 수 없는 이유로 오류가 발생하였습니다.');
+>>>>>>> dc9e71ee1412482b7a1548cb70faddd6149e6a9d
       }
     });
   }
@@ -97,7 +107,6 @@ class _loginPageState extends State<loginPage> {
     final nick = loginDataStorage.getString('nick') ?? '';
     if (id != '') {
       Get.off(() => mainPage());
-      showSnackBar(context, '${name}(${nick})님 환영합니다.', 5);
     }
   }
 
@@ -225,7 +234,7 @@ class _loginPageState extends State<loginPage> {
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       final _msg = "뒤로 버튼을 한 번 더 누르시면 종료됩니다.";
-      showSnackBar(context, _msg, 2);
+      showToast( _msg);
       return Future.value(false);
     }
     return Future.value(true);

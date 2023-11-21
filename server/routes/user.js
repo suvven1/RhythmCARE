@@ -40,7 +40,7 @@ router.post("/join", (req, res) => {
 
   // 기기사용자 정보 insert
   const joinUser = () => {
-    let joinUserSql = "insert into t_user values (?,?,?,?,?,?)";
+    let joinUserSql = "insert into t_user values (?,?,?,?,?,?,null)";
 
     conn.query(
       joinUserSql,

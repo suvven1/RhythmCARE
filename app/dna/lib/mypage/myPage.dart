@@ -5,7 +5,7 @@ import 'package:dna/member/loginPage.dart';
 import 'package:dna/mypage/widget/infoContainer.dart';
 import 'package:dna/mypage/widget/profileImage.dart';
 import 'package:dna/mypage/widget/profileNick.dart';
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -33,6 +33,7 @@ class _myPageState extends State<myPage> {
 
   void logout() async {
     final loginDataStorage = await SharedPreferences.getInstance();
+    showToast("로그아웃이 완료 되었습니다.");
     loginDataStorage.clear();
     Get.off(loginPage());
   }
@@ -54,7 +55,7 @@ class _myPageState extends State<myPage> {
         userDataCon.setUserData(userData);
         isLoding=false;
       }else{
-        showSnackBar(context, '유저 정보 갱신 실패', 2);
+        showToast('유저 정보 갱신 실패');
       }
     });
   }

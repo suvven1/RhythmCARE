@@ -1,12 +1,9 @@
 import 'dart:convert';
-
-import 'package:dna/member/joinPage.dart';
 import 'package:dna/member/widget/textField.dart';
-import 'package:dna/snackBarMessage/snackBar.dart';
+import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../controller/GetJoinController.dart';
 import '../widget/sizeBox.dart';
 import 'loginPage.dart';
@@ -52,9 +49,9 @@ class _join2PageState extends State<join2Page> {
     gender == "null" || gender2 == "null2" ||
     mBirth == "보호자 생년월일" || uBirth == "사용자 생년월일"
     ){
-      showSnackBar(context, '회원가입 정보를 빈칸없이 입력해주세요.', 2);
+      showToast('회원가입 정보를 빈칸없이 입력해주세요.');
     }else if(checkPhoneNumber()){
-      showSnackBar(context, '휴대폰 번호는 숫자로만 입력해주세요.', 2);
+      showToast('휴대폰 번호는 숫자로만 입력해주세요.');
     }else{
       join();
     }
@@ -101,9 +98,9 @@ class _join2PageState extends State<join2Page> {
     setState(() {
       if(resData["joinResult"]){
         Get.offAll(() => loginPage());
-        showSnackBar(context, "회원가입이 완료되었습니다.", 2);
+        showToast("회원가입이 완료되었습니다.");
       }else{
-        showSnackBar(context, "네트워크 에러 : 회원가입이 실패 하였습니다.", 2);
+        showToast("네트워크 에러 : 회원가입이 실패 하였습니다.");
       }
     });
   }
