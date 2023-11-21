@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from 'react-apexcharts';
 import styled from "styled-components";
 
@@ -350,7 +350,101 @@ const Rhythm = () => {
     )
   }
 
- 
+  const HeatmapChart = () => {
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ]; // 월 목록
+    const generateData = (count, yrange) => {
+      let i = 0;
+      const series = [];
+  
+      while (i < count) {
+        const x = new Date(2023, 0, 1 + 7 * i); // 각 주의 시작일
+        const y =
+          Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+  
+        series.push({
+          x: x,
+          y: y,
+        });
+        i++;
+      }
+      return series;
+    };
+  
+    const [chartOptions, setChartOptions] = useState({
+      chart: {
+        height: 250,
+        type: "heatmap",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#4ab134"],
+      title: {
+        text: "HeatMap Chart (Single color)",
+      },
+      xaxis: {
+        type: "datetime",
+        labels: {
+          show: true,
+          rotateAlways: true,
+          rotate: -45,
+          datetimeFormatter: {
+            month: 'MMM', // 월 표시
+          },
+        },
+      },
+      yaxis: {
+        categories: ["Sun", "Sat", "Fri", "Thu", "Wed", "Tue", "Mon"],
+        reversed: true,
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          formatter: function (val) {
+            const date = new Date(val);
+            return months[date.getMonth()] + ' ' + date.getDate();
+          },
+        },
+      },
+    });
+  
+    const [chartSeries, setChartSeries] = useState([
+      { data: generateData(52, { min: 0, max: 90 }) },
+      { data: generateData(52, { min: 0, max: 90 }) },
+      { data: generateData(52, { min: 0, max: 90 }) },
+      { data: generateData(52, { min: 0, max: 90 }) },
+      { data: generateData(52, { min: 0, max: 90 }) },
+      { data: generateData(52, { min: 0, max: 90 }) },
+      { data: generateData(52, { min: 0, max: 90 }) },
+    ]);
+  
+    useEffect(() => {
+      // 차트 초기화
+      setChartOptions((prevOptions) => ({
+        ...prevOptions,
+      }));
+      setChartSeries((prevSeries) => [...prevSeries]);
+    }, []);
+  
+    return (
+      <div>
+        <ReactApexChart
+          options={chartOptions}
+          series={chartSeries}
+          type="heatmap"
+          height={250}
+        />
+      </div>
+    );
+  };
+  
+
+  
+  
+  
 
   return (
     <div>
@@ -362,7 +456,7 @@ const Rhythm = () => {
         <p id="hb">{heartbeat}</p>
         <p>bpm</p>
       </HeartBeat>
- 0     <MeasurementBox>
+       <MeasurementBox>
         <StressBox>
           {/* 현재 */}
           <Title>현재 스트레스 지수</Title>
@@ -447,11 +541,15 @@ const Rhythm = () => {
           건강 그래프
           <br />한 눈에 보기
         </p>
-      </RaderBox>
         <RaderContainer>
           <HealthRadar/>
         </RaderContainer>
-Z    </div>
+      </RaderBox>
+      <HeatmapBox>
+        <HeatmapChart/>
+
+      </HeatmapBox>
+      </div>
   );
 };
 
@@ -606,4 +704,8 @@ const RaderBox = styled.div`
 
 const RaderContainer = styled.div`
   margin-top: 70px;
+`
+const HeatmapBox = styled.div`
+  margin-left: 300px;
+  margin-right: 300px;
 `
