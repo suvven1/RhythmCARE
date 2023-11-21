@@ -11,9 +11,7 @@ const Hospital = () => {
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(
     parseInt(localStorage.getItem("selectedPlace"), 10) || null);
-  const [infowindow, setInfowindow] = useState(null)
-
-  
+    const [infowindow, setInfowindow] = useState(new kakao.maps.InfoWindow({ zIndex: 1 }));
 
   const mapscript = (userLatitude, userLongitude) => {
 
@@ -27,8 +25,6 @@ const Hospital = () => {
     const newMap = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     setMap(newMap)
 
-    const newInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-    setInfowindow(newInfowindow)
 
     const ps = new kakao.maps.services.Places(newMap)
 
@@ -62,7 +58,7 @@ const Hospital = () => {
         if (map) {
           map.setBounds(bounds);
         } else {
-          console.error("map이 null 또는 undefined입니다.");
+          // console.error("map이 null 또는 undefined입니다.");
         }
       }
     }
