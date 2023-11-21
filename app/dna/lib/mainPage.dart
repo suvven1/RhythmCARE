@@ -84,7 +84,7 @@ class _mainPageState extends State<mainPage> {
   }
 
   // 뒤로가기 두번 누를 시 앱 종료
-  Future<bool> onWillPop(){
+  Future<bool> onWillPop() async {
     DateTime now = DateTime.now();
     if(currentBackPressTime == null ||
        now.difference(currentBackPressTime!) > Duration(seconds: 2)){
@@ -93,6 +93,9 @@ class _mainPageState extends State<mainPage> {
       showToast(_msg);
       return Future.value(false);
     }
+    final loginDataStorage = await SharedPreferences.getInstance();
+    final autoLogin = loginDataStorage.getBool('autoLogin') ?? false;
+    if(!autoLogin)loginDataStorage.clear();
     return Future.value(true);
   }
 

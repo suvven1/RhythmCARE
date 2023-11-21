@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 
 class ConnectionController extends GetxController {
   static ConnectionController get to => Get.find();
+  RxBool isWidgetLoding = true.obs;
   static const MethodChannel platform = MethodChannel('rhythm_channel');
 
-  RxBool isWidgetLoding = true.obs;
 
   void startScan() async {
     try {
