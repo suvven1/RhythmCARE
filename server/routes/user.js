@@ -202,8 +202,9 @@ const getbadgeData = (id) => {
 router.post("/getUserData", (req, res) => {
   console.log("getUserData", req.body);
   let { id } = req.body;
-  getbadgeData(id);
-  let getUserDataSql = `select mem.mem_id,
+  if (id != "") {
+    getbadgeData(id);
+    let getUserDataSql = `select mem.mem_id,
             mem.mem_name,
             mem.mem_nick,
             mem.mem_birthdate,
@@ -216,32 +217,35 @@ router.post("/getUserData", (req, res) => {
        from t_member as mem left join t_user as user
          on mem.mem_id = user.mem_id
       where mem.mem_id = ?`;
-  conn.query(getUserDataSql, [id], (err, userDataRows) => {
-    if (err) {
-      console.log("Fail getUserData!", err);
-      res.json({ userData: false });
-    } else {
-      console.log("Success getUserData!");
-      console.log("Success getBadgeData!");
-      // 뱃지 데이터 초기화
-      userDataRows[0].badge = badgeData;
+    conn.query(getUserDataSql, [id], (err, userDataRows) => {
+      if (err) {
+        console.log("Fail getUserData!", err);
+        res.json({ userData: false });
+      } else {
+        console.log("Success getUserData!");
+        console.log("Success getBadgeData!");
+        // 뱃지 데이터 초기화
+        userDataRows[0].badge = badgeData;
 
-      // 보호자 생년월일 전처리
-      mem_birth = userDataRows[0].mem_birthdate;
-      mem_birth.setDate(mem_birth.getDate() + 1);
-      userDataRows[0].mem_birthdate = mem_birth.toISOString().split("T")[0];
+        // 보호자 생년월일 전처리
+        mem_birth = userDataRows[0].mem_birthdate;
+        mem_birth.setDate(mem_birth.getDate() + 1);
+        userDataRows[0].mem_birthdate = mem_birth.toISOString().split("T")[0];
 
-      // 사용자 생년월일 전처리
-      user_birth = userDataRows[0].user_birthdate;
-      user_birth.setDate(user_birth.getDate() + 1);
-      userDataRows[0].user_birthdate = user_birth.toISOString().split("T")[0];
+        // 사용자 생년월일 전처리
+        user_birth = userDataRows[0].user_birthdate;
+        user_birth.setDate(user_birth.getDate() + 1);
+        userDataRows[0].user_birthdate = user_birth.toISOString().split("T")[0];
 
-      res.json({ userData: userDataRows[0] });
+        res.json({ userData: userDataRows[0] });
 
-      // 전송 후 뱃지 데이터 삭제
-      badgeData = [];
-    }
-  });
+        // 전송 후 뱃지 데이터 삭제
+        badgeData = [];
+      }
+    });
+  } else {
+    res.json({ userData: true });
+  }
 });
 // 회원정보 조회 끝 ---------------------------------------------------------------------------------------------------
 //

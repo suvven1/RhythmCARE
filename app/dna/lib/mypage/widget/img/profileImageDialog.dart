@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,6 +25,34 @@ class changeImgDialog extends StatefulWidget {
 class _changeImgDialogState extends State<changeImgDialog> {
   Uint8List? uint8list;
 
+  //ImagePicker 초기화
+  final ImagePicker picker = ImagePicker();
+
+  //이미지를 가져오는 함수
+  Future getImage(ImageSource imageSource) async {
+    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+    if (pickedFile != null) {
+      uint8list = await pickedFile.readAsBytes();
+      cropImg(uint8list!);
+    }
+  }
+
+  // 이미지 압축 함수
+  void cropImg(Uint8List beforeList) async {
+    var croppedUint8List= await FlutterImageCompress.compressWithList(
+      beforeList,
+      minWidth: 500,
+      minHeight: 500,
+      quality: 50
+    );
+
+    changeImg(croppedUint8List);
+  }
+
+
+
+
   // 이미지 변경 함수
   void changeImg(Uint8List imageBytes) async {
     final loginDataStorage = await SharedPreferences.getInstance();
@@ -39,7 +68,7 @@ class _changeImgDialogState extends State<changeImgDialog> {
         'image',
         imageBytes,
         filename: 'image.png',
-        contentType: MediaType('image', 'png'), // 이 부분 수정
+        contentType: MediaType('image', '*'), // 이 부분 수정
       ));
 
     try {
@@ -61,18 +90,7 @@ class _changeImgDialogState extends State<changeImgDialog> {
     }
   }
 
-  //ImagePicker 초기화
-  final ImagePicker picker = ImagePicker();
 
-  //이미지를 가져오는 함수
-  Future getImage(ImageSource imageSource) async {
-    //pickedFile에 ImagePicker로 가져온 이미지가 담긴다.
-    final XFile? pickedFile = await picker.pickImage(source: imageSource);
-    if (pickedFile != null) {
-      uint8list = await pickedFile.readAsBytes();
-      changeImg(uint8list!);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

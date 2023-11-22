@@ -52,9 +52,12 @@ class _myPageState extends State<myPage> {
     var userData = jsonDecode(res.body)["userData"];
 
     setState(() {
-      if (userData != false) {
+      if (userData.runtimeType != bool) {
         userDataCon.setUserData(userData);
         isLoding=false;
+      }else if(userData){
+        isLoding=false;
+        showToast('왠만하면 로그인하고 작업좀!');
       }else{
         showToast('유저 정보 갱신 실패');
       }
