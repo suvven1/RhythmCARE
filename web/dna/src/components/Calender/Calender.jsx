@@ -19,20 +19,22 @@ function Calendar() {
 
   // 일정 정보 불러오기
   useEffect(() => {
-    axios.post("/calender/getSchedule", { id: loginData.id }).then((res) => {
-      if (res.data.scheduleData) {
-        res.data.scheduleData.map((schedule) => {
-          const newEvent = {
-            key: schedule.sche_idx,
-            title: schedule.sche_title,
-            start: schedule.started_at.split("T")[0],
-            end: schedule.ended_at.split("T")[0],
-            backgroundColor: schedule.sche_color,
-          };
-          setEvents((prevEvents) => [...prevEvents, newEvent]);
-        });
-      }
-    });
+    if (loginData != null) {
+      axios.post("/calender/getSchedule", { id: loginData.id }).then((res) => {
+        if (res.data.scheduleData) {
+          res.data.scheduleData.map((schedule) => {
+            const newEvent = {
+              key: schedule.sche_idx,
+              title: schedule.sche_title,
+              start: schedule.started_at.split("T")[0],
+              end: schedule.ended_at.split("T")[0],
+              backgroundColor: schedule.sche_color,
+            };
+            setEvents((prevEvents) => [...prevEvents, newEvent]);
+          });
+        }
+      });
+    }
   }, []);
 
   const handleDateClick = (arg) => {

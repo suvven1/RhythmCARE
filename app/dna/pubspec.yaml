@@ -39,6 +39,7 @@ dependencies:
   flutter_native_splash: ^2.3.5 # splash
   http: ^1.1.0 # 서버 연결
   flutter_blue: ^0.8.0
+  flutter_blue_plus: ^1.29.5
   permission_handler: ^11.0.1
   webview_flutter: ^4.4.2 # 웹뷰
   webview_flutter_android: ^3.12.1 # 웹뷰

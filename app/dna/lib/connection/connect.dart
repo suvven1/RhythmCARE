@@ -1,6 +1,13 @@
+import 'dart:async';
+
 import 'package:dna/connection/widget/connect_step_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:permission_handler/permission_handler.dart';
 
+import '../controller/GetConnectionController.dart';
 import 'widget/connect_step_1.dart';
 import 'widget/connect_step_3.dart';
 import 'widget/connect_step_4.dart';
@@ -14,7 +21,11 @@ class connectDialog extends StatefulWidget {
   State<connectDialog> createState() => _connectDialogState();
 }
 
+
+
 class _connectDialogState extends State<connectDialog> {
+  ConnectionController connect = Get.put(ConnectionController());
+
   int _Step = 1;
 
   void setStep(int step){
@@ -23,7 +34,7 @@ class _connectDialogState extends State<connectDialog> {
         _Step = 1;
       }else if(step == 2){
         _Step = 2;
-        // delayConnect();
+        delayConnect();
       }else if(step == 3){
         _Step = 3;
       }else{
@@ -33,11 +44,21 @@ class _connectDialogState extends State<connectDialog> {
   }
 
   void delayConnect(){
-    Future.delayed(Duration(seconds: 8), () {
-      setState(() {
-        _Step = 3;
-      });
+    Future.delayed(Duration(seconds: 10), () {
+      if (connect.scanDeviceList.isEmpty) {
+        setState(() {
+          _Step = 3;
+        });
+      }else{
+        Future.delayed(Duration(seconds: 5), () {
+            setState(() {
+              _Step = 3;
+            });
+        });
+
+      }
     });
+
   }
 
   @override

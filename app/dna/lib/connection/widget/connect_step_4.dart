@@ -4,6 +4,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../controller/GetConnectionController.dart';
 import '../../toastMessage/toast.dart';
 
 

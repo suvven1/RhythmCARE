@@ -1,6 +1,9 @@
+import 'package:dna/connection/connect.dart';
 import 'package:dna/controller/GetConnectionController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'connect_list.dart';
@@ -8,6 +11,8 @@ import 'connect_list.dart';
 connect_step_2(context, setStep) {
   ConnectionController connect = Get.put(ConnectionController());
   connect.startScan();
+  // scanStart();
+
   return Container(
     height: 340,
     child: Column(
@@ -31,7 +36,7 @@ connect_step_2(context, setStep) {
                 CircularProgressIndicator(),
               ],
             )
-                : connect_list())),
+                : connect_list(connect.scanDeviceList.value))),
         SizedBox(
           height: 24,
         ),
@@ -47,7 +52,8 @@ connect_step_2(context, setStep) {
                 minimumSize:
                 Size(MediaQuery.of(context).size.width * 0.5, 45)),
             onPressed: () {
-              setStep(3);
+              connect.isWidgetLoding.value = true;
+              connect.startScan();
             },
             child: Text(
               '장치 다시 검색하기',

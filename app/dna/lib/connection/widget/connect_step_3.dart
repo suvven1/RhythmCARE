@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../controller/GetConnectionController.dart';
+
 connect_step_3(context, setStep) {
+  ConnectionController connect = Get.put(ConnectionController());
   return Container(
     height: 340,
     child: Column(
@@ -132,6 +135,7 @@ connect_step_3(context, setStep) {
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.5, 45)),
             onPressed: () {
               setStep(2);
+              connect.isWidgetLoding.value = true;
             },
             child: Text(
               '다시 연결하기',

@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../controller/GetConnectionController.dart';
 
 List<String> connectList = [];
+ConnectionController connect = Get.put(ConnectionController());
 
 void setItem(){
   for(int i = 0; i < 10; i++){
@@ -13,7 +14,7 @@ void setItem(){
   }
 }
 
-connect_list() {
+connect_list(scanList) {
   setItem();
   return Column(
     children: [
@@ -21,7 +22,7 @@ connect_list() {
       Text("연결 가능한 기기 목록", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
       Expanded(
         child: ListView.builder(
-            itemCount: connectList.length,
+            itemCount: scanList.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
@@ -33,7 +34,7 @@ connect_list() {
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: Text(connectList[index])
+                    child: Text(scanList[index])
                   ),
                 ),
               );
