@@ -15,38 +15,43 @@ const Community = () => {
   return (
     <CommunityBox>
       <form onSubmit={searchBoard}>
-        <input type="text" />
-        <input type="submit" value="검색" />
+        <img src={`${process.env.PUBLIC_URL}/images/board/search.png`}/>
+        <input 
+          className="search_text" 
+          type="text"
+          placeholder="검색어를 입력해주세요" />
+        <input className="search_btn" type="submit" value="검색" />
         <Link to="/boardwriteform">
           <button>글쓰기</button>
         </Link>
       </form>
-      <hr />
+      <hr className="custom-hr"/>
       <table>
         <tbody>
           <tr>
             <th width="150px">글번호</th>
             <th width="700px">제목</th>
             <th width="150px">글쓴이</th>
-            <th width="150px">날짜</th>
-            <th width="150px">공감</th>
-            <th width="150px">조회</th>
+            <th width="150px">작성일자</th>
+            <th width="150px">공감수</th>
+            <th width="150px">조회수</th>
           </tr>
           </tbody>
       </table>
-      <hr/>
+      <hr className="custom-hr"/>
       <table>
         <tbody>
           <tr onClick={moveToBoardDetail} style={{ cursor: "pointer" }}>
-            <th width="150px">001</th>
-            <th width="700px">첫번째 게시글</th>
-            <th width="150px">최진수</th>
-            <th width="150px">23.10.31</th>
-            <th width="150px">2</th>
-            <th width="150px">2</th>
+            <td width="150px">001</td>
+            <td width="700px">첫번째 게시글</td>
+            <td width="150px">최진수</td>
+            <td width="150px">23.10.31</td>
+            <td width="150px">2</td>
+            <td width="150px">2</td>
           </tr>
           </tbody>
       </table>
+          <hr/>
           {/* {userData.map((data) => {
             return (
               <tr key={num}>
@@ -68,8 +73,30 @@ export default Community;
 const CommunityBox = styled.div`
   margin-left: 300px;
   margin-right: 300px;
+  margin-top: 50px;
 
-  & hr {
+  & img {
+    width: 20px;
+    padding-right: 10px;
+  }
+
+  & .search_text {
+    width: 200px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  & .search_btn {
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2e2288;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  & .custom-hr {
     border: 1px solid #2e2288;
   }
 
@@ -84,5 +111,15 @@ const CommunityBox = styled.div`
     color: white;
     font-size: 20px;
     cursor: pointer;
+  }
+
+  & table {
+    width: 100%;
+    /* border-collapse: collapse; */
+  }
+
+  & th, & td {
+    text-align: center;
+    padding: 10px;
   }
 `

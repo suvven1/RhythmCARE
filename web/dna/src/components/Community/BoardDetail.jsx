@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const BoardDetail = () => {
   const [comment, setComment] = useState("");
@@ -9,25 +10,32 @@ const BoardDetail = () => {
   };
 
   return (
-    <div>
-      <input type="button" value="<이전글" />
-      <input type="button" value="다음글>" />
-      <hr />
-      <span>첫번째 게시글</span>
-      <span>최진수</span>
-      <span>23.10.31</span>
-      <span>조회 2</span>
+    <BoardDetailBox>
+      <Link to="/community">
+        <button>목록으로</button>
+      </Link>
+      <hr className="custom-hr"/>
+      <table>
+        <tbody>
+          <tr>
+            <th width="1000px">첫번째 게시글</th>
+            <th width="150px">최진수</th>
+            <th width="150px">23.10.31</th>
+            <th width="150px">조회 2</th>
+          </tr>
+          </tbody>
+      </table>
       <hr />
       <div>❤ 2</div>
-      <div>첫번째 테스트 게시글입니다.</div>
+      <div style={{fontSize:"20px"}}>첫번째 테스트 게시글입니다.</div>
       <hr />
       <div>댓글</div>
       <table>
         <tbody>
           <tr>
-            <th width="100px">류하경</th>
-            <th width="300px">재밌겠다~</th>
-            <th width="100px">23.10.31</th>
+            <td width="100px">류하경</td>
+            <td width="300px">재밌겠다~</td>
+            <td width="100px">23.10.31</td>
           </tr>
         </tbody>
       </table>
@@ -44,11 +52,39 @@ const BoardDetail = () => {
         ></textarea>
         <input type="submit" value="댓글달기" />
       </form>
-      <Link to="/community">
-        <button>목록으로</button>
-      </Link>
-    </div>
+    </BoardDetailBox>
   );
 };
 
 export default BoardDetail;
+
+const BoardDetailBox = styled.div`
+  margin : 20px 300px 0 300px;
+
+  & .custom-hr {
+    border: 1px solid #2e2288;
+  }
+
+  & Button{
+    margin : 0 0 20px auto;
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: none;
+    background-color: #2e2288;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    display: block;
+    
+  }
+
+  & table {
+    width: 100%;
+    /* border-collapse: collapse; */
+  }
+
+  & th, & td {
+    text-align: center;
+    padding: 10px;
+  }
+`
