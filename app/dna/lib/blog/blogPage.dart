@@ -1,11 +1,14 @@
 import 'dart:typed_data';
 
+import 'package:dna/blog/communityWrite.dart';
 import 'package:dna/blog/widget/communityTitle.dart';
+import 'package:dna/blog/widget/postContainer.dart';
 import 'package:dna/blog/widget/postListNum.dart';
 import 'package:dna/blog/widget/search.dart';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class blogPage extends StatefulWidget {
   const blogPage({super.key});
@@ -87,13 +90,33 @@ class _blogPageState extends State<blogPage> {
               search(
                   searchCon: searchCon, searchButtonAction: searchButtonAction),
               Expanded(
-                child: ListView(
-                  children: List.generate(
-                      viewListNum == viewListCount
-                          ? dataDB.length - viewListCount * 7
-                          : 7,
-                      (index) =>
-                          postContainer(dataDB[index + viewListNum * 7])),
+                child: Stack(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  children: [
+                    ListView(
+                      children: List.generate(
+                          viewListNum == viewListCount
+                              ? dataDB.length - viewListCount * 7
+                              : 7,
+                          (index) => postContainer(
+                              dataDB: dataDB[index + viewListNum * 7])),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12, right: 4),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(communityWrite());
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
+                            backgroundColor: Color(0xff2e2288),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12)))
+                          ),
+                          child: Text('글쓰기',
+                              style: TextStyle(
+                                  fontSize: 25,))),
+                    )
+                  ],
                 ),
               ),
               horisonLine,
@@ -101,6 +124,7 @@ class _blogPageState extends State<blogPage> {
                   viewListNum: viewListNum,
                   viewFt: viewFt,
                   viewListCount: viewListCount),
+              horisonLine,
             ],
           ),
         ),
@@ -115,102 +139,5 @@ class _blogPageState extends State<blogPage> {
     print(searchCon.text);
   }
 
-  // 게시물 양식
-  Widget postContainer(List<dynamic> dataDB) {
-    int postNum = dataDB[0];
-    int likeNum = dataDB[1];
-    int commentNum = dataDB[2];
-    List<int> writerImage = List<int>.from(dataDB[3]);
-    String writerNick = dataDB[4];
-    String date = dataDB[5];
-    String title = dataDB[6];
-    const TextStyle textStyle = TextStyle(fontSize: 20);
-    return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide())),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizeBoxH20,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'no. $postNum',
-                style: textStyle,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    'image/heart_good.png',
-                    height: 25,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  SizedBox(
-                    width: 40,
-                    child: Text(
-                      '$likeNum',
-                      style: textStyle,
-                    ),
-                  ),
-                  Image.asset(
-                    'image/navigationBarIcon/icon_db.png',
-                    height: 25,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  SizedBox(
-                    width: 40,
-                    child: Text('$commentNum', style: textStyle),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizeBoxH20,
-          Row(
-            children: [
-              ClipOval(
-                child: writerImage.isNotEmpty
-                    ? Image.memory(
-                        Uint8List.fromList(writerImage),
-                        width: 50,
-                        height: 50,
-                      )
-                    : Image.asset(
-                        'image/User.png',
-                        width: 50,
-                        height: 50,
-                      ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    writerNick,
-                    style: textStyle,
-                  ),
-                  Text(
-                    date,
-                    style: textStyle,
-                  ),
-                ],
-              )
-            ],
-          ),
-          SizeBoxH20,
-          Text(
-            title,
-            style: textStyle,
-          ),
-          SizeBoxH30
-        ],
-      ),
-    );
-  }
+// 게시물 양식
 }

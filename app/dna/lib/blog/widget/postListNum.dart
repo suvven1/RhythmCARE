@@ -28,10 +28,11 @@ class _postListNumState extends State<postListNum> {
               style: TextButton.styleFrom(
                 maximumSize: Size(64, 36),
                 padding: EdgeInsets.zero,
+                foregroundColor: Color(0xff2e2288),
               ),
               child: Text(
                     '${index + 1}',
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,),
                   ),
             )),
       ),
