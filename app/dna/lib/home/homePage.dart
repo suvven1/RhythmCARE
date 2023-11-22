@@ -16,14 +16,6 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  // 스트레스 바
-  // 피로도 바
-  // 수치에 따른 낮은/높은 표시, 표정 표시
-
-  // 심박수
-
-  // 스트레스/피로도
-  bool valueHigh = false;
 
   //잔디심기
   List<int> walkNum = List.filled(35, 0);

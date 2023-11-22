@@ -1,3 +1,4 @@
+import 'package:dna/home/widget/tired/oneWeekTiredChart.dart';
 import 'package:flutter/material.dart';
 
 class oneWeekTired extends StatelessWidget {
@@ -8,9 +9,9 @@ class oneWeekTired extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('한 주 스트레스',
+        Text('한 주 피로도',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        Image.asset('image/visualModel_Week.png'),
+        oneWeekTiredChart(),
       ],
     );
   }

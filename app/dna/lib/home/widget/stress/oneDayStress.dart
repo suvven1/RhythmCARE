@@ -30,6 +30,7 @@ class _oneDayStressState extends State<oneDayStress> {
                 return Row(
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('현재 스트레스는',
                             style: TextStyle(fontWeight: FontWeight.bold)),

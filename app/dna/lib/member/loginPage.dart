@@ -83,19 +83,10 @@ class _loginPageState extends State<loginPage> {
         loginDataStorage.setString('nick', loginData["nick"]);
 
         Get.off(() => mainPage());
-<<<<<<< HEAD
-        showSnackBar(
-            context, '${loginData["name"]}(${loginData["nick"]})님 환영합니다.', 2);
-      } else if (loginData) {
-        showSnackBar(context, '아이디 또는 비밀번호가 일치하지 않습니다.', 2);
-      } else {
-        showSnackBar(context, '알 수 없는 이유로 오류가 발생하였습니다.', 2);
-=======
       }else if(loginData){
         showToast('아이디 또는 비밀번호가 일치하지 않습니다.');
       }else{
         showToast('알 수 없는 이유로 오류가 발생하였습니다.');
->>>>>>> dc9e71ee1412482b7a1548cb70faddd6149e6a9d
       }
     });
   }

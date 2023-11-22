@@ -1,3 +1,4 @@
+import 'package:dna/home/widget/tired/oneDayTiredChart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,7 @@ class oneDayTired extends StatelessWidget {
                 return Row(
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('현재 피로도는',
                             style: TextStyle(fontWeight: FontWeight.bold)),
@@ -53,7 +55,7 @@ class oneDayTired extends StatelessWidget {
             )
           ],
         ),
-        Image.asset('image/visualModel_Day.png'),
+        oneDayTiredChart(),
       ],
     );
   }

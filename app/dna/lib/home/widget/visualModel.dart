@@ -14,7 +14,7 @@ visualModel (context, String what) {
   if(what == "스트레스"){
     return TextButton(
       style: TextButton.styleFrom(
-          primary: Colors.black
+          foregroundColor: Colors.black
       ),
       onPressed: (){
           Get.to(()=>stressPage());
@@ -37,7 +37,7 @@ visualModel (context, String what) {
   }else{
     return TextButton(
       style: TextButton.styleFrom(
-          primary: Colors.black
+          foregroundColor: Colors.black
       ),
       onPressed: (){
         Get.to(()=>tiredPage());
