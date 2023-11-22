@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/member/loginPage.dart';
 import 'package:dna/mypage/widget/infoContainer.dart';
-import 'package:dna/mypage/widget/profileImage.dart';
-import 'package:dna/mypage/widget/profileNick.dart';
+import 'package:dna/mypage/widget/img/profileImage.dart';
+import 'package:dna/mypage/widget/nick/profileNick.dart';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +19,7 @@ class myPage extends StatefulWidget {
   @override
   State<myPage> createState() => _myPageState();
 }
+
 
 class _myPageState extends State<myPage> {
   final MypageController userDataCon = Get.put(MypageController());
@@ -51,9 +52,12 @@ class _myPageState extends State<myPage> {
     var userData = jsonDecode(res.body)["userData"];
 
     setState(() {
-      if (userData != false) {
+      if (userData.runtimeType != bool) {
         userDataCon.setUserData(userData);
         isLoding=false;
+      }else if(userData){
+        isLoding=false;
+        showToast('왠만하면 로그인하고 작업좀!');
       }else{
         showToast('유저 정보 갱신 실패');
       }
@@ -78,8 +82,8 @@ class _myPageState extends State<myPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(alignment: Alignment.centerRight, child: ElevatedButton(onPressed: (){logout();}, child: Text("로그아웃"))),
-                  profileImage(imageData: userDataCon.imageData.value),
-                  profileNick(userDataCon.nick.value),
+                  profileImage(context, userDataCon.imageData.value, getUserData),
+                  profileNick(userDataCon.nick.value, getUserData),
                   SizeBoxH10,
                   infoContainer(userDataCon.infomationGuard.value, userDataCon.informationUser.value, context),
                   SizeBoxH30,

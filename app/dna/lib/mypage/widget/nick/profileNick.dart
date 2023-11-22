@@ -1,13 +1,15 @@
-import 'package:dna/mypage/widget/nickDialog.dart';
+import 'package:dna/mypage/widget/nick/nickDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-profileNick(String nickName) {
+profileNick(String nickName, getUserData) {
   return TextButton(
     onPressed: (){
       Get.dialog(
         nickDialog(),
-      );
+      ).then((value){
+        if(value)getUserData();
+      });
     },
     style: TextButton.styleFrom(
       foregroundColor: Colors.black

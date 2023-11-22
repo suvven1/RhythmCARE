@@ -82,6 +82,8 @@ class _loginPageState extends State<loginPage> {
         loginDataStorage.setString('name', loginData["name"]);
         loginDataStorage.setString('nick', loginData["nick"]);
 
+        if(autoLogin)loginDataStorage.setBool('autoLogin', true);
+
         Get.off(() => mainPage());
       }else if(loginData){
         showToast('아이디 또는 비밀번호가 일치하지 않습니다.');
@@ -93,10 +95,9 @@ class _loginPageState extends State<loginPage> {
 
   void isLogined() async {
     final loginDataStorage = await SharedPreferences.getInstance();
-    final id = loginDataStorage.getString('id') ?? '';
-    final name = loginDataStorage.getString('name') ?? '';
-    final nick = loginDataStorage.getString('nick') ?? '';
-    if (id != '') {
+    final autoLogin = loginDataStorage.getBool('autoLogin') ?? false;
+
+    if (autoLogin) {
       Get.off(() => mainPage());
     }
   }

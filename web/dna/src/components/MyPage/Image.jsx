@@ -10,7 +10,7 @@ const Image = () => {
   // 유저 전체 정보
   const userData = useContext(UserContext);
 
-  // 이미지 변환시 바로 표시하는 기능
+  // 이미지 압축
   const [img, setImg] = useState({ pre: "", data: "" });
   const setImage = async (e) => {
     if (e.target.files[0]) {
