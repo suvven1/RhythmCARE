@@ -14,7 +14,7 @@ const Hospitalapp = () => {
         mapscript(latitude, longitude);
       },
       (error) => {
-        mapscript(35.14648, 126.922253);
+        mapscript(35.160007, 126.851610);
       }
     );
   }, []);
