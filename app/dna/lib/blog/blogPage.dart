@@ -31,7 +31,8 @@ class _blogPageState extends State<blogPage> {
                 .subtract(Duration(days: index))
                 .toString()
                 .split(' ')[0],
-            '게시물 제목$index'
+            '게시물 제목$index',
+            '게시물 내용$index'*5,
           ]);
 
   // [
@@ -43,6 +44,7 @@ class _blogPageState extends State<blogPage> {
   //   4 : 글쓴이 닉네임
   //   5 : 글 작성일자
   //   6 : 게시물 제목
+  //   7 : 게시물 내용
   //   */
   //   위 인덱스 번호에 맞는 데이터를 아래 예시처럼 리스트로 넣어주면 됨.
   //   인덱스 번호 바꾸려면 밑에 게시물 양식에서 변수 초기화 부분이랑 같이 바꾸면 됨.

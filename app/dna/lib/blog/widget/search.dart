@@ -18,33 +18,24 @@ class _searchState extends State<search> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(),
-                    bottom: BorderSide(),
-                    left: BorderSide(),
-                  )),
-              child: Image.asset(
-                'image/search_icon.png',
-                width: 38,
-                height: 38,
-              ),
-            ),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(),
-                      bottom: BorderSide(),
-                      right: BorderSide(),
-                    )),
+                    border: Border.all()),
                 child: TextField(
                   controller: widget.searchCon,
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(10)),
+                      contentPadding: EdgeInsets.all(10),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Image.asset(
+                        'image/search_icon.png',
+                        width: 38,
+                        height: 38,
+                      ),
+                    ),
+                  ),
                   style: TextStyle(fontSize: 20),
                 ),
               ),

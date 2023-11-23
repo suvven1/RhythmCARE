@@ -42,7 +42,7 @@ class _postContainerState extends State<postContainer> {
   Widget build(BuildContext context) {
       return TextButton(
         onPressed: (){
-          Get.to(communityView());
+          Get.to(communityView(dataDB: widget.dataDB,));
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
