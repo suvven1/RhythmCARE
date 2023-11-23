@@ -15,8 +15,29 @@ class postContainer extends StatefulWidget {
 }
 
 class _postContainerState extends State<postContainer> {
+
+  // Test용 더미데이터 2
+  List<List<dynamic>> detailData = List.generate(150, (index) => [
+    index~/3,
+    index%3,
+    '${index~/3}번 게시글 ${index%3}번 댓글 내용입니다.',
+    52,
+    false,
+    DateTime.now().subtract(Duration(days: index~/3)),
+    'Nick${index%3}',
+    /*
+    0 : 글 번호
+    1 : 댓글 번호
+    2 : 댓글 내용
+    3 : 댓글 공감 수
+    4 : 댓글 작성일자
+    5 : 댓글 작성자 닉네임
+    */
+  ]);
+
   late int postNum;
   late int likeNum;
+  late bool likeBool;
   late int commentNum;
   late List<int> writerImage;
   late String writerNick;
@@ -29,11 +50,12 @@ class _postContainerState extends State<postContainer> {
     super.initState();
     postNum = widget.dataDB[0];
     likeNum = widget.dataDB[1];
-    commentNum = widget.dataDB[2];
-    writerImage = List<int>.from(widget.dataDB[3]);
-    writerNick = widget.dataDB[4];
-    date = widget.dataDB[5];
-    title = widget.dataDB[6];
+    likeBool = widget.dataDB[2];
+    commentNum = widget.dataDB[3];
+    writerImage = List<int>.from(widget.dataDB[4]);
+    writerNick = widget.dataDB[5];
+    date = widget.dataDB[6].toString().split(' ')[0];
+    title = widget.dataDB[7];
   }
 
   TextStyle textStyle = TextStyle(fontSize: 20);
@@ -42,7 +64,7 @@ class _postContainerState extends State<postContainer> {
   Widget build(BuildContext context) {
       return TextButton(
         onPressed: (){
-          Get.to(communityView(dataDB: widget.dataDB,));
+          Get.to(communityView(dataDB: widget.dataDB, detailData: detailData,));
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
@@ -64,7 +86,9 @@ class _postContainerState extends State<postContainer> {
                   Row(
                     children: [
                       Image.asset(
-                        'image/heart_good.png',
+                        likeBool
+                            ? 'image/trueLike_icon.png'
+                            : 'image/falseLike_icon.png',
                         height: 25,
                       ),
                       SizedBox(
@@ -78,7 +102,7 @@ class _postContainerState extends State<postContainer> {
                         ),
                       ),
                       Image.asset(
-                        'image/navigationBarIcon/icon_db.png',
+                        'image/comment_icon.png',
                         height: 25,
                       ),
                       SizedBox(
