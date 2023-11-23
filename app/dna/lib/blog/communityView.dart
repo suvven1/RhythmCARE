@@ -68,13 +68,12 @@ class _communityViewState extends State<communityView> {
         child: Container(
           padding: EdgeInsets.only(
               right: MediaQuery.of(context).size.width * 0.05,
-              left: MediaQuery.of(context).size.width * 0.05,
-              top: MediaQuery.of(context).size.height * 0.03,
-              bottom: MediaQuery.of(context).size.height * 0.03),
+              left: MediaQuery.of(context).size.width * 0.05,),
           child: ListView(
             children: [
               Column(
                 children: [
+                  SizeBoxH40,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -163,33 +162,58 @@ class _communityViewState extends State<communityView> {
                       ),
                     ],
                   ),
-                  SizeBoxH10,
+                  SizeBoxH20,
                   Column(
                     children: List.generate(
                         commentList.length,
-                        (index) => Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(flex: 3, child: Text(commentNick[index], style: contextStyle, maxLines: 1,)),
-                                Expanded(flex: 6, child: Text(commentList[index], style: contextStyle,)),
-                                Expanded(flex: 2, child: TextButton(
-                                  onPressed: (){
-                                    setState(() {
-                                      commentLikeBool[index] = !commentLikeBool[index];
-                                      commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
-                                    });
-                                  },
-                                  child: Row(
+                        (index) => Container(
+                          padding: EdgeInsets.only(top: 10, bottom: 12),
+                          decoration: BoxDecoration(
+                            border: Border(top: BorderSide(color: Colors.grey))
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(flex: 9, child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
-                                      Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
+                                      Text(commentNick[index], style: contextStyle, maxLines: 1,),
+                                      SizeBoxH10,
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 15,),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(commentList[index], style: contextStyle,),
+                                              SizedBox(height: 5,),
+                                              Text(commentdate[index], style: TextStyle(fontSize: 17, color: Colors.grey),),
+                                            ],
+                                          ),
+                                        ],
+                                      )
                                     ],
-                                  ),
-                                )),
-                              ],
-                            )),
+                                  )),
+                                  Expanded(flex: 2, child: TextButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        commentLikeBool[index] = !commentLikeBool[index];
+                                        commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
+                                        Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
+                                      ],
+                                    ),
+                                  )),
+                                ],
+                              ),
+                        )),
                   ),
-                  SizeBoxH40,
+                  horisonLine,
+                  SizeBoxH20,
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(),
@@ -202,7 +226,8 @@ class _communityViewState extends State<communityView> {
                         border: InputBorder.none,
                       ),
                     ),
-                  )
+                  ),
+                  SizeBoxH40
                 ],
               ),
             ],

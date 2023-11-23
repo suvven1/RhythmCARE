@@ -37,6 +37,11 @@ class _changeImgDialogState extends State<changeImgDialog> {
       cropImg(uint8list!);
     }
   }
+  // 이미지를 지우는 함수
+  void deleteImage(){
+    uint8list = Uint8List(0);
+    cropImg(uint8list!);
+  }
 
   // 이미지 압축 함수
   void cropImg(Uint8List beforeList) async {

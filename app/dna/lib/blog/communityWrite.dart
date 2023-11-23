@@ -17,21 +17,17 @@ class _communityWriteState extends State<communityWrite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('글쓰기'),
-        backgroundColor: Color(0xff2e2288),
-      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(
               right: MediaQuery.of(context).size.width * 0.05,
               left: MediaQuery.of(context).size.width * 0.05,
-              top: MediaQuery.of(context).size.height * 0.03,
-              bottom: MediaQuery.of(context).size.height * 0.03),
+            top: 40,
+          ),
           child: ListView(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.8,
+                height: MediaQuery.of(context).size.height * 0.83,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -63,14 +59,20 @@ class _communityWriteState extends State<communityWrite> {
                             hintText: '제목을 입력해주세요.',
                           ),
                         ),
-                        TextField(
-                          controller: contextCon,
-                          style: TextStyle(fontSize: 20),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: '내용을 입력해주세요.',
+                        SizeBoxH10,
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color: Color(0xffbebebe))),
                           ),
-                          maxLines: 18,
+                          child: TextField(
+                            controller: contextCon,
+                            style: TextStyle(fontSize: 20),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: '내용을 입력해주세요.',
+                            ),
+                            maxLines: 18,
+                          ),
                         ),
                       ],
                     ),

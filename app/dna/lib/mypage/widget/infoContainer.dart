@@ -21,6 +21,7 @@ infoContainer(Map infomationGuard, Map informationUser, context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizeBoxH10,
         infoGuard(infomationGuard),
         SizeBoxH30,
         infoUser(informationUser),
@@ -28,6 +29,7 @@ infoContainer(Map infomationGuard, Map informationUser, context) {
         badgeList(),
         SizeBoxH50,
         leave(context),
+        SizeBoxH20,
       ],
     ),
   );

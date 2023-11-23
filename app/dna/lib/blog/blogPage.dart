@@ -64,7 +64,6 @@ class _blogPageState extends State<blogPage> {
     viewList = List.generate(viewListNum == viewListCount
         ? dataDB.length - viewListCount * 7
         : 7, (index) => dataDB[index + viewListNum * 7]);
-    print(viewList);
   }
 
   // 하단 숫자버튼 클릭 시,
@@ -78,7 +77,6 @@ class _blogPageState extends State<blogPage> {
     // 게시물 클릭 시, db를 불러와야 할 때 여기로 불러오면 됨.
     viewListNum = selectedNum;
     _refreshIndicator.currentState?.show();
-    print(viewListNum);
   }
 
   late int viewListCount;
@@ -116,6 +114,10 @@ class _blogPageState extends State<blogPage> {
                       itemCount: viewList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return postContainer(
+                          // key를 부여하지 않는다면,
+                          // flutter는 기본적으로 같은 키에 대해
+                          // 재사용을 하기 때문에 상태변화가 일어나지 않을 수 있다.
+                          key: ValueKey(index+viewListNum*7),
                             dataDB: viewList[index]);
                       },
                     ),

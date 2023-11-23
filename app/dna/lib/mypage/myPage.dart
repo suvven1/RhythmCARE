@@ -20,11 +20,10 @@ class myPage extends StatefulWidget {
   State<myPage> createState() => _myPageState();
 }
 
-
 class _myPageState extends State<myPage> {
   final MypageController userDataCon = Get.put(MypageController());
   bool isLoding = true;
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -54,15 +53,16 @@ class _myPageState extends State<myPage> {
     setState(() {
       if (userData.runtimeType != bool) {
         userDataCon.setUserData(userData);
-        isLoding=false;
-      }else if(userData){
-        isLoding=false;
+        isLoding = false;
+      } else if (userData) {
+        isLoding = false;
         showToast('왠만하면 로그인하고 작업좀!');
-      }else{
+      } else {
         showToast('유저 정보 갱신 실패');
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,26 +72,40 @@ class _myPageState extends State<myPage> {
             getUserData();
           });
         },
-        child: isLoding ? Center(child: CircularProgressIndicator()) :ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.05),
-              width: double.infinity,
-              color: Colors.grey[200],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+        child: isLoding
+            ? Center(child: CircularProgressIndicator())
+            : ListView(
                 children: [
-                  Container(alignment: Alignment.centerRight, child: ElevatedButton(onPressed: (){logout();}, child: Text("로그아웃"))),
-                  profileImage(context, userDataCon.imageData.value, getUserData),
-                  profileNick(userDataCon.nick.value, getUserData),
-                  SizeBoxH10,
-                  infoContainer(userDataCon.infomationGuard.value, userDataCon.informationUser.value, context),
-                  SizeBoxH30,
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * 0.05),
+                    width: double.infinity,
+                    color: Colors.grey[200],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                logout();
+                              },
+                              child: Text("로그아웃"),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff2e2288)),
+                            )),
+                        profileImage(
+                            context, userDataCon.imageData.value, getUserData),
+                        profileNick(userDataCon.nick.value, getUserData),
+                        SizeBoxH10,
+                        infoContainer(userDataCon.infomationGuard.value,
+                            userDataCon.informationUser.value, context),
+                        SizeBoxH30,
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
