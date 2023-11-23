@@ -46,7 +46,7 @@ function App() {
           </Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/boardwriteform" element={<BoardWriteForm />}></Route>
-          <Route path="/boarddetail" element={<BoardDetail />}></Route>
+          <Route path="/boarddetail/:bd_idx" element={<BoardDetail />}></Route>
         </Routes>
       </UserContext.Provider>
     </div>
