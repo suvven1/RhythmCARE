@@ -1,7 +1,6 @@
-import 'package:dna/controller/GetController.dart';
+import 'package:dna/controller/GetRhythmController.dart';
 import 'package:dna/home/widget/grass.dart';
 import 'package:dna/home/widget/heartBeat.dart';
-import 'package:dna/home/widget/testWidget.dart';
 import 'package:dna/home/widget/visualModel.dart';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/widget/sizeBox.dart';
@@ -38,37 +37,31 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ReactiveController());
-    return GetX<ReactiveController>(
-      builder: (controller) {
-        return RefreshIndicator(
-          onRefresh: () async {
-            setState(() {
-              showToast("화면새로고침 완료");
-            });
-          },
-          child: ListView(
-            children: [
-              heartbeatTestWidget(),
-              // 심박수
-              heartBeat(controller.hearBeatNum.value),
-              // 스트레스 모델
-              visualModel(context, "스트레스"),
-              SizeBoxH30,
-              horisonLine,
-              SizeBoxH30,
-              // 피로도
-              visualModel(context, "피로도"),
-              SizeBoxH30,
-              horisonLine,
-              SizeBoxH30,
-              // 잔디심기
-              grass(grassColor(walkNum)),
-              SizeBoxH30,
-            ],
-          ),
-        );
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {
+          showToast("화면새로고침 완료");
+        });
       },
+      child: ListView(
+        children: [
+          // 심박수
+          heartBeat(),
+          // 스트레스 모델
+          visualModel(context, "스트레스"),
+          SizeBoxH30,
+          horisonLine,
+          SizeBoxH30,
+          // 피로도
+          visualModel(context, "피로도"),
+          SizeBoxH30,
+          horisonLine,
+          SizeBoxH30,
+          // 잔디심기
+          grass(list: grassColor(walkNum),),
+          SizeBoxH30,
+        ],
+      ),
     );
   }
 }

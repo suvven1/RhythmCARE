@@ -2,14 +2,14 @@ import 'package:dna/home/widget/tired/oneDayTiredChart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/GetController.dart';
+import '../../../controller/GetRhythmController.dart';
 
 class oneDayTired extends StatelessWidget {
   const oneDayTired({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ReactiveController controller = Get.put(ReactiveController());
+    final RhythmController controller = Get.put(RhythmController());
     return Column(
       children: [
         Row(
@@ -19,7 +19,7 @@ class oneDayTired extends StatelessWidget {
               '하루 피로도',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            GetX<ReactiveController>(
+            GetX<RhythmController>(
               builder: (_){
                 return Row(
                   children: [

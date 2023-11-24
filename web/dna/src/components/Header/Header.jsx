@@ -13,6 +13,7 @@ const Header = () => {
   const locationData = useLocation().pathname;
   const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
 
+  // 화면 크기 줄어들 시 사이드바로 전환
   const handelResize = () => {
     setHeaderWidth(window.innerWidth);
   };
@@ -24,11 +25,13 @@ const Header = () => {
     };
   }, []);
 
+  // 사이드바 열고 닫기
   const [close, setClose] = useState(false);
   const closeMenu = (e) => {
     setClose(e);
   };
 
+  // 로그아웃
   const logout = () => {
     localStorage.clear();
     alert("로그아웃이 완료되었습니다.");
@@ -36,7 +39,6 @@ const Header = () => {
   };
 
   // 새로고침시 유저 정보 받아오기
-  const [update, setUpdate] = useState(false);
   useEffect(() => {
     if (loginData != undefined) {
       axios
@@ -54,6 +56,14 @@ const Header = () => {
         });
     }
   }, []);
+
+  // 로그인 유지 여부에 따른 localstorage 관리
+  const checkKeepLogin = () => {
+    if (!loginData?.keepLogin) localStorage.clear();
+  };
+
+  // 창 종료시 로그인 유지 여부에 따라 값 유지 또는 삭제
+  // window.addEventListener("beforeunload", checkKeepLogin());
 
   return (
     <div>

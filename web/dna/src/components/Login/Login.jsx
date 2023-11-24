@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import axios from "../../axios";
 
 const Login = () => {
@@ -10,11 +12,17 @@ const Login = () => {
   const [pw, setPw] = useState("");
 
   // 로그인 상태시 메인페이지로 우회
-  // useEffect(() => {
-  //   if (localStorage.getItem("userData")) {
-  //     nav("/");
-  //   }
-  // });
+  useEffect(() => {
+    if (localStorage.getItem("userData")) {
+      nav("/");
+    }
+  });
+
+  // 로그인 유지 체크 여부
+  const [keepLogin, setKeepLogin] = useState(false);
+  const checkKeepLogin = () => {
+    setKeepLogin(!keepLogin);
+  };
 
   // 로그인 함수
   const login = (e) => {
@@ -23,6 +31,7 @@ const Login = () => {
       const loginData = res.data.loginResult;
       if (typeof loginData == "object") {
         loginData.id = id;
+        loginData.keepLogin = keepLogin;
         attendDate();
         alert(`${loginData.name}(${loginData.nick})님 환영합니다!`);
         localStorage.setItem("loginData", JSON.stringify(loginData));
@@ -119,6 +128,14 @@ const Login = () => {
               }}
             />
           </div>
+          <LoginCheckBox onClick={checkKeepLogin}>
+            {keepLogin ? (
+              <AiFillCheckCircle id="check" className="checked" />
+            ) : (
+              <RiCheckboxBlankCircleLine id="check" className="noncheck" />
+            )}
+            <div>로그인 상태 유지</div>
+          </LoginCheckBox>
           <input type="submit" className="btnLogin" value="로그인" />
         </LoginForm>
         <Find>
@@ -243,7 +260,7 @@ const LoginForm = styled.form`
 
   & .btnLogin {
     width: 380px;
-    margin-top: 40px;
+    margin-top: 30px;
     background-color: #2e2288;
     border: none;
     color: white;
@@ -252,23 +269,44 @@ const LoginForm = styled.form`
   }
 `;
 
+const LoginCheckBox = styled.div`
+  display: flex;
+  width: 380px;
+  margin-top: 5px;
+  & #check {
+    font-size: 18px;
+  }
+
+  & .checked {
+    color: #2e2288;
+  }
+
+  & div {
+    font-size: 14px;
+    margin-left: 5px;
+  }
+
+  cursor: pointer;
+`;
+
 const Find = styled.div`
   margin-top: 30px;
   & .findUserData {
     margin: 10px;
     text-decoration: none;
     font-size: 12px;
-    color: #bdbdbd;
+    color: grey;
   }
 `;
 
 const Join = styled.div`
   font-size: 12px;
-  color: #bdbdbd;
+  color: grey;
   margin-top: 40px;
   & .goToJoin {
     margin-left: 20px;
     text-decoration: none;
     color: #2e2288;
+    font-weight: bold;
   }
 `;

@@ -5,7 +5,6 @@ import 'package:dna/home/widget/tired/faceTired.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dna/controller/GetController.dart';
 
 import '../stressPage.dart';
 import '../tiredPage.dart';

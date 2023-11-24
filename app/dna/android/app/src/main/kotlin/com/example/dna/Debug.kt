@@ -14,7 +14,7 @@ object Debug {
     const val LEVEL4 = 3
     const val LEVEL5 = 4
     var LogLevel = LEVEL5
-    const val TAG = "Lifeband"
+    const val TAG = "RhythmCare"
     fun print(bytes: ByteArray): String {
         val sb = StringBuilder()
         sb.append("[ ")

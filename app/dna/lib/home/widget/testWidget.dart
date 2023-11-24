@@ -1,9 +1,10 @@
-import 'package:dna/controller/GetController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/GetRhythmController.dart';
+
 heartbeatTestWidget(){
-  final ReactiveController controller = Get.put(ReactiveController());
+  final RhythmController controller = Get.put(RhythmController());
   return Column(
     children: [
       Row(
@@ -11,12 +12,12 @@ heartbeatTestWidget(){
           Text('심박수 test'),
           TextButton(
               onPressed: () {
-                print(++controller.hearBeatNum.value);
+                print(++controller.heartRate.value);
               },
               child: Text('+')),
           TextButton(
               onPressed: () {
-                print(--controller.hearBeatNum.value);
+                print(--controller.heartRate.value);
               },
               child: Text('-')),
         ],

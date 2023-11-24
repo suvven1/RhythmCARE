@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:dna/blog/blogPage.dart';
 import 'package:dna/calendar/calendarPage.dart';
+import 'package:dna/controller/GetRhythmController.dart';
 import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/myBottomNavi.dart';
@@ -13,6 +16,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'connection/connect.dart';
+import 'controller/GetConnectionController.dart';
 
 class mainPage extends StatefulWidget {
   const mainPage({super.key});
@@ -21,8 +25,8 @@ class mainPage extends StatefulWidget {
   State<mainPage> createState() => _mainPageState();
 }
 
-
 class _mainPageState extends State<mainPage> {
+  ConnectionController connect = Get.put(ConnectionController());
   DateTime? currentBackPressTime;
 
   @override
@@ -31,9 +35,21 @@ class _mainPageState extends State<mainPage> {
     loginToast();
     Future.delayed(Duration.zero, () {
       setState(() {
-        Get.dialog(connectDialog());
+        checkConnected();
+
       });
     });
+  }
+
+  void checkConnected() async {
+    final deviceDataStorage = await SharedPreferences.getInstance();
+    var device = deviceDataStorage.getString("deviceName") ?? "STATE_DISCONNECTED";
+    if(device == "STATE_DISCONNECTED"){
+      Get.dialog(connectDialog());
+    }else{
+      connect.startConnect(device);
+    }
+
   }
 
   // 초기 페이지 2번 인덱스(홈)

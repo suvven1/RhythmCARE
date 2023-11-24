@@ -1,14 +1,15 @@
-import 'package:dna/controller/GetController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../controller/GetRhythmController.dart';
 
 class faceTired extends StatelessWidget {
   const faceTired({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ReactiveController controller = Get.put(ReactiveController());
-    return GetX<ReactiveController>(
+    final RhythmController controller = Get.put(RhythmController());
+    return GetX<RhythmController>(
       builder: (context) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

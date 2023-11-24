@@ -25,7 +25,7 @@ const SideBarContents = ({ close }) => {
   return (
     <SideBarContentBox>
       <UserDataBox>
-        {loginData == null ? (
+        {userData == null ? (
           <>
             <ImgBox>
               <Link to="/login" onClick={closeMenu}>

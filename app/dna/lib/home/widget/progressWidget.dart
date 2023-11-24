@@ -1,6 +1,7 @@
-import 'package:dna/controller/GetController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../controller/GetRhythmController.dart';
 
 class progressWidget extends StatelessWidget {
   const progressWidget({super.key, required this.what});
@@ -17,11 +18,11 @@ class progressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ReactiveController controller = Get.put(ReactiveController());
+    final RhythmController controller = Get.put(RhythmController());
     return Stack(
       children: [
         Image.asset('image/stateBar.png'),
-        GetX<ReactiveController>(
+        GetX<RhythmController>(
           builder: (_){
             return Container(
                 padding: EdgeInsets.all(5),

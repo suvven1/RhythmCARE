@@ -3,22 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
 
+import '../../controller/GetConnectionController.dart';
 import '../../toastMessage/toast.dart';
 
 
 
-connect_step_1(context, setStep) {
-  void checkBlue(context) async {
-// 블루투스 활성화 여부 확인
-    bool isBluetoothEnabled = await FlutterBlue.instance.isOn;
-    if (!isBluetoothEnabled) {
-// 블루투스가 비활성화된 경우 활성화 요청
-      showToast('블루투스 연결필요');
-      setStep(4);
-    } else {
-      setStep(2);
-    }
-  }
+connect_step_1(context) {
+  ConnectionController connect = Get.put(ConnectionController());
 
   return Container(
     height: 340,
@@ -53,7 +44,7 @@ connect_step_1(context, setStep) {
                   side: BorderSide(color: Color(0xff2e2288), width: 2), // 테두리 스타일 설정
                 ),
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.5, 45)),
-            onPressed: () {checkBlue(context);},
+            onPressed: () {connect.checkBlue();},
             child: Text(
               '장치 연결하기',
               style: TextStyle(

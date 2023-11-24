@@ -5,17 +5,9 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../controller/GetConnectionController.dart';
 
-List<String> connectList = [];
 ConnectionController connect = Get.put(ConnectionController());
 
-void setItem(){
-  for(int i = 0; i < 10; i++){
-    connectList.add('Smart_watch_${i+1}');
-  }
-}
-
 connect_list(scanList) {
-  setItem();
   return Column(
     children: [
       SizedBox(height: 10,),
@@ -26,6 +18,7 @@ connect_list(scanList) {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
+                  connect.startConnect(scanList[index]);
                 },
                 child: Card(
                   margin: EdgeInsets.all(1),

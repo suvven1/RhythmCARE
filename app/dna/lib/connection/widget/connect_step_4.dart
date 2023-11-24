@@ -8,18 +8,11 @@ import '../../controller/GetConnectionController.dart';
 import '../../toastMessage/toast.dart';
 
 
-connect_step_4(context, setStep) {
-  void checkBlue(context) async {
-// 블루투스 활성화 여부 확인
-    bool isBluetoothEnabled = await FlutterBlue.instance.isOn;
-    if (!isBluetoothEnabled) {
-// 블루투스가 비활성화된 경우 활성화 요청
-      showToast('블루투스 연결필요');
-      setStep(4);
-    } else {
-      setStep(2);
-    }
-  }
+connect_step_4(context) {
+  ConnectionController connect = Get.put(ConnectionController());
+
+  connect.checkBlue();
+
   return Container(
     height: 340,
     child: Column(
@@ -56,7 +49,7 @@ connect_step_4(context, setStep) {
                 ),
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.5, 45)),
             onPressed: () {
-              checkBlue(context);
+              connect.checkBlue();
             },
             child: Text(
               '다시 연결하기',

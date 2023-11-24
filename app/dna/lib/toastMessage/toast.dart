@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 
-const MethodChannel platform = MethodChannel('rhythm_channel');
+const MethodChannel platform = MethodChannel('rhythm_method');
 
 void showToast(text) async {
   try{

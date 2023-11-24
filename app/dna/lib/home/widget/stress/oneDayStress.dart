@@ -2,7 +2,7 @@ import 'package:dna/home/widget/stress/oneDayStressChart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/GetController.dart';
+import '../../../controller/GetRhythmController.dart';
 
 class oneDayStress extends StatefulWidget {
   const oneDayStress({super.key});
@@ -15,7 +15,7 @@ class _oneDayStressState extends State<oneDayStress> {
 
   @override
   Widget build(BuildContext context) {
-    final ReactiveController controller = Get.put(ReactiveController());
+    final RhythmController controller = Get.put(RhythmController());
     return Column(
       children: [
         Row(
@@ -25,7 +25,7 @@ class _oneDayStressState extends State<oneDayStress> {
               '하루 스트레스',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            GetX<ReactiveController>(
+            GetX<RhythmController>(
               builder: (_) {
                 return Row(
                   children: [

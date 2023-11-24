@@ -8,10 +8,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'connect_list.dart';
 
-connect_step_2(context, setStep) {
+connect_step_2(context) {
   ConnectionController connect = Get.put(ConnectionController());
+  connect.delayConnect();
   connect.startScan();
-  // scanStart();
 
   return Container(
     height: 340,
@@ -29,14 +29,14 @@ connect_step_2(context, setStep) {
                 Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("기기 검색중..."),
+                Text(connect.loadingText.value),
                 SizedBox(
                   height: 20,
                 ),
                 CircularProgressIndicator(),
               ],
             )
-                : connect_list(connect.scanDeviceList.value))),
+                : connect_list(connect.scanDeviceList.value.keys.toList()))),
         SizedBox(
           height: 24,
         ),
@@ -53,6 +53,7 @@ connect_step_2(context, setStep) {
                 Size(MediaQuery.of(context).size.width * 0.5, 45)),
             onPressed: () {
               connect.isWidgetLoding.value = true;
+              connect.delayConnect();
               connect.startScan();
             },
             child: Text(

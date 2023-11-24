@@ -1,3 +1,4 @@
+import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/mypage/widget/infomation/pwChangeDialog.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 
-infoGuard(Map infomationGuard) {
+infoGuard() {
+  MypageController mypage = Get.put(MypageController());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -31,7 +33,7 @@ infoGuard(Map infomationGuard) {
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
                           child: Text(
-                        '${infomationGuard.keys.toList()[index]}',
+                        '${mypage.infomationGuard.value.keys.toList()[index]}',
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       )),
@@ -39,7 +41,7 @@ infoGuard(Map infomationGuard) {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '${infomationGuard.values.toList()[index]}',
+                        '${mypage.infomationGuard.value.values.toList()[index]}',
                         style: TextStyle(fontSize: 15),
                       ),
                     ),

@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../controller/GetConnectionController.dart';
 
-connect_step_3(context, setStep) {
+connect_step_3(context) {
   ConnectionController connect = Get.put(ConnectionController());
   return Container(
     height: 340,
@@ -134,7 +134,7 @@ connect_step_3(context, setStep) {
                 ),
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.5, 45)),
             onPressed: () {
-              setStep(2);
+              connect.steps.value = 2;
               connect.isWidgetLoding.value = true;
             },
             child: Text(

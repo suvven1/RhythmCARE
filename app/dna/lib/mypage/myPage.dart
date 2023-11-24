@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/member/loginPage.dart';
-import 'package:dna/mypage/widget/infoContainer.dart';
+import 'package:dna/mypage/widget/infomation/infoContainer.dart';
 import 'package:dna/mypage/widget/img/profileImage.dart';
 import 'package:dna/mypage/widget/nick/profileNick.dart';
 import 'package:dna/toastMessage/toast.dart';
