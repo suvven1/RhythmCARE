@@ -5,7 +5,6 @@ import styled from "styled-components";
 const BoardDetail = () => {
   const {bd_idx} = useParams();
   
-
   const [likecount, setLikeCount] = useState(0);
   const [likeImage, setLikeImage] = useState("likes.png");
 
@@ -21,22 +20,40 @@ const BoardDetail = () => {
 
   const [comment, setComment] = useState("");
   const [commentLikes, setCommentLikes] = useState(0);
-  const [commentLikeImage, setCommentLikeImage] = useState("likes.png");
+  const [commentLikeImages, setCommentLikeImages] = useState("likes.png");
 
-  const toggleCommentLike = () => {
-    if (commentLikeImage === "likes.png") {
-      setCommentLikes((prevCount) => prevCount + 1);
-      setCommentLikeImage("likes2.png");
-    } else {
-      setCommentLikes((prevCount) => prevCount - 1);
-      setCommentLikeImage("likes.png");
-    }
+  const toggleCommentLike = (commentId) => {
+    setCommentLikes((prevLikes) => {
+      const updatedLikes = { ...prevLikes };
+
+      if (updatedLikes[commentId] === undefined) {
+        updatedLikes[commentId] = 0;
+      }
+
+      updatedLikes[commentId] += updatedLikes[commentId] === 0 ? 1 : -1;
+
+      return updatedLikes;
+    });
+
+    setCommentLikeImages((prevImages) => {
+      const updatedImages = { ...prevImages };
+
+      updatedImages[commentId] = updatedImages[commentId] === "likes.png" ? "likes2.png" : "likes.png";
+
+      return updatedImages;
+    });
   };
 
   const postComment = (e) => {
     e.preventDefault();
     console.log(comment);
   };
+
+  const dummyComments = [
+    {id: 1, created_at: "23.11.24", mem_id: "콩수니", cmt_content : "무슨 맛이냐하면,,, 우선 꽉 깨물 때 부드럽구,,, 말랑말랑하구,,"},
+    {id: 2, created_at: "23.11.24", mem_id: "콩수니", cmt_content : "아카시아 꽃 향기가 나구,,, 참기름 처럼 고소하면서,,(꿀꺽) 그리구,,"}, 
+    {id: 3, created_at: "23.11.24", mem_id: "콩수니", cmt_content : "그리구,, (아움꺽) 하늘!!! 땅!!! 하늘 땅 하늘 땅 하늘 땅땅땅땅만큼 맛있어!!!"},
+  ]
 
   return (
     <BoardDetailBox>
@@ -61,24 +78,35 @@ const BoardDetail = () => {
           onClick={toggleLike} />
         <p>{likecount}</p>
       </ContentBox>
-      <hr />
       <CommentBox>
-        <table>
-          <tbody>
-            <tr>
-              <td width="100px">류하경</td>
-              <td width="300px">재밌겠다~</td>
-              <td width="100px">
-              <img
-                  src={`${process.env.PUBLIC_URL}/images/community/${commentLikeImage}`}
-                  onClick={toggleCommentLike}
-                />
-                <span>{commentLikes}</span>
-              </td>
-              <td width="100px">23.10.31</td>
-            </tr>
-          </tbody>
-        </table>
+        <h2>댓글</h2>
+        <hr/>
+      <table>
+    <tbody>
+    {dummyComments.map((comment) => (
+              <React.Fragment key={comment.id}>
+                <tr>
+                  <td colSpan="3">{comment.created_at}</td>
+                </tr>
+                <tr>
+                  <td className="comment"id="profile" width="100">
+                    <div style={{ width: "30px", height: "30px", backgroundColor: "gray", borderRadius: "15px", marginRight: "15px" }}></div>
+                    {comment.mem_id}
+                  </td>
+                  <td className="comment"width="1200px">{comment.cmt_content}</td>
+                  <td className="comment"width="100px">
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/community/${commentLikes[comment.id] > 0 ? "likes2.png" : "likes.png"}`}
+                      onClick={() => toggleCommentLike(comment.id)}
+                    />
+                    <span>{commentLikes[comment.id] || 0}</span>
+                  </td>
+                </tr>
+                
+              </React.Fragment>
+      ))}
+    </tbody>
+  </table>
       </CommentBox>
       <form onSubmit={postComment}>
         <textarea
@@ -86,7 +114,7 @@ const BoardDetail = () => {
           name=""
           id=""
           cols="160"
-          rows="5"
+          rows="4"
           onChange={(e) => {
             setComment(e.target.value);
           }}
@@ -101,6 +129,7 @@ export default BoardDetail;
 
 const BoardDetailBox = styled.div`
   margin : 20px 300px 0 300px;
+
 
   & .custom-hr {
     border: 1px solid #2e2288;
@@ -125,21 +154,25 @@ const BoardDetailBox = styled.div`
   }
 
   & th, & td {
-    text-align: center;
     padding: 10px;
+  }
+  & td#profile{
+    display: flex;
+    align-items: center;
   }
 
   & textarea {
     /* border: none; */
     font-size: 15px;
     font-family: sans-serif;
-    margin-top: 10px;
+    margin-top: 30px;
     padding: 10px;
+    resize: none;
   }
 
   & #putCommentBtn{
     display: block;
-    margin: 0 0 auto auto;
+    margin: -53px 0 auto auto;
     padding: 15px 25px;
     border-radius: 10px;
     border: none;
@@ -173,11 +206,18 @@ const ContentBox = styled.div`
 `
 
 const CommentBox = styled.div`
-  
-
+  & h2{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+  }
   & img {
     width: 20px;
     margin-right : 10px;
+  }
+
+  & .comment {
+    border-bottom: 1px solid #BBBBBB;
   }
 
 `

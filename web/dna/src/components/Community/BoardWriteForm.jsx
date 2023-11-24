@@ -86,6 +86,7 @@ const BoardWriteBox = styled.div`
     border: none;
     font-size: 20px;
     font-family: sans-serif;
+    resize: none;
   }
 
   & #putBtn{

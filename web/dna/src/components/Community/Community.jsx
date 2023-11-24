@@ -21,6 +21,7 @@ const Community = () => {
   setSearchResults(results);
   // 검색 결과가 있을 경우 현재 페이지를 1로 설정
   setCurrentPage(results.length > 0 ? 1 : 0);
+  setInitialLoad(false)
     console.log("Search results:", searchResults);
 
   };
@@ -45,9 +46,9 @@ const Community = () => {
   const endIndex = startIndex + itemsPerPage;
 
   // 현재 페이지의 아이템 가져오기
-  const currentItems = dummyData.slice(startIndex, endIndex);
+  const currentItems = searchKeyword ? searchResults : dummyData.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+  const totalPages =  Math.ceil((searchKeyword ? searchResults.length : dummyData.length) / itemsPerPage);
 
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 
@@ -70,36 +71,85 @@ const Community = () => {
 
       </ToolContainer>
       <hr className="custom-hr" />
-      <table>
-      <tbody>
-  {searchResults.length > 0 ? (
-    searchResults.map((data) => (
-      <tr key={data.bd_idx} style={{ cursor: "pointer" }}>
-        <td width="150px">{data.bd_idx}</td>
-        <td width="820px">
-          <Link
-            to={`/boarddetail/${data.bd_idx}`}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            {data.bd_title}
-          </Link>
-        </td>
-        <td width="150px">{data.mem_id}</td>
-        <td width="150px">{data.created_at}</td>
-        <td width="150px">{data.bd_likes}</td>
-        <td width="150px">{data.bd_views}</td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="6" style={{ textAlign: "center" }}>
-        검색 결과가 없습니다.
-      </td>
-    </tr>
-  )}
-</tbody>
-      </table>
-      <div className="pagination">
+      {/* <table>
+        <tbody>
+          <tr>
+            <th width="150px">글번호</th>
+            <th width="690px">제목</th>
+            <th width="150px">글쓴이</th>
+            <th width="150px">작성일자</th>
+            <th width="150px">좋아요수</th>
+            <th width="150px">댓글수</th>
+          </tr>
+        </tbody>
+      </table> */}
+      <TableHeader>
+        <div style={{width:"150px"}}>글번호</div>
+        <div style={{width:"650px"}}>제목</div>
+        <div style={{width:"150px"}}>작성자</div>
+        <div style={{width:"150px"}}>작성일자</div>
+        <div style={{width:"150px"}}>좋아요수</div>
+        <div style={{width:"150px"}}>조회수</div>
+      </TableHeader>
+      <hr className="custom-hr" />
+      {/* <table>
+        <tbody>
+          {currentItems.length > 0 ? (
+            currentItems.map((data) => (
+              <tr key={data.bd_idx} style={{ cursor: "pointer" }}>
+                <td width="150px">{data.bd_idx}</td>
+                <td width="820px">
+                  <Link
+                    to={`/boarddetail/${data.bd_idx}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    {data.bd_title}
+                  </Link>
+                </td>
+                <td width="150px">{data.mem_id}</td>
+                <td width="150px">{data.created_at}</td>
+                <td width="150px" >
+                  <img src={`${process.env.PUBLIC_URL}/images/community/likes.png`}
+                  style={{width: '20px', marginRight:"10px"}}/>
+                  {data.bd_likes}
+                  </td>
+                <td width="150px">
+                  <img src={`${process.env.PUBLIC_URL}/images/community/comment.png`}
+                  style={{width: '20px', marginRight:"10px"}}/>
+                  {data.bd_views}
+                  </td>
+              </tr>
+            ))
+          ) : !initialLoad ? (
+            <tr>
+              <td colSpan="6" style={{ textAlign: "center" }}>
+                검색 결과가 없습니다.
+              </td>
+            </tr>
+          ) : (
+            // 초기 로딩 시 전체 데이터 표시
+            dummyData.map((data) => (
+              <tr key={data.bd_idx} style={{ cursor: "pointer" }}>
+                <td width="150px">{data.bd_idx}</td>
+                <td width="820px">
+                  <Link
+                    to={`/boarddetail/${data.bd_idx}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    {data.bd_title}
+                  </Link>
+                </td>
+                <td width="150px">{data.mem_id}</td>
+                <td width="150px">{data.created_at}</td>
+                <td width="150px">{data.bd_likes}</td>
+                <td width="150px">{data.bd_views}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table> */}
+      {/* 페이지 버튼 이동 */}
+      <Pagination>
         <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
           ←
         </button>
@@ -111,7 +161,7 @@ const Community = () => {
         <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
           →
         </button>
-      </div>
+      </Pagination>
     </CommunityBox>
   );
 };
@@ -143,25 +193,12 @@ const CommunityBox = styled.div`
     border-bottom: 1px solid #bbbbbb;
   }
 
-  & .pagination {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-  }
+  
 
-  & .pagination button {
-    border: none;
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
+  @media only screen and (max-width: 1040px){
+    margin: 20px 50px 0 50px;
 
-  & .pagination button.active {
-    background-color: #2e2288;
-    color: white;
   }
-
 `
 
 const ToolContainer = styled.div`
@@ -190,7 +227,8 @@ const ToolContainer = styled.div`
     cursor: pointer;
     text-decoration: none;
   }
-  & .writeBtn{
+  
+& .writeBtn{
     padding: 15px 32.5px;
     border-radius: 10px;
     border: none;
@@ -202,5 +240,55 @@ const ToolContainer = styled.div`
     text-decoration: none;
 
   }
+  @media only screen and (max-width: 1040px){
+    & .search_text {
+    width: 150px;
+    height: 25px;
+    margin-right: 10px;
+    }
 
+    & .writeBtn{
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2e2288;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    }
+  }
+`
+
+const TableHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+`
+
+const TableRow = styled.div`
+  
+`
+
+const Pagination = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  & button {
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  & button.active {
+    background-color: #2e2288;
+    color: white;
+  }
+  
 `
