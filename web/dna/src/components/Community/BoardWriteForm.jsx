@@ -23,7 +23,7 @@ const BoardWriteForm = () => {
         <button>목록으로</button>
       </Link>
       <form onSubmit={uploadBoard}>
-      <hr className="custom-hr"/>
+        <hr className="custom-hr" />
         <input
           id="boardtitle"
           type="text"
@@ -32,7 +32,7 @@ const BoardWriteForm = () => {
             setTitle(e.target.value);
           }}
         />
-        <hr/>
+        <hr />
         <textarea
           placeholder="내용을 입력해주세요"
           name=""
@@ -43,8 +43,8 @@ const BoardWriteForm = () => {
             setContent(e.target.value);
           }}
         ></textarea>
-        <hr/>
-        
+        <hr />
+
         <input id="putBtn" type="submit" value="등록하기" />
       </form>
     </BoardWriteBox>
@@ -87,6 +87,7 @@ const BoardWriteBox = styled.div`
     font-size: 20px;
     font-family: sans-serif;
     resize: none;
+    width: 100%;
   }
 
   & #putBtn{
@@ -99,5 +100,25 @@ const BoardWriteBox = styled.div`
     font-size: 15px;
     cursor: pointer;
     display: block;
+  }
+
+  @media only screen and (max-width: 1040px){
+    margin: 20px 50px 0 50px;
+
+    & Button, #putBtn {
+      padding: 8px 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #2e2288;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
+
+    & textarea, #boardtitle{
+      font-size: 18px;
+    }
   }
 `
