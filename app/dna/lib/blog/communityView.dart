@@ -167,34 +167,18 @@ class _communityViewState extends State<communityView> {
                     children: List.generate(
                         commentList.length,
                         (index) => Container(
-                          padding: EdgeInsets.only(top: 10, bottom: 12),
+                          padding: EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
                             border: Border(top: BorderSide(color: Colors.grey))
                           ),
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(flex: 9, child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(commentNick[index], style: contextStyle, maxLines: 1,),
-                                      SizeBoxH10,
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 15,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(commentList[index], style: contextStyle,),
-                                              SizedBox(height: 5,),
-                                              Text(commentdate[index], style: TextStyle(fontSize: 17, color: Colors.grey),),
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )),
-                                  Expanded(flex: 2, child: TextButton(
+                                  Text(commentNick[index], style: contextStyle, maxLines: 1,),
+                                  TextButton(
                                     onPressed: (){
                                       setState(() {
                                         commentLikeBool[index] = !commentLikeBool[index];
@@ -207,9 +191,24 @@ class _communityViewState extends State<communityView> {
                                         Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
                                       ],
                                     ),
-                                  )),
+                                  ),
                                 ],
                               ),
+                              Row(
+                                children: [
+                                  SizedBox(width: 15,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(commentList[index], style: contextStyle,),
+                                      SizedBox(height: 5,),
+                                      Text(commentdate[index], style: TextStyle(fontSize: 17, color: Colors.grey),),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         )),
                   ),
                   horisonLine,

@@ -11,6 +11,13 @@ class postListNum extends StatefulWidget {
 }
 
 class _postListNumState extends State<postListNum> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -28,7 +35,7 @@ class _postListNumState extends State<postListNum> {
               style: TextButton.styleFrom(
                 maximumSize: Size(64, 36),
                 padding: EdgeInsets.zero,
-                foregroundColor: Color(0xff2e2288),
+                foregroundColor: widget.viewListNum == index ? Color(0xff2e2288) : Colors.grey[300],
               ),
               child: Text(
                     '${index + 1}',
