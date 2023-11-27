@@ -5,6 +5,7 @@ const indexRouter = require("./routes");
 const userRouter = require("./routes/user");
 const attendRouter = require("./routes/attend");
 const calenderRouter = require("./routes/calender");
+const webSocketRouter = require("./routes/webSocket");
 const path = require("path");
 const cors = require("cors");
 
@@ -16,6 +17,7 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/attend", attendRouter);
 app.use("/calender", calenderRouter);
+app.use("/webSocket", webSocketRouter);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "web", "dna", "build")));
 app.get("/*", (req, res) => {

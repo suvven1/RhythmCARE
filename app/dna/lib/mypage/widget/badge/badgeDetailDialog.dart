@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 
 class badgeDetailDialog extends StatefulWidget {
   // const badgeDetailDialog({super.key});
-  badgeDetailDialog({Key? key, required this.badgeImg, required this.badgeName})
+  badgeDetailDialog({Key? key, required this.badgeImg, required this.badgeName, required this.badgeText})
       : super(key: key);
 
   final String badgeImg;
   final String badgeName;
+  final String badgeText;
 
   @override
   State<badgeDetailDialog> createState() => _badgeDetailDialogState();
@@ -98,7 +99,7 @@ class _badgeDetailDialogState extends State<badgeDetailDialog> {
                 Container(
                   height: 100,
                   child: Text(
-                    "뱃지 획득 조건 부분",
+                    widget.badgeText,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),

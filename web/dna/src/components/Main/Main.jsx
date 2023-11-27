@@ -72,7 +72,7 @@ const Main = () => {
           <br />
           위한 최고의 파트너
         </p>
-        <div className="blank"/>
+        <div className="blank" />
         <SloganImage />
       </SloganBack>
 
@@ -293,7 +293,7 @@ const SloganBack = styled.div`
     font-weight: bold;
   }
 
-  & .blank{
+  & .blank {
     width: 100px;
   }
 

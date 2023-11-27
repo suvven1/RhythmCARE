@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +15,6 @@ class ConnectionController extends GetxController {
   RxString loadingText = "기기 검색중...".obs;
   RxMap<String, String> scanDeviceList = <String, String>{}.obs;
   RxString connectedDeviceName = "연결된 기기 없음".obs;
-
 
 
   void delayConnect(){
@@ -71,22 +69,19 @@ class ConnectionController extends GetxController {
     loadingText.value = "${device} 연결중...";
     isWidgetLoding.value = true;
     try {
-      var adress = deviceDataStorage.getString("deviceAdress") ?? "STATE_DISCONNECTED";
-
-      if(adress == "STATE_DISCONNECTED"){
-        adress = scanDeviceList[device]!;
-      }
+      var adress = deviceDataStorage.getString("deviceAdress") ?? scanDeviceList[device]!;
 
       var connectResult = await platform.invokeMethod(
           "startConnect", {'adress': adress});
       isWidgetLoding.value = false;
 
       if (connectResult) {
-        if(adress == "STATE_DISCONNECTED"){
+        if(scanDeviceList.isNotEmpty){
           showToast("${device}에 연결되었습니다.");
           deviceDataStorage.setString("deviceName", device);
           deviceDataStorage.setString("deviceAdress", scanDeviceList[device]!);
         }
+
         connectedDeviceName.value = device;
         Get.back();
       } else {

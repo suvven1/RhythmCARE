@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:http/http.dart' as http;
+import '../url.dart';
 import '../widget/sizeBox.dart';
 import 'join2Page.dart';
 
@@ -54,7 +55,7 @@ class _joinPageState extends State<joinPage> {
 
   // 닉네임 중복검사 함수
   void checkNickDup() async {
-    String url = "http://115.95.222.206:80/user/join/nickDupCheck";
+    String url = "http://${URL.ip}/user/join/nickDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'nick': nickCon.text}));
@@ -88,7 +89,7 @@ class _joinPageState extends State<joinPage> {
 
   // 아이디 중복검사 함수
   void checkIdDup() async {
-    String url = "http://115.95.222.206:80/user/join/idDupCheck";
+    String url = "http://${URL.ip}/user/join/idDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': idCon.text}));

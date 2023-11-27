@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../url.dart';
+
 class deleteDialog extends StatelessWidget {
   const deleteDialog({
     Key? key,
@@ -21,7 +23,7 @@ class deleteDialog extends StatelessWidget {
   void deleteSchedule() async {
     print(todayList);
 
-    String url = "http://115.95.222.206:80/calender/deleteSchedule";
+    String url = "http://${URL.ip}/calender/deleteSchedule";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({"id": todayList?[1], "key": todayList?[0]}));

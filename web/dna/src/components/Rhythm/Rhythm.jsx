@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ReactApexChart from 'react-apexcharts';
+import ReactApexChart from "react-apexcharts";
 import styled from "styled-components";
 
+import HeartBeat from "./HeartBeat";
 const Rhythm = () => {
-  var heartbeat = 100;
   var stress = 62;
   var fatigue = 50;
-  var step = 6720;
-
+  const [step, setStep] = useState("--");
   // 스트레스 바 그래프---------------
   const StressBar = () => {
     const options = {
@@ -32,8 +31,30 @@ const Rhythm = () => {
       },
       xaxis: {
         categories: [
-          "AM 12", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " 10", " 11", 
-          "PM 12", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " 10", " 11"
+          "AM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
+          "PM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
         ],
       },
       yaxis: {
@@ -162,8 +183,30 @@ const Rhythm = () => {
       },
       xaxis: {
         categories: [
-          "AM 12", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " 10", " 11", 
-          "PM 12", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " 10", " 11"
+          "AM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
+          "PM 12",
+          " 1",
+          " 2",
+          " 3",
+          " 4",
+          " 5",
+          " 6",
+          " 7",
+          " 8",
+          " 9",
+          " 10",
+          " 11",
         ],
       },
       yaxis: {
@@ -270,75 +313,82 @@ const Rhythm = () => {
 
   // 방사형 그래프---------------
   const HealthRadar = () => {
-
     // 심박 백분율
-    const heartPersentage = (value)=>{
-      return (value/200)*100
-    }
+    const heartPersentage = (value) => {
+      return (value / 200) * 100;
+    };
 
     const calculatePersentage = (value) => {
-      return (value/100)*100
-    }
+      return (value / 100) * 100;
+    };
 
     const stepPersentage = (value) => {
-      return (value/20000) *100
-    }
-    
-    const options = {
-      series: [{
-      name: '평균',
-      data: [heartPersentage(80), 73, 26.89, 98, stepPersentage(6000)],
-    }, {
-      name: '내 건강정보',
-      data: [heartPersentage(88), calculatePersentage(10), calculatePersentage(80), calculatePersentage(90), stepPersentage(4068)],
-    }],
-      chart: {
-      height: 400,
-      width : 500,
-      type: 'radar',
-      dropShadow: {
-        enabled: true,
-        blur: 1,
-        left: 1,
-        top: 1
-      },
-    },
-    stroke: {
-      width: 2
-    },
-    fill: {
-      opacity: 0.1
-    },
-    markers: {
-      size: 0
-    },
-    xaxis: {
-      categories: ['심박수', '스트레스', '피로도', '산소포화도', '걸음수'],
-      labels: {
-        style: {
-          colors: ['white', 'white', 'white', 'white', 'white']
-        },
-      }
-    },
-    yaxis:{
-      max: 100,
-      min: 0,
-      tickAmount: 5
-    },
-    legend: {
-      position: 'left',
-      offsetY: 140,
-      labels: {
-        colors: 'white'
-      }
-    },
-    theme: {
-      palette: 'palette8', // 팔레트 선택 (선택한 팔레트에 따라 색상이 다르게 적용됩니다)
-    },
+      return (value / 20000) * 100;
     };
-    
 
-    return(
+    const options = {
+      series: [
+        {
+          name: "평균",
+          data: [heartPersentage(80), 73, 26.89, 98, stepPersentage(6000)],
+        },
+        {
+          name: "내 건강정보",
+          data: [
+            heartPersentage(88),
+            calculatePersentage(10),
+            calculatePersentage(80),
+            calculatePersentage(90),
+            stepPersentage(4068),
+          ],
+        },
+      ],
+      chart: {
+        height: 400,
+        width: 500,
+        type: "radar",
+        dropShadow: {
+          enabled: true,
+          blur: 1,
+          left: 1,
+          top: 1,
+        },
+      },
+      stroke: {
+        width: 2,
+      },
+      fill: {
+        opacity: 0.1,
+      },
+      markers: {
+        size: 0,
+      },
+      xaxis: {
+        categories: ["심박수", "스트레스", "피로도", "산소포화도", "걸음수"],
+        labels: {
+          style: {
+            colors: ["white", "white", "white", "white", "white"],
+          },
+        },
+      },
+      yaxis: {
+        max: 100,
+        min: 0,
+        tickAmount: 5,
+      },
+      legend: {
+        position: "left",
+        offsetY: 140,
+        labels: {
+          colors: "white",
+        },
+      },
+      theme: {
+        palette: "palette8", // 팔레트 선택 (선택한 팔레트에 따라 색상이 다르게 적용됩니다)
+      },
+    };
+
+    return (
       <div id="chart">
         <ReactApexChart
           options={options}
@@ -348,25 +398,36 @@ const Rhythm = () => {
           width={500}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const HeatmapChart = () => {
     const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ]; // 월 목록
     const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]; // 요일 목록
 
-    const generateData = (count, yrange,startDay) => {
+    const generateData = (count, yrange, startDay) => {
       let i = 0;
       const series = [];
-  
+
       while (i < count) {
-        const x = new Date(2023, 0, startDay + i * 7) // 각 주의 시작일
+        const x = new Date(2023, 0, startDay + i * 7); // 각 주의 시작일
         const y =
-          Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-  
+          Math.floor(Math.random() * (yrange.max - yrange.min + 1)) +
+          yrange.min;
+
         series.push({
           x: x.getTime(),
           y: y,
@@ -375,7 +436,7 @@ const Rhythm = () => {
       }
       return series;
     };
-  
+
     const [chartOptions, setChartOptions] = useState({
       chart: {
         height: 250,
@@ -395,7 +456,7 @@ const Rhythm = () => {
           // rotateAlways: true,
           // rotate: -45,/
           datetimeFormatter: {
-            month: 'MMM', // 월 표시
+            month: "MMM", // 월 표시
           },
         },
       },
@@ -408,22 +469,22 @@ const Rhythm = () => {
         x: {
           formatter: function (val) {
             const date = new Date(val);
-            return months[date.getMonth()] + ' ' + date.getDate();
+            return months[date.getMonth()] + " " + date.getDate();
           },
         },
       },
     });
-  
+
     const [chartSeries, setChartSeries] = useState([
-      { name:"Sun",data: generateData(53, { min: 0, max: 90 }, 1) },
-      { name:"Mon",data: generateData(53, { min: 0, max: 90 }, 2) },
-      { name:"Tue",data: generateData(53, { min: 0, max: 90 }, 3) },
-      { name:"Wed",data: generateData(53, { min: 0, max: 90 }, 4) },
-      { name:"Thu",data: generateData(53, { min: 0, max: 90 }, 5) },
-      { name:"Fri",data: generateData(53, { min: 0, max: 90 }, 6) },
-      { name:"Sat",data: generateData(53, { min: 0, max: 90 }, 7) },
+      { name: "Sun", data: generateData(53, { min: 0, max: 90 }, 1) },
+      { name: "Mon", data: generateData(53, { min: 0, max: 90 }, 2) },
+      { name: "Tue", data: generateData(53, { min: 0, max: 90 }, 3) },
+      { name: "Wed", data: generateData(53, { min: 0, max: 90 }, 4) },
+      { name: "Thu", data: generateData(53, { min: 0, max: 90 }, 5) },
+      { name: "Fri", data: generateData(53, { min: 0, max: 90 }, 6) },
+      { name: "Sat", data: generateData(53, { min: 0, max: 90 }, 7) },
     ]);
-  
+
     useEffect(() => {
       // 차트 초기화
       setChartOptions((prevOptions) => ({
@@ -431,7 +492,7 @@ const Rhythm = () => {
       }));
       setChartSeries((prevSeries) => [...prevSeries]);
     }, []);
-  
+
     return (
       <div>
         <ReactApexChart
@@ -443,23 +504,11 @@ const Rhythm = () => {
       </div>
     );
   };
-  
-
-  
-  
-  
 
   return (
     <div>
-      <HeartBeat>
-        <img
-          src={`${process.env.PUBLIC_URL}/images/rhythm/heartbeat.gif`}
-          alt=""
-        />
-        <p id="hb">{heartbeat}</p>
-        <p>bpm</p>
-      </HeartBeat>
-       <MeasurementBox>
+      <HeartBeat />
+      <MeasurementBox>
         <StressBox>
           {/* 현재 */}
           <Title>현재 스트레스 지수</Title>
@@ -545,66 +594,26 @@ const Rhythm = () => {
           <br />한 눈에 보기
         </p>
         <RaderContainer>
-          <HealthRadar/>
+          <HealthRadar />
         </RaderContainer>
       </RaderBox>
       <HeatmapBox>
         <Title>걸음수 잔디밭</Title>
         <StepText>
           <p>
-            오늘의 걸음수에 따라 잔디를 채울 수 있어요<br/>
+            오늘의 걸음수에 따라 잔디를 채울 수 있어요
+            <br />
             6000보 이상은 연한 잔디, 10000보 이상은 진한 잔디가 채워져요
           </p>
           <p id="step">{step}걸음</p>
         </StepText>
-        <HeatmapChart/>
-
+        <HeatmapChart />
       </HeatmapBox>
-      </div>
+    </div>
   );
 };
 
 export default Rhythm;
-
-// 심박수 ------------------------
-const HeartBeat = styled.div`
-  margin-top: 50px;
-  width: 100%;
-  height: 460px;
-  /* background-image: url("${process.env.PUBLIC_URL}/images/rhythm/heartbeat.gif"); */
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  & img {
-    position: absolute;
-    z-index: -1;
-    width: 500px
-  }
-
-  & #hb {
-    margin-top: 150px;
-    font-size: 80px;
-    font-weight: bold;
-  }
-
-  & p {
-    margin-top: -70px;
-    font-size: 40px;
-    font-weight: bold;
-  }
-
-  @media only screen and (max-width: 1040px){
-    & img {
-      width: 400px;
-    }
-
-    & #hb {
-      margin-top: 120px;
-    }
-  }
-`;
 
 const Title = styled.h2`
   font-size: 28px;
@@ -715,7 +724,6 @@ const RaderBox = styled.div`
   align-items: center;
   justify-content: center;
   gap: 300px;
-  
 
   & p {
     color: white;
@@ -726,12 +734,12 @@ const RaderBox = styled.div`
 
 const RaderContainer = styled.div`
   margin-top: 70px;
-`
+`;
 const HeatmapBox = styled.div`
   margin-left: 300px;
   margin-right: 300px;
   margin-top: 70px;
-`
+`;
 
 const StepText = styled.div`
   display: flex;
@@ -744,4 +752,4 @@ const StepText = styled.div`
     font-weight: bold;
     color: #212e3d;
   }
-`
+`;

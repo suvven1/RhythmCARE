@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { BiMenu } from "react-icons/bi";
 import SideBar from "./SideBar";
 import SideBarContents from "./SideBarContents";
 import { UserContext } from "../../context/UserContext";
 import isEqual from "lodash/isEqual";
 import axios from "../../axios";
+
 const Header = () => {
   const oldUserData = useContext(UserContext);
   const loginData = JSON.parse(localStorage.getItem("loginData"));

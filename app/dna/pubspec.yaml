@@ -38,9 +38,10 @@ dependencies:
   get: ^4.6.6 # 상태관리
   flutter_native_splash: ^2.3.5 # splash
   http: ^1.1.0 # 서버 연결
-  flutter_blue: ^0.8.0
-  flutter_blue_plus: ^1.29.5
-  permission_handler: ^11.0.1
+  web_socket_channel: ^2.4.0 # 앱 -> 서버 -> 웹을 위한 라이브러리
+  flutter_blue: ^0.8.0 # 블루투스
+  flutter_blue_plus: ^1.29.5 # 블루투스
+  permission_handler: ^11.0.1 # 권한 관리
   webview_flutter: ^4.4.2 # 웹뷰
   webview_flutter_android: ^3.12.1 # 웹뷰
   webview_flutter_wkwebview: ^3.9.4 # 웹뷰
@@ -49,7 +50,8 @@ dependencies:
   image_picker: ^1.0.4 # 마이페이지 이미지 가져오기
   flutter_image_compress: ^2.1.0 # 이미지 압축 라이브러리
   fl_chart: ^0.64.0 # 차트 라이브러리
-
+#  flutter_background_service: ^5.0.4 # 백그라운드 실행 라이브러리
+  flutter_local_notifications: ^16.2.0 # 알람 라이브러리
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dna/controller/GetConnectionController.dart';
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/member/loginPage.dart';
 import 'package:dna/mypage/widget/infomation/infoContainer.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import '../url.dart';
 import '../widget/sizeBox.dart';
 
 class myPage extends StatefulWidget {
@@ -22,6 +24,7 @@ class myPage extends StatefulWidget {
 
 class _myPageState extends State<myPage> {
   final MypageController userDataCon = Get.put(MypageController());
+  final ConnectionController connect = Get.put(ConnectionController());
   bool isLoding = true;
 
   @override
@@ -34,6 +37,7 @@ class _myPageState extends State<myPage> {
   void logout() async {
     final loginDataStorage = await SharedPreferences.getInstance();
     showToast("로그아웃이 완료 되었습니다.");
+    connect.disconnect();
     loginDataStorage.clear();
     Get.off(loginPage());
   }
@@ -42,7 +46,7 @@ class _myPageState extends State<myPage> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://115.95.222.206:80/user/getUserData";
+    String url = "http://${URL.ip}/user/getUserData";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': id}));

@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:dna/controller/GetConnectionController.dart';
 import 'package:dna/controller/GetXCalendar.dart';
 import 'package:dna/calendar/widget/calendarWidget.dart';
 import 'package:dna/calendar/widget/schaduleContents.dart';
 import 'package:dna/calendar/widget/scheduleDialog.dart';
 import 'package:dna/calendar/widget/scheduleTitle.dart';
 import 'package:dna/calendar/widget/title.dart';
+import 'package:dna/url.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +39,7 @@ class _calendarPageState extends State<calendarPage> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
     controller.toDoList.clear();
-    String url = "http://115.95.222.206:80/calender/getSchedule";
+    String url = "http://${URL.ip}/calender/getSchedule";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({"id": id}));

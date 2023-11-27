@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../controller/GetJoinController.dart';
+import '../url.dart';
 import '../widget/sizeBox.dart';
 import 'loginPage.dart';
 
@@ -70,7 +71,7 @@ class _join2PageState extends State<join2Page> {
 
   // 회원가입 서버 통신 함수 구현 예정
   void join() async {
-    String url = "http://115.95.222.206:80/user/join";
+    String url = "http://${URL.ip}/user/join";
     http.Response res = await http.post(
         Uri.parse(url),
         headers: <String, String>{'Content-Type':'application/json'},

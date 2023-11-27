@@ -22,6 +22,7 @@ import FindIdPw from "./components/Login/FindIdPw";
 
 function App() {
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const [bodyData, setBodyData] = useState({});
 
   // AppWebView Header 삭제
   const location = useLocation();
