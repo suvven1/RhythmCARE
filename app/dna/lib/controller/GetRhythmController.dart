@@ -26,7 +26,7 @@ class RhythmController extends GetxController {
   late IOWebSocketChannel channel;
 
   // 심박수, 스트레스, 피로도, 걸음수
-  RxInt heartRate = 105.obs;
+  RxInt heartRate = 0.obs;
   RxInt OldHeart = 0.obs;
   RxInt steps = 0.obs;
   RxInt stressValue = 0.obs;
@@ -44,22 +44,22 @@ class RhythmController extends GetxController {
     String ID = userDataStorage.getString("id") ?? "";
 
 
-    // channel = IOWebSocketChannel.connect('ws://${URL.ip}:90');
-    //
-    // // 1초마다 웹으로 심박수, 걸음수 보내기
-    //
-    //   interval(heartRate, (_) {
-    //     String device = userDataStorage.getString("deviceName") ?? "";
-    //     if(device != ""){
-    //       if(OldHeart.value != heartRate.value){
-    //         OldHeart.value = heartRate.value;
-    //         final data = {"channel": "RhythmCare", "ID": ID, "heartRate" : heartRate.value, "step": steps.value};
-    //         channel.sink.add(jsonEncode(data));
-    //       }
-    //     }
-    //   },
-    //     time: Duration(seconds: 3),
-    //   );
+    channel = IOWebSocketChannel.connect('ws://115.95.222.206:90');
+
+    // 1초마다 웹으로 심박수, 걸음수 보내기
+
+      interval(heartRate, (_) {
+        String device = userDataStorage.getString("deviceName") ?? "";
+        if(device != ""){
+          if(OldHeart.value != heartRate.value){
+            OldHeart.value = heartRate.value;
+            final data = {"channel": "RhythmCare", "ID": ID, "heartRate" : heartRate.value, "step": steps.value};
+            channel.sink.add(jsonEncode(data));
+          }
+        }
+      },
+        time: Duration(seconds: 3),
+      );
 
 
     // 5초마다 심박수 파악후 위험 상황 감지
@@ -68,7 +68,7 @@ class RhythmController extends GetxController {
       if(heartRate.value < 60 || heartRate.value > 100){
         NotificationService().showNotification(["emergency",heartRate.value]);
       }else{
-        NotificationService().showNotification(["dailyData",heartRate.value, steps.value]);
+        // NotificationService().showNotification(["dailyData",heartRate.value, steps.value]);
       }
     },
       time: Duration(seconds: 5),

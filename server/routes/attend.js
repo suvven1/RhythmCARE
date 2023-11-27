@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const conn = require("../config/database");
+const pool = require("../config/database");
 
 router.post("/dateCal", async (req, res) => {
   console.log("attend", req.body);
@@ -10,23 +10,30 @@ router.post("/dateCal", async (req, res) => {
   let continue_attend;
 
   let attendCheckSql = "select * from t_attendance where mem_id=?";
-  conn.query(attendCheckSql, [id], (err, rows) => {
-    if (err) {
-      console.log(`${id} : 출석 정보 조회 실패!`);
-    } else {
-      login_dt = rows[0].attd_time;
-      login_dt.setDate(login_dt.getDate() + 1);
-      login_dt = login_dt.toISOString().split("T")[0];
-      total_attend = rows[0].attd_accumulate;
-      continue_attend = rows[0].attd_continuous;
 
-      if (login_dt == today) {
-        res.json({ attendResult: false });
-      } else {
-        attendCal();
-      }
+  // 출석 수 DB 업로드 함수
+  const attendInsert = async () => {
+    let attendInsertSql =
+      "update t_attendance set attd_accumulate=?, attd_continuous=?, attd_time=? where mem_id=?";
+
+    try {
+      await pool.query(attendInsertSql, [
+        total_attend,
+        continue_attend,
+        today,
+        id,
+      ]);
+      console.log(`${id} : 출석 정보 업데이트 성공!`);
+      res.json({
+        attendResult: {
+          total: total_attend,
+          continue: continue_attend,
+        },
+      });
+    } catch (err) {
+      console.log(`${id} : 출석 정보 업데이트 실패!`, err);
     }
-  });
+  };
 
   // 출석 수 계산 함수
   const attendCal = () => {
@@ -45,28 +52,22 @@ router.post("/dateCal", async (req, res) => {
     }
   };
 
-  // 출석 수 DB 업로드 함수
-  const attendInsert = () => {
-    let attendInsertSql =
-      "update t_attendance set attd_accumulate=?, attd_continuous=?, attd_time=? where mem_id=?";
-    conn.query(
-      attendInsertSql,
-      [total_attend, continue_attend, today, id],
-      (err, rows) => {
-        if (rows) {
-          console.log(`${id} : 출석 정보 업데이트 성공!`);
-          res.json({
-            attendResult: {
-              total: total_attend,
-              continue: continue_attend,
-            },
-          });
-        } else {
-          console.log(`${id} : 출석 정보 업데이트 실패!`, err);
-        }
-      }
-    );
-  };
+  try {
+    const [rows] = await pool.query(attendCheckSql, [id]);
+    login_dt = rows[0].attd_time;
+    login_dt.setDate(login_dt.getDate() + 1);
+    login_dt = login_dt.toISOString().split("T")[0];
+    total_attend = rows[0].attd_accumulate;
+    continue_attend = rows[0].attd_continuous;
+
+    if (login_dt == today) {
+      res.json({ attendResult: false });
+    } else {
+      attendCal();
+    }
+  } catch (err) {
+    console.log(`${id} : 출석 정보 조회 실패!`);
+  }
 });
 
 module.exports = router;

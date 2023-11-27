@@ -6,7 +6,7 @@ const HeartBeat = () => {
 
   // ----------------------------------------------------------------------------
   const [heartbeat, setHeartbeat] = useState("--");
-  const socket = new WebSocket("ws://192.168.70.12:100");
+  const socket = new WebSocket("ws://115.95.222.206:100");
   const triggerNotif = useNotification("[경고] 심박수 이상", {
     body: `기기 사용자의 심박에서 이상을 감지했습니다! \n현재 심박수 : ${heartbeat}`,
     icon: `${process.env.PUBLIC_URL}/images/ic_launcher.png`,
