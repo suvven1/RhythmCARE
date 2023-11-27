@@ -21,7 +21,7 @@ class progressWidget extends StatelessWidget {
     final RhythmController controller = Get.put(RhythmController());
     return Stack(
       children: [
-        Image.asset('image/stateBar.png'),
+        Image.asset('image/stateBar.png', height: 45, fit: BoxFit.fill),
         GetX<RhythmController>(
           builder: (_){
             return Container(

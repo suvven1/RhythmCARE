@@ -49,6 +49,7 @@ dependencies:
   image_picker: ^1.0.4 # 마이페이지 이미지 가져오기
   flutter_image_compress: ^2.1.0 # 이미지 압축 라이브러리
   fl_chart: ^0.64.0 # 차트 라이브러리
+  shake: ^2.2.0 # 흔들림 감지 라이브러리
 
 
 dev_dependencies:

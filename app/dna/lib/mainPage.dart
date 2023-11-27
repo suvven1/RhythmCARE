@@ -7,12 +7,14 @@ import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
+import 'package:dna/shakeDialog.dart';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shake/shake.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'connection/connect.dart';
@@ -29,6 +31,8 @@ class _mainPageState extends State<mainPage> {
   ConnectionController connect = Get.put(ConnectionController());
   DateTime? currentBackPressTime;
 
+  bool isShakeOpen = false;
+
   @override
   void initState() {
     super.initState();
@@ -36,20 +40,35 @@ class _mainPageState extends State<mainPage> {
     Future.delayed(Duration.zero, () {
       setState(() {
         checkConnected();
-
       });
     });
+    // 흔들기 함수
+    ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () async{
+      if(isShakeOpen == false){
+        isShakeOpen = true;
+        await Get.dialog(
+            shakeDialog(isShakeOpen: isShakeOpen,),
+        );
+        isShakeOpen = false;
+      }
+    },
+      minimumShakeCount: 1,
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2,
+      // 1 : 정지한 상태에서도 계속 뜸
+    );
   }
 
   void checkConnected() async {
     final deviceDataStorage = await SharedPreferences.getInstance();
-    var device = deviceDataStorage.getString("deviceName") ?? "STATE_DISCONNECTED";
-    if(device == "STATE_DISCONNECTED"){
+    var device =
+        deviceDataStorage.getString("deviceName") ?? "STATE_DISCONNECTED";
+    if (device == "STATE_DISCONNECTED") {
       Get.dialog(connectDialog());
-    }else{
+    } else {
       connect.startConnect(device);
     }
-
   }
 
   // 초기 페이지 2번 인덱스(홈)
@@ -86,14 +105,12 @@ class _mainPageState extends State<mainPage> {
         onWillPop: onWillPop,
         child: SafeArea(
             child: Container(
-              color: currentPageIndex == 4 ? Colors.grey[200] : Colors.white,
-              padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  right: MediaQuery.of(context).size.width * 0.05
-              ),
-              child: pageIndex.elementAt(currentPageIndex),
-            )
-        ),
+          color: currentPageIndex == 4 ? Colors.grey[200] : Colors.white,
+          padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05),
+          child: pageIndex.elementAt(currentPageIndex),
+        )),
       ),
       bottomNavigationBar: myBottomNavi(currentPageIndex, onItemTap),
     );
@@ -102,8 +119,8 @@ class _mainPageState extends State<mainPage> {
   // 뒤로가기 두번 누를 시 앱 종료
   Future<bool> onWillPop() async {
     DateTime now = DateTime.now();
-    if(currentBackPressTime == null ||
-       now.difference(currentBackPressTime!) > Duration(seconds: 2)){
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       final _msg = "뒤로 버튼을 한 번 더 누르시면 종료됩니다.";
       showToast(_msg);
@@ -111,8 +128,7 @@ class _mainPageState extends State<mainPage> {
     }
     final loginDataStorage = await SharedPreferences.getInstance();
     final autoLogin = loginDataStorage.getBool('autoLogin') ?? false;
-    if(!autoLogin)loginDataStorage.clear();
+    if (!autoLogin) loginDataStorage.clear();
     return Future.value(true);
   }
-
 }

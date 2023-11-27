@@ -171,45 +171,54 @@ class _communityViewState extends State<communityView> {
                           decoration: BoxDecoration(
                             border: Border(top: BorderSide(color: Colors.grey))
                           ),
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(flex: 9, child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(commentNick[index], style: contextStyle, maxLines: 1,),
-                                      SizeBoxH10,
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 15,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(commentList[index], style: contextStyle,),
-                                              SizedBox(height: 5,),
-                                              Text(commentdate[index], style: TextStyle(fontSize: 17, color: Colors.grey),),
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )),
-                                  Expanded(flex: 2, child: TextButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        commentLikeBool[index] = !commentLikeBool[index];
-                                        commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
-                                      });
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
-                                        Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
-                                      ],
+                                  Text(commentNick[index], style: contextStyle, maxLines: 1,),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all()
                                     ),
-                                  )),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        setState(() {
+                                          commentLikeBool[index] = !commentLikeBool[index];
+                                          commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        maximumSize: Size(80, 60),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
+                                          Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
+                              SizeBoxH10,
+                              Row(
+                                children: [
+                                  SizedBox(width: 15,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(commentList[index], style: contextStyle,),
+                                      SizedBox(height: 5,),
+                                      Text(commentdate[index], style: TextStyle(fontSize: 17, color: Colors.grey),),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         )),
                   ),
                   horisonLine,

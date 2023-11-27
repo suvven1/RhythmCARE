@@ -11,6 +11,15 @@ class postListNum extends StatefulWidget {
 }
 
 class _postListNumState extends State<postListNum> {
+
+  late int selectedNumber;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedNumber = widget.viewListNum;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -23,12 +32,13 @@ class _postListNumState extends State<postListNum> {
               onPressed: (){
                 setState(() {
                   widget.viewFt(index);
+                  selectedNumber = index;
                 });
               },
               style: TextButton.styleFrom(
                 maximumSize: Size(64, 36),
                 padding: EdgeInsets.zero,
-                foregroundColor: Color(0xff2e2288),
+                foregroundColor: selectedNumber == index ? Color(0xff2e2288) : Colors.grey[300],
               ),
               child: Text(
                     '${index + 1}',

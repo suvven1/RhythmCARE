@@ -45,6 +45,7 @@ class _homePageState extends State<homePage> {
       },
       child: ListView(
         children: [
+          SizeBoxH10,
           // 심박수
           heartBeat(),
           // 스트레스 모델
