@@ -27,7 +27,7 @@ class _WebViewPageState extends State<WebViewPage> {
   // 웹뷰
   late final WebViewController _controller;
   final String hospitalUrl = 'http://${URL.ip}/hospitalapp';
-  bool isWebLoding = true;
+  bool isWebLoding = false;
 
   @override
   void initState() {
@@ -60,6 +60,7 @@ class _WebViewPageState extends State<WebViewPage> {
           },
           onPageFinished: (String url) {
             debugPrint('Page finished loading: $url');
+            webLodingFt();
           },
           onWebResourceError: (WebResourceError error) {
             debugPrint('''
@@ -93,14 +94,33 @@ class _WebViewPageState extends State<WebViewPage> {
       (controller.platform as AndroidWebViewController)
           .setMediaPlaybackRequiresUserGesture(false);
     }
+    print('success');
 
     _controller = controller;
   }
 
+  // 웹뷰 로딩중 표시 함수
+  void webLodingFt () async{
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {
+      isWebLoding = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(
-      controller: _controller,
+    return Stack(
+      children: [
+        WebViewWidget(
+          controller: _controller,
+        ),
+        !isWebLoding
+            ? Container(
+            color: Colors.white,
+            child: Center(child: CircularProgressIndicator()),
+              )
+            : SizedBox()
+      ],
     );
   }
 }
