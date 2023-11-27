@@ -19,6 +19,8 @@ import BoardDetail from "./components/Community/BoardDetail";
 import LoginData from "./components/Join/LoginData";
 import UserData from "./components/Join/UserData";
 import FindIdPw from "./components/Login/FindIdPw";
+import StressChart from "./components/Rhythm/Stress/StressChart";
+import TiredChart from "./components/Rhythm/Tried/TiredChart";
 
 function App() {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -35,6 +37,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/rhythm" element={<Rhythm />}></Route>
+          <Route path="/stressChart" element={<StressChart />}></Route>
+          <Route path="/tiredChart" element={<TiredChart />}></Route>
           <Route path="/calender" element={<Calender />}></Route>
           <Route path="/hospital" element={<Hospital />}></Route>
           <Route path="/hospitalapp" element={<Hospitalapp />}></Route>
