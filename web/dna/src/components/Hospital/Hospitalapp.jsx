@@ -24,7 +24,7 @@ const Hospitalapp = () => {
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(userLatitude, userLongitude), //지도의 중심좌표.
-      level: 4, //지도의 레벨(확대, 축소 정도)
+      level: 6, //지도의 레벨(확대, 축소 정도)
     };
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -57,7 +57,7 @@ const Hospitalapp = () => {
     }
 
     function addMarker(position) {
-      const imageSrc = process.env.PUBLIC_URL + "/images/map_marker.png";
+      const imageSrc = process.env.PUBLIC_URL + '/images/map_marker1.png';
       const imageSize = new kakao.maps.Size(36, 37);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
@@ -131,7 +131,7 @@ const HospitalBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   background-color: #ffffff;
   gap: 50px;
   overflow: hidden;
@@ -139,7 +139,7 @@ const HospitalBox = styled.div`
 
   & #map {
     width: 100vw;
-    height: 30vh;
+    height: 40vh;
     border-radius: 20px;
     border: 1px solid gray;
   }

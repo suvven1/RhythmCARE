@@ -27,6 +27,7 @@ class _WebViewPageState extends State<WebViewPage> {
   // 웹뷰
   late final WebViewController _controller;
   final String hospitalUrl = 'http://${URL.ip}/hospitalapp';
+  bool isWebLoding = true;
 
   @override
   void initState() {
