@@ -1,3 +1,4 @@
+import 'package:dna/widget/sizeBox.dart';
 import "package:flutter/material.dart";
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,10 +15,9 @@ class WebViewPage extends StatefulWidget {
 }
 
 class _WebViewPageState extends State<WebViewPage> {
-
   // 전화걸기 함수
-  void _call(String phoneNumber) async{
-    if (await canLaunchUrl(Uri(scheme: 'tel', path: phoneNumber))){
+  void _call(String phoneNumber) async {
+    if (await canLaunchUrl(Uri(scheme: 'tel', path: phoneNumber))) {
       await launchUrl(Uri(scheme: 'tel', path: phoneNumber));
     } else {
       throw 'Could not launch';
@@ -44,7 +44,7 @@ class _WebViewPageState extends State<WebViewPage> {
     }
 
     final WebViewController controller =
-    WebViewController.fromPlatformCreationParams(params);
+        WebViewController.fromPlatformCreationParams(params);
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -96,16 +96,10 @@ class _WebViewPageState extends State<WebViewPage> {
     _controller = controller;
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: WebViewWidget(
-            controller: _controller,
-        ),
-      ),
+    return WebViewWidget(
+      controller: _controller,
     );
   }
 }

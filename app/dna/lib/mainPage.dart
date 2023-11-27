@@ -9,9 +9,10 @@ import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
 import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
-import 'package:dna/shakeDialog.dart';
+import 'package:dna/widget/shakeDialog.dart';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:dna/url.dart';
+import 'package:dna/widget/shakeDetector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -36,7 +37,7 @@ class _mainPageState extends State<mainPage> {
   NoticeController notice = Get.put(NoticeController());
   DateTime? currentBackPressTime;
 
-  bool isShakeOpen = false;
+
 
   @override
   void initState() {
@@ -49,22 +50,8 @@ class _mainPageState extends State<mainPage> {
         notice.requestNotificationPermissions(context);
       });
     });
-    // 흔들기 함수
-    ShakeDetector detector = ShakeDetector.autoStart(onPhoneShake: () async{
-      if(isShakeOpen == false){
-        isShakeOpen = true;
-        await Get.dialog(
-            shakeDialog(isShakeOpen: isShakeOpen,),
-        );
-        isShakeOpen = false;
-      }
-    },
-      minimumShakeCount: 1,
-      shakeSlopTimeMS: 500,
-      shakeCountResetTime: 3000,
-      shakeThresholdGravity: 2,
-      // 1 : 정지한 상태에서도 계속 뜸
-    );
+    // 흔들기 시작
+    detector.startListening();
   }
 
   void checkConnected() async {
@@ -111,7 +98,8 @@ class _mainPageState extends State<mainPage> {
     DateTime now = DateTime.now();
 
     // 현재 날짜 출력 (년-월-일)
-    String attendDate = "${now.year}-${_addZero(now.month)}-${_addZero(now.day)}";
+    String attendDate =
+        "${now.year}-${_addZero(now.month)}-${_addZero(now.day)}";
     print('출석 날짜: $attendDate');
 
     // 출석 체크 로직
@@ -127,7 +115,8 @@ class _mainPageState extends State<mainPage> {
     var attendResult = jsonDecode(res.body)["attendResult"];
     setState(() {
       if (attendResult.runtimeType != bool) {
-        showToast('누적 출석일수 : ${attendResult["total"]}일\n연속 출석일수 : ${attendResult["continue"]}일');
+        showToast(
+            '누적 출석일수 : ${attendResult["total"]}일\n연속 출석일수 : ${attendResult["continue"]}일');
       }
     });
   }

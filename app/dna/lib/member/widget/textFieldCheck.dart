@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class textFieldCheck extends StatefulWidget {
-  textFieldCheck({Key? key, required this.Con, required this.idpw, this.checkDup, required this.checkIcon, required this.checkUseable, this.checkNull = false}) : super(key: key);
+  textFieldCheck({Key? key, required this.Con, required this.idpw, this.checkDup, required this.checkIcon, required this.checkUseable, this.checkNull = false, this.hide = false}) : super(key: key);
 
   final TextEditingController Con;
   final String idpw;
@@ -10,6 +10,7 @@ class textFieldCheck extends StatefulWidget {
   final Function(String)? checkUseable;
   final bool checkIcon;
   final bool checkNull;
+  final bool hide;
 
   @override
   State<textFieldCheck> createState() => _textFieldCheckState();
@@ -32,6 +33,7 @@ class _textFieldCheckState extends State<textFieldCheck> {
             hintText: widget.idpw,
             border: InputBorder.none,
           ),
+          obscureText: widget.hide,
         ),
       ),
       Row(

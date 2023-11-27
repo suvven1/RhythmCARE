@@ -38,7 +38,7 @@ showLeaveDialog(context) {
                 const SizedBox(height: 15),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-                  child: textField(pwCon, "비밀번호"),
+                  child: textField(pwCon, "비밀번호", hide: true),
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(

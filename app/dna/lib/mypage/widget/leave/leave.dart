@@ -17,7 +17,7 @@ leave(context) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text("계정 탈퇴", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      Text('탈퇴 후 복구할 수 없습니다. 신중하게 결정해주세요.'),
+      Text('탈퇴 후 복구할 수 없습니다. 신중하게 결정해주세요.', style: TextStyle(color: Colors.grey),),
       SizeBoxH10,
       horisonLine,
       Table(

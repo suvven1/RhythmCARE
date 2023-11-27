@@ -208,7 +208,7 @@ class _joinPageState extends State<joinPage> {
                   ),
                   SizeBoxH10,
                   textFieldCheck(
-                      Con: pwCon, idpw: "비밀번호 (8자리 이상)", checkIcon: useablePw, checkUseable: checkPwUseable,),
+                      Con: pwCon, idpw: "비밀번호 (8자리 이상)", checkIcon: useablePw, checkUseable: checkPwUseable, hide: true),
                   useablePw
                       ? Text(
                     '    *사용가능한 비밀번호입니다.',
@@ -220,7 +220,7 @@ class _joinPageState extends State<joinPage> {
                   ),
                   SizeBoxH10,
                   textFieldCheck(
-                      Con: pw2Con, idpw: '비밀번호 확인', checkIcon: useablePw2, checkUseable: checkPw2Useable,),
+                      Con: pw2Con, idpw: '비밀번호 확인', checkIcon: useablePw2, checkUseable: checkPw2Useable, hide: true,),
                   useablePw2
                       ? Text(
                     '    *같은 비밀번호를 입력하셨습니다.',

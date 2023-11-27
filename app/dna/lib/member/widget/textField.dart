@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-textField (Con, String idpw){
+textField (TextEditingController Con, String hintText, {bool? hide}){
   return Container(
     padding: EdgeInsets.only(left: 10, right: 10),
     decoration: BoxDecoration(
@@ -11,9 +11,10 @@ textField (Con, String idpw){
       style: TextStyle(fontSize: 20),
       controller: Con,
       decoration: InputDecoration(
-        hintText: idpw,
+        hintText: hintText,
         border: InputBorder.none,
       ),
+      obscureText: hide ?? false,
     ),
   );
 }

@@ -130,7 +130,7 @@ class _loginPageState extends State<loginPage> {
                         SizeBoxH30,
                         textField(idCon, "아이디"),
                         SizeBoxH10,
-                        textField(pwCon, "비밀번호"),
+                        textField(pwCon, "비밀번호", hide: true),
                         TextButton(
                           onPressed: () {
                             setState(() {

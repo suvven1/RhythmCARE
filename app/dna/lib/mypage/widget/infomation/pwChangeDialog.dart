@@ -158,7 +158,9 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
                     idpw: "기존 비밀번호",
                     checkIcon: useablePw,
                     checkUseable: checkPwUseable,
-                    checkNull: checknull),
+                    checkNull: checknull,
+                  hide: true,
+                ),
                 useablePw
                     ? Text(
                         '    *기존 비밀번호와 일치합니다.',
@@ -174,6 +176,7 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
                   idpw: "비밀번호 (8자리 이상)",
                   checkIcon: useableNewPw,
                   checkUseable: checkNewPwUseable,
+                  hide: true,
                 ),
                 useableNewPw
                     ? Text(
@@ -190,6 +193,7 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
                   idpw: '비밀번호 확인',
                   checkIcon: useableNewPw2,
                   checkUseable: checkNewPw2Useable,
+                  hide: true,
                 ),
                 useableNewPw2
                     ? Text(

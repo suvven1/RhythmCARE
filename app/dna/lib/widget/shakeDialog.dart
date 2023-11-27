@@ -1,13 +1,11 @@
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:dna/toastMessage/toast.dart';
-import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class shakeDialog extends StatefulWidget {
-  const shakeDialog({Key? key, required this.isShakeOpen}) : super(key: key);
-  final bool isShakeOpen;
+  const shakeDialog({Key? key}) : super(key: key);
 
   @override
   State<shakeDialog> createState() => _shakeDialogState();

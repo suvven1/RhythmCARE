@@ -67,9 +67,9 @@ class _findSettingPageState extends State<findSettingPage> {
                       SizeBoxH40,
                       Text('  변경할 비밀번호를 입력해주세요', style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                       SizeBoxH10,
-                      textField(pwCon, '비밀번호'),
+                      textField(pwCon, '비밀번호', hide: true),
                       SizeBoxH10,
-                      textField(pw2Con, '비밀번호 확인'),
+                      textField(pw2Con, '비밀번호 확인', hide: true),
                       SizedBox(
                         height: 70,
                       ),

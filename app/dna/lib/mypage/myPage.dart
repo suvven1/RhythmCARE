@@ -7,6 +7,7 @@ import 'package:dna/mypage/widget/infomation/infoContainer.dart';
 import 'package:dna/mypage/widget/img/profileImage.dart';
 import 'package:dna/mypage/widget/nick/profileNick.dart';
 import 'package:dna/toastMessage/toast.dart';
+import 'package:dna/widget/shakeDetector.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -92,6 +93,8 @@ class _myPageState extends State<myPage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () {
+                                // 흔들기 정지
+                                detector.stopListening();
                                 logout();
                               },
                               child: Text("로그아웃"),
