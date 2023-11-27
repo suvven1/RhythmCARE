@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../url.dart';
+
 class pwChangeDialog extends StatefulWidget {
   const pwChangeDialog({super.key});
 
@@ -86,7 +88,7 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://115.95.222.206:80/user/login";
+    String url = "http://${URL.ip}/user/login";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'user': "mem", 'id': id, 'pw': pwCon.text}));
@@ -110,7 +112,7 @@ class _pwChangeDialogState extends State<pwChangeDialog> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://115.95.222.206:80/user/changePw";
+    String url = "http://${URL.ip}/user/changePw";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': id, 'changePw': newPwCon.text}));

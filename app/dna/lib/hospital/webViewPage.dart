@@ -4,6 +4,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+import '../url.dart';
+
 class WebViewPage extends StatefulWidget {
   const WebViewPage({super.key});
 
@@ -24,7 +26,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
   // 웹뷰
   late final WebViewController _controller;
-  final String hospitalUrl = 'http://115.95.222.206:80/hospitalapp';
+  final String hospitalUrl = 'http://${URL.ip}/hospitalapp';
 
   @override
   void initState() {

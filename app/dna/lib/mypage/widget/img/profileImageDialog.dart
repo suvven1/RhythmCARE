@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import '../../../url.dart';
 import '../../../widget/sizeBox.dart';
 
 
@@ -64,7 +65,7 @@ class _changeImgDialogState extends State<changeImgDialog> {
     final userId = loginDataStorage.getString('id') ?? '';
 
     // 서버 엔드포인트 URL
-    var url = Uri.parse('http://115.95.222.206:80/user/changeImg');
+    var url = Uri.parse('http://${URL.ip}/user/changeImg');
 
     // Multipart 요청 생성
     var request = http.MultipartRequest('POST', url)

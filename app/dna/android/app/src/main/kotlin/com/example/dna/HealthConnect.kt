@@ -64,6 +64,7 @@ class HealthConnect {
 
     // 생체신호
     var steps: Int = 0;
+    var yesterdaySteps: Int = 0;
     var heartRate: Int = 0;
 
      fun scanning(context: Context): CRPBleClient {
@@ -166,6 +167,7 @@ class HealthConnect {
                         }
 
                         CRPBleConnectionStateListener.STATE_DISCONNECTED -> {
+
                             Log.d(
                                 Debug.TAG,
                                 "[Kotlin] 연결 해제"
@@ -181,6 +183,7 @@ class HealthConnect {
         // 걸음수
         bleConnection.syncStep();
         bleConnection.queryStepsCategory(CRPStepsCategoryDateType.TODAY_STEPS_CATEGORY);
+        bleConnection?.syncPastStep(CRPPastTimeType.YESTERDAY_STEPS);
 
         // 심박수
         bleConnection.queryTodayHeartRate(CRPHeartRateType.ALL_DAY_HEART_RATE);
@@ -192,7 +195,7 @@ class HealthConnect {
 //        bleConnection?.syncTime();
 //        bleConnection?.queryPastHeartRate();
 //        bleConnection?.syncSleep();
-//        bleConnection?.syncPastStep(CRPPastTimeType.YESTERDAY_STEPS);
+
 //        bleConnection?.syncPastStep(CRPPastTimeType.DAY_BEFORE_YESTERDAY_STEPS);
 //        bleConnection?.syncPastSleep(CRPPastTimeType.YESTERDAY_SLEEP);
 //        bleConnection?.syncPastSleep(CRPPastTimeType.DAY_BEFORE_YESTERDAY_SLEEP);
@@ -247,10 +250,10 @@ class HealthConnect {
             }
 
             override fun onPastStepChange(timeType: Int, info: CRPStepInfo) {
-                if (Debug.LogLevel >= Debug.LEVEL1) Log.d(
-                    Debug.TAG,
-                    "onPastStepChange : "
-                )
+                if (Debug.LogLevel >= Debug.LEVEL1){
+                    Log.d(Debug.TAG,"PastStep steps : ${info.steps}")
+                    yesterdaySteps = info.steps;
+                }
             }
         }
 

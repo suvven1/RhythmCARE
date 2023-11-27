@@ -9,6 +9,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../url.dart';
+
 class nickDialog extends StatefulWidget {
   const nickDialog({super.key});
 
@@ -40,7 +42,7 @@ class _nickDialogState extends State<nickDialog> {
 
   // 닉네임 중복검사 함수
   void checkNickDup() async {
-    String url = "http://115.95.222.206:80/user/join/nickDupCheck";
+    String url = "http://${URL.ip}/user/join/nickDupCheck";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'nick': nickCon.text}));
@@ -61,7 +63,7 @@ class _nickDialogState extends State<nickDialog> {
     final loginDataStorage = await SharedPreferences.getInstance();
     final id = loginDataStorage.getString('id') ?? '';
 
-    String url = "http://115.95.222.206:80/user/changeNick";
+    String url = "http://${URL.ip}/user/changeNick";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({'id': id,'nick': nickCon.text}));

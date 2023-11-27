@@ -167,7 +167,7 @@ class _communityViewState extends State<communityView> {
                     children: List.generate(
                         commentList.length,
                         (index) => Container(
-                          padding: EdgeInsets.only(top: 10, bottom: 12),
+                          padding: EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
                             border: Border(top: BorderSide(color: Colors.grey))
                           ),
@@ -175,35 +175,25 @@ class _communityViewState extends State<communityView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(commentNick[index], style: contextStyle, maxLines: 1,),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all()
-                                    ),
-                                    child: ElevatedButton(
-                                      onPressed: (){
-                                        setState(() {
-                                          commentLikeBool[index] = !commentLikeBool[index];
-                                          commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        maximumSize: Size(80, 60),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
-                                          Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
-                                        ],
-                                      ),
+                                  TextButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        commentLikeBool[index] = !commentLikeBool[index];
+                                        commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
+                                        Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                              SizeBoxH10,
                               Row(
                                 children: [
                                   SizedBox(width: 15,),

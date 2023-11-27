@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../member/loginPage.dart';
+import '../../../url.dart';
 import '../../myPage.dart';
 
 
@@ -17,7 +18,7 @@ showFinalCheck(context, idCon, pwCon) {
     final id = loginDataStorage.getString('id') ?? '';
 
     if(id == idCon.text){
-      String url = "http://115.95.222.206:80/user/delete";
+      String url = "http://${URL.ip}/user/delete";
       http.Response res = await http.post(Uri.parse(url),
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode({'id': idCon.text, 'pw': pwCon.text}));

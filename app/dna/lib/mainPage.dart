@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dna/blog/blogPage.dart';
 import 'package:dna/calendar/calendarPage.dart';
+import 'package:dna/controller/GetNoticeController.dart';
 import 'package:dna/controller/GetRhythmController.dart';
 import 'package:dna/home/homePage.dart';
 import 'package:dna/hospital/hospitalPage.dart';
@@ -9,6 +11,7 @@ import 'package:dna/myBottomNavi.dart';
 import 'package:dna/mypage/myPage.dart';
 import 'package:dna/shakeDialog.dart';
 import 'package:dna/toastMessage/toast.dart';
+import 'package:dna/url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -16,9 +19,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:shake/shake.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 import 'connection/connect.dart';
 import 'controller/GetConnectionController.dart';
+import 'notification/emergency_notification.dart';
 
 class mainPage extends StatefulWidget {
   const mainPage({super.key});
@@ -29,6 +33,7 @@ class mainPage extends StatefulWidget {
 
 class _mainPageState extends State<mainPage> {
   ConnectionController connect = Get.put(ConnectionController());
+  NoticeController notice = Get.put(NoticeController());
   DateTime? currentBackPressTime;
 
   bool isShakeOpen = false;
@@ -37,9 +42,11 @@ class _mainPageState extends State<mainPage> {
   void initState() {
     super.initState();
     loginToast();
+    attend();
     Future.delayed(Duration.zero, () {
       setState(() {
         checkConnected();
+        notice.requestNotificationPermissions(context);
       });
     });
     // 흔들기 함수
@@ -96,6 +103,38 @@ class _mainPageState extends State<mainPage> {
     final name = loginDataStorage.getString('name') ?? '';
     final nick = loginDataStorage.getString('nick') ?? '';
     showToast('${name}(${nick})님 환영합니다.');
+  }
+
+  // 출석 체크
+  void attend() async {
+    // 현재 날짜 및 시간 받아오기
+    DateTime now = DateTime.now();
+
+    // 현재 날짜 출력 (년-월-일)
+    String attendDate = "${now.year}-${_addZero(now.month)}-${_addZero(now.day)}";
+    print('출석 날짜: $attendDate');
+
+    // 출석 체크 로직
+    final loginDataStorage = await SharedPreferences.getInstance();
+    final id = loginDataStorage.getString('id') ?? '';
+
+    String url = "http://${URL.ip}/attend/dateCal";
+    http.Response res = await http.post(Uri.parse(url),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode({'id': id, 'today': attendDate}));
+
+    // 통신 결과를 받아와 변수에 저장
+    var attendResult = jsonDecode(res.body)["attendResult"];
+    setState(() {
+      if (attendResult.runtimeType != bool) {
+        showToast('누적 출석일수 : ${attendResult["total"]}일\n연속 출석일수 : ${attendResult["continue"]}일');
+      }
+    });
+  }
+
+  String _addZero(int number) {
+    // 한 자리 수일 경우 앞에 0 추가
+    return number.toString().padLeft(2, '0');
   }
 
   @override

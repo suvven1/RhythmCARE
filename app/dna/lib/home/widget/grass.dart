@@ -17,37 +17,7 @@ class grass extends StatefulWidget {
 }
 
 class _grassState extends State<grass> {
-  // 걸음수
   RhythmController rhythm = Get.put(RhythmController());
-  static const stepStream = const EventChannel('steps_event');
-  late StreamSubscription<dynamic> _streamSubscription;
-  int steps = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // 걸음수
-    _streamSubscription = stepStream.receiveBroadcastStream()
-        .listen((stepMap) {
-      setState(() {
-        if(stepMap["steps"] != null){
-          rhythm.steps.value = stepMap["steps"];
-          // steps = steps;
-          print("[Flutter] 걸음수 : ${stepMap["steps"]}걸음");
-        }else{
-          print("STEP_ERROR");
-        }
-      });
-    });
-  }
-
-  // 걸음수
-  @override
-  void dispose() {
-    _streamSubscription.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +31,7 @@ class _grassState extends State<grass> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('걸음 수 잔디밭', style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold),),
-                Text("${rhythm.steps.value}걸음", style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold))
+                Obx(()=>Text("${rhythm.steps.value}걸음", style: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold)))
               ],
             ),
             SizeBoxH10,

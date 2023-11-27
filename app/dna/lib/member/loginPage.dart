@@ -14,6 +14,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../mainPage.dart';
+import '../url.dart';
 import '../widget/sizeBox.dart';
 import 'findPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,7 @@ class _loginPageState extends State<loginPage> {
       loginUser = "user";
     }
 
-    String url = "http://115.95.222.206:80/user/login";
+    String url = "http://${URL.ip}/user/login";
     http.Response res = await http.post(Uri.parse(url),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode(

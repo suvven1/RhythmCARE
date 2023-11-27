@@ -5,7 +5,7 @@ import android.widget.Toast
 
 class MyToast {
     fun showToast(context : Context,text: String?) : Boolean? {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
         return false;
     }
 }

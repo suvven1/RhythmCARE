@@ -7,20 +7,10 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
-import com.crrepa.ble.CRPBleClient
-import com.crrepa.ble.conn.CRPBleDevice
-import com.crrepa.ble.scan.bean.CRPScanDevice
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Timer
 import kotlin.concurrent.schedule
 import kotlin.properties.Delegates
@@ -34,7 +24,6 @@ class MainActivity : FlutterActivity() {
     // 객체화
     val health = HealthConnect();
     val toast = MyToast();
-
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
@@ -50,10 +39,7 @@ class MainActivity : FlutterActivity() {
                             health.scanning(context)
                             Timer().schedule(8000) {
                                 result.success(health.scanResultList)
-                                Log.d(
-                                    Debug.TAG,
-                                    "[Kotlin] Scan Complete"
-                                )
+                                Log.d(Debug.TAG,"[Kotlin] Scan Complete")
                             }
                         } else if (call.method.equals("startConnect")) {
                             val adress = call.argument<String>("adress");
@@ -61,10 +47,7 @@ class MainActivity : FlutterActivity() {
                             Timer().schedule(8000) {
                                 result.success(health.isConnected)
                                 health.scanResultList.clear()
-                                Log.d(
-                                    Debug.TAG,
-                                    "[Kotlin] Connect Complete"
-                                )
+                                Log.d(Debug.TAG,"[Kotlin] Connect Complete")
                             }
                         } else if(call.method.equals("disconnect")){
                             result.success(health.disconnect());
@@ -85,6 +68,7 @@ class MainActivity : FlutterActivity() {
                 private var observSteps: Int by Delegates.observable(0) { property, old, new ->
                     var stepMap: MutableMap<String, Int> = mutableMapOf();
                     stepMap["steps"] = new;
+                    stepMap["yesterdaySteps"] = health.yesterdaySteps
                     Log.d(Debug.TAG, "[Kotlin] 걸음수 전송 : ${new}걸음")
                     eventSink?.success(stepMap)
                 }
