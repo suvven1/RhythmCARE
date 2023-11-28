@@ -53,16 +53,6 @@ const StressBar = () => {
       max: 100,
       tickAmount: 4,
     },
-    // fill: {
-    //   opacity: 1,
-    // },
-    // tooltip: {
-    //   y: {
-    //     formatter: function (val) {
-    //       return "$ " + val + " thousands";
-    //     },
-    //   },
-    // },
     colors: ["#4bb56d"],
   };
 

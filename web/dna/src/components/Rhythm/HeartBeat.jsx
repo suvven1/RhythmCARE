@@ -50,8 +50,6 @@ const HeartBeatBox = styled.div`
   margin-top: 50px;
   width: 100%;
   height: 460px;
-  /* background-image: url("${process.env
-    .PUBLIC_URL}/images/rhythm/heartbeat.gif"); */
   background-size: cover;
   display: flex;
   flex-direction: column;

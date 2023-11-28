@@ -101,9 +101,11 @@ export default Radar;
 
 // 방사형 div---------
 const RaderBox = styled.div`
+
   width: 100%;
   height: 400px;
-  margin-top: 80px;
+  margin: 80px -300px 0 -300px;
+  padding: 0 300px 0 300px;
   background-color: #5c95d0;
   display: flex;
   align-items: center;
@@ -115,8 +117,27 @@ const RaderBox = styled.div`
     font-size: 40px;
     font-weight: bold;
   }
+
+  @media only screen and (max-width: 1100px){
+    flex-direction: column;
+    height: 550px;
+    margin-top: -10px;
+    gap: 0px;
+
+    & p {
+      font-size: 30px;
+      text-align: center;
+      margin-top: 70px;
+    }
+
+  }
 `;
 
 const RaderContainer = styled.div`
   margin-top: 70px;
+
+  @media only screen and (max-width: 1100px){
+    margin-top: 0px;
+  }
 `;
+

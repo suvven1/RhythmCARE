@@ -4,7 +4,7 @@ import TiredChart from "./TiredChart";
 import { useNavigate } from "react-router-dom";
 const Tired = () => {
   const nav = useNavigate();
-  var fatigue = 50;
+  var fatigue = 100;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // 화면 크기 감지
@@ -29,6 +29,7 @@ const Tired = () => {
       <NowStatus onClick={showChart}>
         <Title>현재 피로도 지수</Title>
         <CircleBack>
+        <img src={`${process.env.PUBLIC_URL}/images/rhythm/status.png`}></img>
           <CircleBack2>
             <Circle
               style={{
@@ -71,11 +72,9 @@ const NowStatus = styled.div`
 
 // 피로도 div
 const FatigueBox = styled.div`
-  width: 50%;
-  margin-right: 300px;
-  @media only screen and (max-width: 1300px) {
+  width: 610px;
+  @media only screen and (max-width: 600px) {
     width: 80%;
-    margin-right: 0px;
   }
 `;
 
@@ -86,21 +85,35 @@ const Title = styled.h2`
 
 // 상태바
 const CircleBack = styled.div`
-  width: 100%;
+ width: 100%;
   height: 90px;
-  background-image: url("${process.env.PUBLIC_URL}/images/rhythm/status.png");
-  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 30px;
+
+  & img {
+    width: 600px;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media only screen and (max-width: 600px) {
+    & img {
+      width: 400px;
+    }
+  }
 `;
 
 // circle을 위한 div(0% or 100% 위치해 있을 때 여백을 주기위한 용도)
 const CircleBack2 = styled.div`
-  width: 80%;
+  width: 500px;
+  position: absolute;
   height: 90px;
-  position: relative;
+
+  @media only screen and (max-width: 600px){
+    width: 300px;
+  }
 `;
 
 const Circle = styled.div`
@@ -113,6 +126,11 @@ const Circle = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @media only screen and (max-width: 600px){
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const RowHighText = styled.div`
@@ -131,6 +149,9 @@ const RowHighText = styled.div`
 
   & .high {
     color: #da4b3c;
+  }
+  @media only screen and (max-width: 1300px){
+    margin-top: -20px;
   }
 `;
 

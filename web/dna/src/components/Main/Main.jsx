@@ -283,7 +283,7 @@ const MainBox = styled.div`
 
 // 슬로건 css---------------
 const SloganBack = styled.div`
-  margin: 100px 350px 0 350px;
+  margin: 50px 350px 0 350px;
   height: 870px;
   
   & img {

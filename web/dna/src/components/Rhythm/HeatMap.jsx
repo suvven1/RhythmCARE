@@ -78,7 +78,8 @@ const HeatMap = () => {
 
   const [chartOptions, setChartOptions] = useState({
     chart: {
-      height: 250,
+      height: 400,
+      width: 600,
       type: "heatmap",
       toolbar: {
         show: false, // 툴바를 숨김
@@ -115,13 +116,13 @@ const HeatMap = () => {
   });
 
   const [chartSeries, setChartSeries] = useState([
-    { name: "Sun", data: generateData(8, { min: 0, max: 90 }, 1) },
-    { name: "Mon", data: generateData(8, { min: 0, max: 90 }, 2) },
-    { name: "Tue", data: generateData(8, { min: 0, max: 90 }, 3) },
-    { name: "Wed", data: generateData(8, { min: 0, max: 90 }, 4) },
-    { name: "Thu", data: generateData(8, { min: 0, max: 90 }, 5) },
-    { name: "Fri", data: generateData(8, { min: 0, max: 90 }, 6) },
-    { name: "Sat", data: generateData(8, { min: 0, max: 90 }, 7) },
+    { name: "Sun", data: generateData(12, { min: 0, max: 20000 }, 1) },
+    { name: "Mon", data: generateData(12, { min: 0, max: 20000 }, 2) },
+    { name: "Tue", data: generateData(12, { min: 0, max: 20000 }, 3) },
+    { name: "Wed", data: generateData(12, { min: 0, max: 20000 }, 4) },
+    { name: "Thu", data: generateData(12, { min: 0, max: 20000 }, 5) },
+    { name: "Fri", data: generateData(12, { min: 0, max: 20000 }, 6) },
+    { name: "Sat", data: generateData(12, { min: 0, max: 20000 }, 7) },
   ]);
 
   useEffect(() => {
@@ -133,48 +134,77 @@ const HeatMap = () => {
   }, []);
   return (
     <HeatmapBox>
-      <Title>걸음수 잔디밭</Title>
-      <StepText>
-        <p>
-          오늘의 걸음수에 따라 잔디를 채울 수 있어요
-          <br />
-          6000보 이상은 연한 잔디, 10000보 이상은 진한 잔디가 채워져요
-        </p>
-        <p id="step">{step}걸음</p>
-      </StepText>
-      <div>
-        <ReactApexChart
-          options={chartOptions}
-          series={chartSeries}
-          type="heatmap"
-          height={400}
-        />
-      </div>
+      <GrassBox>
+        <StepText>
+          <h2>걸음수 잔디밭</h2>
+          <p>
+            오늘의 걸음수에 따라 잔디를 채울 수 있어요
+            <br />
+            6000보 이상은 연한 잔디, 10000보 이상은 진한 잔디가 채워져요
+          </p>
+          <p id="step">{step}걸음</p>
+        </StepText>
+        <ChartContainer>
+          <ReactApexChart
+            options={chartOptions}
+            series={chartSeries}
+            type="heatmap"
+            width={600}
+            height={400}
+          />
+        </ChartContainer>
+      </GrassBox>
     </HeatmapBox>
   );
 };
 
 export default HeatMap;
-const Title = styled.h2`
-  font-size: 28px;
-  color: #212e3d;
-`;
+
 
 const HeatmapBox = styled.div`
-  margin-left: 300px;
-  margin-right: 300px;
   margin-top: 70px;
 `;
 
+const GrassBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:100px;
+
+  @media only screen and (max-width: 1300px) {
+   flex-direction : column ;
+   margin: 0 50px 0 50px;
+   gap: 0px;
+  }
+`
+
 const StepText = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: -60px;
+  flex-direction: column;
+  justify-content: flex-start;
+  & h2 {
+    font-size: 30px;
+    color: #212e3d;
+  }
 
+  & p {
+    font-size: 20px;
+  }
   & #step {
     font-size: 45px;
     font-weight: bold;
     color: #212e3d;
+  }
+
+  
+`;
+
+const ChartContainer = styled.div`
+  width: 600px;
+  height: 400px;
+
+  @media only screen and (max-width: 1300px) {
+    width: 60%;
+    height: auto;
   }
 `;

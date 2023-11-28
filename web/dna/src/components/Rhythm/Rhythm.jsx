@@ -8,7 +8,7 @@ import HeatMap from "./HeatMap";
 
 const Rhythm = () => {
   return (
-    <div>
+    <RhythmBox>
       <HeartBeat />
       <MeasurementBox>
         <Stress />
@@ -16,11 +16,22 @@ const Rhythm = () => {
       </MeasurementBox>
       <Radar />
       <HeatMap />
-    </div>
+    </RhythmBox>
   );
 };
 
 export default Rhythm;
+
+const RhythmBox = styled.div`
+  margin: 0 300px 0 300px;
+  
+  @media only screen and (max-width: 1300px) {
+    margin: 0px;
+    flex-direction: column;
+    gap: 0px;
+  }
+`
+
 
 // 스트레스 피로도 전체 div---------
 const MeasurementBox = styled.div`
