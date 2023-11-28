@@ -1,3 +1,4 @@
+import 'package:dna/controller/GetMyPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +30,11 @@ class _communityViewState extends State<communityView> {
   late List<String> commentdate;
   late List<String> commentNick;
 
+  // 현재 뷰어가 작성자인가?
+  late bool isWriter;
+
   TextEditingController commentCon = TextEditingController();
+  final MypageController userDataCon = Get.put(MypageController());
 
   TextStyle titleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
   TextStyle contextStyle = TextStyle(fontSize: 20);
@@ -46,11 +51,17 @@ class _communityViewState extends State<communityView> {
     title = widget.dataDB[7];
     contexts = widget.dataDB[8];
     commentList = List.generate(
-        commentNum, (index) => widget.detailData[postNum*3 + index][2]);
-    commentLike = List.generate(commentNum, (index) => widget.detailData[postNum*3 + index][3]);
-    commentLikeBool = List.generate(commentNum, (index) => widget.detailData[postNum*3 + index][4]);
-    commentdate = List.generate(commentNum, (index) => widget.detailData[postNum*3 + index][5].toString().split(' ')[0]);
-    commentNick = List.generate(commentNum, (index) => widget.detailData[postNum*3 + index][6]);
+        commentNum, (index) => widget.detailData[postNum * 3 + index][2]);
+    commentLike = List.generate(
+        commentNum, (index) => widget.detailData[postNum * 3 + index][3]);
+    commentLikeBool = List.generate(
+        commentNum, (index) => widget.detailData[postNum * 3 + index][4]);
+    commentdate = List.generate(
+        commentNum,
+        (index) =>
+            widget.detailData[postNum * 3 + index][5].toString().split(' ')[0]);
+    commentNick = List.generate(
+        commentNum, (index) => widget.detailData[postNum * 3 + index][6]);
     /*
     0 : 글 번호
     1 : 댓글 번호
@@ -59,6 +70,7 @@ class _communityViewState extends State<communityView> {
     4 : 댓글 작성일자
     5 : 댓글 작성자 닉네임
     */
+    isWriter = userDataCon.nick.value == widget.dataDB[5];
   }
 
   @override
@@ -67,16 +79,31 @@ class _communityViewState extends State<communityView> {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(
-              right: MediaQuery.of(context).size.width * 0.05,
-              left: MediaQuery.of(context).size.width * 0.05,),
+            right: MediaQuery.of(context).size.width * 0.05,
+            left: MediaQuery.of(context).size.width * 0.05,
+          ),
           child: ListView(
             children: [
               Column(
                 children: [
                   SizeBoxH40,
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      !isWriter
+                          ? SizedBox()
+                          : ElevatedButton(
+                              onPressed: () {
+                                // DB 삭제 여기에 넣으면 됨
+                                Get.back();
+                              },
+                              child: Text(
+                                '삭제하기',
+                                style: TextStyle(fontSize: 17),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff2e2288)),
+                            ),
                       ElevatedButton(
                         onPressed: () {
                           Get.back();
@@ -130,7 +157,7 @@ class _communityViewState extends State<communityView> {
                   ),
                   SizeBoxH30,
                   TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
                         likeBool = !likeBool;
                         likeBool ? likeNum++ : likeNum--;
@@ -167,49 +194,79 @@ class _communityViewState extends State<communityView> {
                     children: List.generate(
                         commentList.length,
                         (index) => Container(
-                          padding: EdgeInsets.only(bottom: 12),
-                          decoration: BoxDecoration(
-                            border: Border(top: BorderSide(color: Colors.grey))
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              padding: EdgeInsets.only(bottom: 12),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      top: BorderSide(color: Colors.grey))),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(commentNick[index], style: contextStyle, maxLines: 1,),
-                                  TextButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        commentLikeBool[index] = !commentLikeBool[index];
-                                        commentLikeBool[index] ? commentLike[index]++ : commentLike[index]--;
-                                      });
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(commentLikeBool[index] ? 'image/trueLike_icon.png': 'image/falseLike_icon.png', width: 20,),
-                                        Text(' ${commentLike[index]}', style: contextStyle, maxLines: 1, ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(width: 15,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(commentList[index], style: contextStyle,),
-                                      SizedBox(height: 5,),
-                                      Text(commentdate[index], style: TextStyle(fontSize: 17, color: Colors.grey),),
+                                      Text(
+                                        commentNick[index],
+                                        style: contextStyle,
+                                        maxLines: 1,
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            commentLikeBool[index] =
+                                                !commentLikeBool[index];
+                                            commentLikeBool[index]
+                                                ? commentLike[index]++
+                                                : commentLike[index]--;
+                                          });
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              commentLikeBool[index]
+                                                  ? 'image/trueLike_icon.png'
+                                                  : 'image/falseLike_icon.png',
+                                              width: 20,
+                                            ),
+                                            Text(
+                                              ' ${commentLike[index]}',
+                                              style: contextStyle,
+                                              maxLines: 1,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            commentList[index],
+                                            style: contextStyle,
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            commentdate[index],
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.grey),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                        )),
+                              ),
+                            )),
                   ),
                   horisonLine,
                   SizeBoxH20,

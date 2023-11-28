@@ -130,7 +130,11 @@ class _blogPageState extends State<blogPage> {
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 5),
+                                 top: 10,
+                                bottom: 10,
+                                right: 20,
+                                left: 20,
+                              ),
                               backgroundColor: Color(0xff2e2288),
                               shape: RoundedRectangleBorder(
                                   borderRadius:

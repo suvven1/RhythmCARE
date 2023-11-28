@@ -41,7 +41,7 @@ class _grassState extends State<grass> {
           ],
         ),
         SizeBoxH10,
-        grassTable(widget.list),
+        grassTable(widget.list, context),
       ],
     );
   }
