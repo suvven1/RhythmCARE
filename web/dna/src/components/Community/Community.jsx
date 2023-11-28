@@ -12,31 +12,24 @@ const Community = () => {
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
   const [initialLoad, setInitialLoad] = useState(true); // 초기 로딩 여부
+  const [boardList, setBoardList] = useState([]);
 
   useEffect(() => {
-    if (loginData != null) {
-      axios.post("/board/getBoard").then((res) => {
-        // if (res.data.scheduleData) {
-        //   res.data.scheduleData.map((schedule) => {
-        //     const newEvent = {
-        //       key: schedule.sche_idx,
-        //       title: schedule.sche_title,
-        //       start: schedule.started_at.split("T")[0],
-        //       end: schedule.ended_at.split("T")[0],
-        //       backgroundColor: schedule.sche_color,
-        //     };
-        //     setEvents((prevEvents) => [...prevEvents, newEvent]);
-        //   });
-        // }
-      });
-    }
+    axios.post("/board/getBoard").then((res) => {
+      if (res.data.boardData) {
+        res.data.boardData.map((board) => {
+          board.created_at = board.created_at.split("T")[0];
+          setBoardList((prev) => [...prev, board]);
+        });
+      }
+    });
   }, []);
 
   const searchBoard = (e) => {
     e.preventDefault();
     const results = searchKeyword
-      ? dummyData.filter((data) => data.bd_title.includes(searchKeyword))
-      : dummyData;
+      ? boardList.filter((data) => data.bd_title.includes(searchKeyword))
+      : boardList;
     // 검색 결과 설정
     setSearchResults(results);
     // 검색 결과가 있을 경우 현재 페이지를 1로 설정
@@ -45,105 +38,6 @@ const Community = () => {
     console.log("Search results:", searchResults);
   };
 
-  const dummyData = [
-    {
-      bd_idx: 1,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 2,
-      bd_title: "두번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 3,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 4,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 5,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 6,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 7,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 8,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 9,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 10,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 11,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-    {
-      bd_idx: 12,
-      bd_title: "첫번째 게시글",
-      mem_id: "최진수",
-      created_at: "23.10.31",
-      bd_likes: 2,
-      bd_views: 2,
-    },
-  ];
-
   // 현재 페이지에 대한 인덱스 범위 계산
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -151,10 +45,10 @@ const Community = () => {
   // 현재 페이지의 아이템 가져오기
   const currentItems = searchKeyword
     ? searchResults
-    : dummyData.slice(startIndex, endIndex);
+    : boardList.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(
-    (searchKeyword ? searchResults.length : dummyData.length) / itemsPerPage
+    (searchKeyword ? searchResults.length : boardList.length) / itemsPerPage
   );
 
   const pageNumbers = Array.from(
@@ -199,12 +93,14 @@ const Community = () => {
             <TableRow>
               <div style={{ width: "150px" }}>{data.bd_idx}</div>
               <div style={{ width: "650px" }}>
-                <Link
-                  to={`/boarddetail/${data.bd_idx}`}
-                  style={{ textDecoration: "none", color: "black" }}
+                <div
+                  onClick={() =>
+                    nav(`/boarddetail/${data.bd_idx}`, { state: data })
+                  }
+                  style={{ cursor: "pointer" }}
                 >
                   {data.bd_title}
-                </Link>
+                </div>
               </div>
               <div style={{ width: "150px" }}>{data.mem_id}</div>
               <div style={{ width: "150px" }}>{data.created_at}</div>
@@ -247,7 +143,7 @@ const Community = () => {
         </div>
       ) : (
         // 초기 로딩시 전체 데이터 표시
-        dummyData.map((data, index) => (
+        boardList.map((data, index) => (
           <React.Fragment key={data.bd_idx}>
             <TableRow>
               <div style={{ width: "150px" }}>{data.bd_idx}</div>
@@ -290,7 +186,7 @@ const Community = () => {
                 {data.bd_views}
               </div>
             </TableRow>
-            {index < dummyData.length - 1 && <hr />}
+            {index < boardList.length - 1 && <hr />}
           </React.Fragment>
         ))
       )}
@@ -408,7 +304,7 @@ const TableHeader = styled.div`
 const TableRow = styled.div`
   display: flex;
   justify-content: space-between;
-
+  align-items: center;
   & div {
     padding: 10px 0 10px 0;
     text-align: center;

@@ -14,8 +14,8 @@ router.post("/getSchedule", async (req, res) => {
     console.log("캘린더 정보 조회 성공!");
     rows.map((schedule) => {
       schedule.sche_idx = schedule.sche_idx.toString();
-      schedule.started_at.setDate(schedule.started_at.getDate() + 1);
-      schedule.ended_at.setDate(schedule.ended_at.getDate() + 2);
+      schedule.started_at.setHours(schedule.started_at.getHours() + 18);
+      schedule.ended_at.setHours(schedule.ended_at.getHours() + 18);
     });
     res.json({
       scheduleData: rows,
