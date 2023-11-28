@@ -45,14 +45,14 @@ void showOverlay(BuildContext context, Offset position, OverlayEntry? overlayEnt
           width: 100,
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: Colors.grey[200],
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(color: Colors.white),
           ),
           child: Center(
             child: Text(
               '$walkNum',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 20),
             ),
           ),
         ),
