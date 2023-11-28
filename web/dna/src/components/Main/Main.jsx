@@ -56,26 +56,31 @@ function TopButton() {
 
 const Main = () => {
   const navigate = useNavigate();
+  const [sloganImage, setSloganImage] = useState("slogan1");
 
   const start_service = () => {
     navigate("/Login");
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      const newSloganImage = window.innerWidth <= 1040 ? "slogan2" : "slogan1";
+      setSloganImage(newSloganImage);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 초기 로딩 시에도 체크
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <MainBox>
       <TopButton />
       <SloganBack>
-        <p>
-          리듬 속 건강
-          <br />
-          당신의 건강한 리듬을
-          <br />
-          위한 최고의 파트너
-        </p>
-        <div className="blank" />
-        <SloganImage />
+      <img src={`${process.env.PUBLIC_URL}/images/main/${sloganImage}.png`}></img>
       </SloganBack>
-
       <ServiceBack>
         <span>서비스</span>
       </ServiceBack>
@@ -278,58 +283,24 @@ const MainBox = styled.div`
 
 // 슬로건 css---------------
 const SloganBack = styled.div`
-  margin-top: -10px;
-  width: 100%;
+  margin: 100px 350px 0 350px;
   height: 870px;
-  display: flex;
-  z-index: 2;
-
-  align-items: center;
-  justify-content: center;
-
-  & p {
-    margin-left: 300px;
-    font-size: 50px;
-    font-weight: bold;
-  }
-
-  & .blank {
-    width: 100px;
+  
+  & img {
+    width: 1280px;
   }
 
   @media only screen and (max-width: 1040px) {
-    justify-content: center;
-    flex-direction: column;
-    height: 650px;
+    margin: 0px;
+    height: 720px;
+    
+    & img {
+    width: 500px;
+  }
 
-    & p {
-      margin-top: -10px;
-      margin-left: 20px;
-      font-size: 35px;
-      text-align: center;
-    }
-
-    & .blank {
-      width: 0px;
-    }
   }
 `;
 
-const SloganImage = styled.div`
-  width: 550px;
-  height: 550px;
-  background-image: url("${process.env.PUBLIC_URL}/images/main/slogan.png");
-  background-size: cover;
-  margin-right: 300px;
-
-  @media only screen and (max-width: 1040px) {
-    justify-content: center;
-    flex-direction: column;
-    width: 350px;
-    height: 350px;
-    margin-right: -20px;
-  }
-`;
 
 // 서비스 css---------------
 const ServiceBack = styled.div`
