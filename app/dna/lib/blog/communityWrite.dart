@@ -36,7 +36,8 @@ class _communityWriteState extends State<communityWrite> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Get.back();
+                            // Get.back();
+                            Navigator.pop(context);
                           },
                           child: Text(
                             '목록으로',

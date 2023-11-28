@@ -13,6 +13,7 @@ class tiredPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('나의 피로도'),
         backgroundColor: Color(0xff2e2288),
+        elevation: 0,
       ),
       body: SafeArea(
           child: Container(

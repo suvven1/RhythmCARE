@@ -74,6 +74,9 @@ class _calendarPageState extends State<calendarPage> {
           });
         },
         child: ListView(
+          padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05),
           children: [
             // 현재 년/월 표시
             titleWidget(),

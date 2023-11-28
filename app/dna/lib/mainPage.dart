@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:dna/widget/enums/bottomNavItem.dart';
 
 import 'package:dna/blog/blogPage.dart';
 import 'package:dna/calendar/calendarPage.dart';
@@ -37,8 +38,6 @@ class _mainPageState extends State<mainPage> {
   NoticeController notice = Get.put(NoticeController());
   DateTime? currentBackPressTime;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -69,13 +68,13 @@ class _mainPageState extends State<mainPage> {
   int currentPageIndex = 2;
 
   // 바텀 네비게이션으로 이동할 페이지 목록
-  final List<Widget> pageIndex = <Widget>[
-    calendarPage(),
-    hospitalPage(),
-    homePage(),
-    blogPage(),
-    myPage(),
-  ];
+  final Map<BottomNaviItem, GlobalKey<NavigatorState>> navigatorKeys = {
+    BottomNaviItem.calendar: GlobalKey<NavigatorState>(),
+    BottomNaviItem.hospital: GlobalKey<NavigatorState>(),
+    BottomNaviItem.home: GlobalKey<NavigatorState>(),
+    BottomNaviItem.blog: GlobalKey<NavigatorState>(),
+    BottomNaviItem.myPage: GlobalKey<NavigatorState>(),
+  };
 
   // 바텀 네비게이션을 클릭할 시, 실행할 메소드
   void onItemTap(index) {
@@ -132,13 +131,19 @@ class _mainPageState extends State<mainPage> {
       body: WillPopScope(
         onWillPop: onWillPop,
         child: SafeArea(
-            child: Container(
-          color: currentPageIndex == 4 ? Colors.grey[200] : Colors.white,
-          padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.05),
-          child: pageIndex.elementAt(currentPageIndex),
-        )),
+          child: Container(
+            color: Colors.white,
+            child: Stack(
+              children: <Widget>[
+                _buildOffstageNavigator(BottomNaviItem.calendar),
+                _buildOffstageNavigator(BottomNaviItem.hospital),
+                _buildOffstageNavigator(BottomNaviItem.home),
+                _buildOffstageNavigator(BottomNaviItem.blog),
+                _buildOffstageNavigator(BottomNaviItem.myPage),
+              ],
+            ),
+          ),
+        ),
       ),
       bottomNavigationBar: myBottomNavi(currentPageIndex, onItemTap),
     );
@@ -158,5 +163,23 @@ class _mainPageState extends State<mainPage> {
     final autoLogin = loginDataStorage.getBool('autoLogin') ?? false;
     if (!autoLogin) loginDataStorage.clear();
     return Future.value(true);
+  }
+
+  Widget _buildOffstageNavigator(BottomNaviItem item) {
+    return Offstage(
+      offstage: currentPageIndex != item.index,
+      child: Navigator(
+        key: navigatorKeys[currentPageIndex],
+        initialRoute: '/',
+        onGenerateRoute: (settings) {
+          print(settings);
+          return MaterialPageRoute(
+            builder: (context) {
+              return openScreen[item]!;
+            },
+          );
+        },
+      ),
+    );
   }
 }

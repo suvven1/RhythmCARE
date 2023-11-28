@@ -12,6 +12,7 @@ class stressPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('나의 스트레스'),
         backgroundColor: Color(0xff2e2288),
+        elevation: 0,
       ),
       body: SafeArea(
           child: Container(

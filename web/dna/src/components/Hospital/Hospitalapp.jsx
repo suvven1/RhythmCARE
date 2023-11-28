@@ -133,7 +133,7 @@ const HospitalBox = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  gap: 30px;
+  gap: 20px;
   overflow: hidden;
   height: 100vh;
 

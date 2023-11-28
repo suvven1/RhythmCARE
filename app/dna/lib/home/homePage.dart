@@ -44,6 +44,9 @@ class _homePageState extends State<homePage> {
         });
       },
       child: ListView(
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05),
         children: [
           SizeBoxH10,
           // 심박수
