@@ -1,16 +1,15 @@
-import 'dart:async';
-
 import 'package:dna/controller/GetRhythmController.dart';
-import 'package:dna/home/widget/grassTable.dart';
+import 'package:dna/home/widget/grass/grassTable.dart';
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class grass extends StatefulWidget {
-  grass({Key? key, required this.list}) : super(key: key);
+  grass({Key? key, required this.walkNum, required this.colorList}) : super(key: key);
 
-  List<Color> list;
+  List<int> walkNum;
+  List<Color> colorList;
 
   @override
   State<grass> createState() => _grassState();
@@ -41,8 +40,11 @@ class _grassState extends State<grass> {
           ],
         ),
         SizeBoxH10,
-        grassTable(widget.list, context),
+        grassTable(widget.walkNum, widget.colorList, context)
       ],
     );
   }
+
+
+
 }

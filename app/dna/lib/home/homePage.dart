@@ -1,5 +1,5 @@
 import 'package:dna/controller/GetRhythmController.dart';
-import 'package:dna/home/widget/grass.dart';
+import 'package:dna/home/widget/grass/grass.dart';
 import 'package:dna/home/widget/heartBeat.dart';
 import 'package:dna/home/widget/visualModel.dart';
 import 'package:dna/toastMessage/toast.dart';
@@ -59,7 +59,7 @@ class _homePageState extends State<homePage> {
           horisonLine,
           SizeBoxH30,
           // 잔디심기
-          grass(list: grassColor(walkNum),),
+          grass(walkNum: walkNum ,colorList: grassColor(walkNum),),
           SizeBoxH30,
         ],
       ),
