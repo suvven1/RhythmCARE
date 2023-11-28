@@ -113,6 +113,17 @@ const HeatMap = () => {
         },
       },
     },
+    responsive : [
+      {
+        breakpoint: 600,
+        options: {
+          chart: {
+            height: 300,
+            width: 400
+          }
+        }
+      }
+    ]
   });
 
   const [chartSeries, setChartSeries] = useState([
@@ -144,7 +155,7 @@ const HeatMap = () => {
           </p>
           <p id="step">{step}걸음</p>
         </StepText>
-        <ChartContainer>
+        <div>
           <ReactApexChart
             options={chartOptions}
             series={chartSeries}
@@ -152,7 +163,7 @@ const HeatMap = () => {
             width={600}
             height={400}
           />
-        </ChartContainer>
+        </div>
       </GrassBox>
     </HeatmapBox>
   );
@@ -196,15 +207,9 @@ const StepText = styled.div`
     color: #212e3d;
   }
 
-  
-`;
-
-const ChartContainer = styled.div`
-  width: 600px;
-  height: 400px;
-
   @media only screen and (max-width: 1300px) {
-    width: 60%;
-    height: auto;
+  & p {
+    font-size: 15px;
   }
+}
 `;

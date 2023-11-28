@@ -75,6 +75,17 @@ const Radar = () => {
     theme: {
       palette: "palette8", // 팔레트 선택 (선택한 팔레트에 따라 색상이 다르게 적용됩니다)
     },
+    responsive : [
+      {
+        breakpoint: 600,
+        options: {
+          chart: {
+            height: 300,
+            width: 400
+          }
+        }
+      }
+    ]
   };
   return (
     <RaderBox>
@@ -120,7 +131,7 @@ const RaderBox = styled.div`
 
   @media only screen and (max-width: 1100px){
     flex-direction: column;
-    height: 550px;
+    height: 500px;
     margin-top: -10px;
     gap: 0px;
 
