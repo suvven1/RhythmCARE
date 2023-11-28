@@ -25,10 +25,12 @@ class _shakeDialogState extends State<shakeDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
       child: Container(
-        height: MediaQuery.of(context).size.width*0.77,
+        height: MediaQuery.of(context).size.width*0.8,
         child: ElevatedButton(
           onPressed: () async{
             if(phoneNumber != null) {
@@ -44,6 +46,7 @@ class _shakeDialogState extends State<shakeDialog> {
           style: ElevatedButton.styleFrom(
               foregroundColor: Colors.yellowAccent,
               backgroundColor: Colors.redAccent,
+            shape: CircleBorder(),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

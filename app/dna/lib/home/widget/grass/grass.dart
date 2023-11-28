@@ -35,8 +35,6 @@ class _grassState extends State<grass> {
             ),
             SizeBoxH10,
             const Text('오늘의 걸음 수에 따라 잔디를 채울 수 있어요.', style: TextStyle(color: Colors.grey),),
-            const Text('6000보 이상은 연한 잔디,', style: TextStyle(color: Colors.grey),),
-            const Text('10000보 이상은 진한 잔디가 채워져요.', style: TextStyle(color: Colors.grey),),
           ],
         ),
         SizeBoxH10,

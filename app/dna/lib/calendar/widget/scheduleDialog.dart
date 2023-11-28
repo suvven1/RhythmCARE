@@ -136,8 +136,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
                             selectedColorBorder = 1;
                             });
                           },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(2)
+                          ),
                           child: Container(
-                            height: 35,
+                            height: MediaQuery.of(context).size.width*0.095,
                             decoration: BoxDecoration(
                               color: Color(0xffeb6867),
                               border: selectedColorBorder == 1 ? Border.all(width: 3, color: Colors.black) : null,
@@ -152,8 +155,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
                             selectedColorBorder = 2;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(2)
+                          ),
                           child: Container(
-                            height: 35,
+                            height: MediaQuery.of(context).size.width*0.095,
                             decoration: BoxDecoration(
                               color: Color(0xfff39a47),
                               border: selectedColorBorder == 2 ? Border.all(width: 3, color: Colors.black) : null,
@@ -168,8 +174,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
                             selectedColorBorder = 3;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(2)
+                          ),
                           child: Container(
-                            height: 35,
+                            height: MediaQuery.of(context).size.width*0.095,
                             decoration: BoxDecoration(
                               color: Color(0xff47b794),
                               border: selectedColorBorder == 3 ? Border.all(width: 3, color: Colors.black) : null,
@@ -184,8 +193,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
                             selectedColorBorder = 4;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(2)
+                          ),
                           child: Container(
-                            height: 35,
+                            height: MediaQuery.of(context).size.width*0.095,
                             decoration: BoxDecoration(
                               color: Color(0xff1eb2d4),
                               border: selectedColorBorder == 4 ? Border.all(width: 3, color: Colors.black) : null,
@@ -200,8 +212,11 @@ class _scheduleDialogState extends State<scheduleDialog> {
                             selectedColorBorder = 5;
                             });
                           },
+                          style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(2)
+                          ),
                           child: Container(
-                            height: 35,
+                            height: MediaQuery.of(context).size.width*0.095,
                             decoration: BoxDecoration(
                               color: Color(0xff762fc1),
                               border: selectedColorBorder == 5 ? Border.all(width: 3, color: Colors.black) : null,
@@ -338,26 +353,6 @@ class _scheduleDialogState extends State<scheduleDialog> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            SizeBoxH20,
-            Row(
-              children: [
-                Text(
-                  '알림',
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.55,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300], border: Border.all()),
-                    child: Text(
-                      '구현 안 됨',
-                      style: TextStyle(color: Colors.grey[600]),
-                    )),
               ],
             ),
             SizeBoxH30,

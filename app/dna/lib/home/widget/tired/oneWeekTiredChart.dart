@@ -29,18 +29,14 @@ class _oneWeekTiredChartState extends State<oneWeekTiredChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15, right: 10),
-            child: LineChart(
-              mainData(),
-            ),
-          ),
+    return AspectRatio(
+      aspectRatio: 1.70,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 15, right: 10),
+        child: LineChart(
+          mainData(),
         ),
-      ],
+      ),
     );
   }
 
@@ -50,7 +46,9 @@ class _oneWeekTiredChartState extends State<oneWeekTiredChart> {
       fontWeight: FontWeight.bold,
       fontSize: 20,
     );
-    return SideTitleWidget(
+    return value == -0.5 || value == 6.5
+        ? Text('')
+        : SideTitleWidget(
       axisSide: meta.axisSide,
       child: Text(
         bottomTitleText[value.toInt()],
@@ -127,8 +125,8 @@ class _oneWeekTiredChartState extends State<oneWeekTiredChart> {
             bottom: BorderSide()
         ),
       ),
-      minX: 0,
-      maxX: 6,
+      minX: -0.5,
+      maxX: 6.5,
       minY: 0,
       maxY: 101,
       lineBarsData: [

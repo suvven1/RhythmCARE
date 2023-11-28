@@ -21,13 +21,22 @@ class _homePageState extends State<homePage> {
 
   List<Color> grassColor(List list) {
     walkNum[0] = 10000; // test용 값 - DB입력 후 지우기
+    walkNum[1] = 8000; // test용 값 - DB입력 후 지우기
     walkNum[2] = 6000; // test용 값 - DB입력 후 지우기
+    walkNum[3] = 4000; // test용 값 - DB입력 후 지우기
+    walkNum[4] = 2000; // test용 값 - DB입력 후 지우기
     List<Color> newList = [];
     list.forEach((e) {
       if (e > 9999) {
-        newList.add(Colors.green);
+        newList.add(Color(0xff009600));
+      } else if (e > 7999) {
+        newList.add(Color(0xcc009600));
       } else if (e > 5999) {
-        newList.add(Colors.lightGreen);
+        newList.add(Color(0x99009600));
+      } else if (e > 3999) {
+        newList.add(Color(0x66009600));
+      } else if (e > 1999) {
+        newList.add(Color(0x33009600));
       } else {
         newList.add(Colors.grey);
       }
