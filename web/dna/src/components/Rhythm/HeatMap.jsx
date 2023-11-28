@@ -1,8 +1,47 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ReactApexChart from "react-apexcharts";
+import useNotification from "../Notification/useNotification";
 const HeatMap = () => {
+  // ----------------------------------------------------------------------------
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   const [step, setStep] = useState("--");
+
+  const socket = new WebSocket("ws://115.95.222.206:100");
+  const firstSteps = useNotification("걸음수 달성", {
+    body: `5,000걸음 달성!\n10,000걸음에 도전하세요!`,
+    icon: `${process.env.PUBLIC_URL}/images/ic_launcher.png`,
+    badge: `${process.env.PUBLIC_URL}/images/ic_launcher.png`,
+    tag: "Rhythm Care",
+    requireInteraction: true,
+  });
+
+  const secondSteps = useNotification("걸음수 달성", {
+    body: `10,000걸음 달성!\n오늘 하루도 고생하셨습니다!`,
+    icon: `${process.env.PUBLIC_URL}/images/ic_launcher.png`,
+    badge: `${process.env.PUBLIC_URL}/images/ic_launcher.png`,
+    tag: "Rhythm Care",
+    requireInteraction: true,
+  });
+
+  // 걸음수 받아오기
+  if (loginData != null) {
+    socket.addEventListener("message", (e) => {
+      e.preventDefault();
+      const data = JSON.parse(e.data);
+      if (data.id == loginData.id && data.steps != step) {
+        setStep(data.steps);
+        if (parseInt(data.steps) == 5000) {
+          firstSteps();
+        } else if (parseInt(data.steps) == 10000) {
+          secondSteps();
+        }
+      }
+    });
+  }
+
+  // ----------------------------------------------------------------------------
+
   const months = [
     "Jan",
     "Feb",

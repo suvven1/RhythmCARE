@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cluster = require("cluster");
 const bodyParser = require("body-parser");
-const indexRouter = require("./routes");
+const boardRouter = require("./routes/board");
 const userRouter = require("./routes/user");
 const attendRouter = require("./routes/attend");
 const calenderRouter = require("./routes/calender");
@@ -19,7 +19,7 @@ if (cluster.isMaster) {
   app.use(cors());
   app.use(express.json());
   app.set("port", process.env.PORT || 80);
-  app.use("/", indexRouter);
+  app.use("/board", boardRouter);
   app.use("/user", userRouter);
   app.use("/attend", attendRouter);
   app.use("/calender", calenderRouter);

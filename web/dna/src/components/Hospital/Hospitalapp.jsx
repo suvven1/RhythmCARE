@@ -14,7 +14,7 @@ const Hospitalapp = () => {
         mapscript(latitude, longitude);
       },
       (error) => {
-        mapscript(35.160007, 126.851610);
+        mapscript(35.160007, 126.85161);
       }
     );
   }, []);
@@ -57,7 +57,7 @@ const Hospitalapp = () => {
     }
 
     function addMarker(position) {
-      const imageSrc = process.env.PUBLIC_URL + '/images/map_marker1.png';
+      const imageSrc = process.env.PUBLIC_URL + "/images/map_marker1.png";
       const imageSize = new kakao.maps.Size(36, 37);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
@@ -131,22 +131,22 @@ const HospitalBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   background-color: #ffffff;
-  gap: 50px;
+  gap: 30px;
   overflow: hidden;
   height: 100vh;
 
   & #map {
     width: 100vw;
-    height: 40vh;
+    height: 50vh;
     border-radius: 20px;
     border: 1px solid gray;
   }
 
   & ul {
     overflow-y: auto;
-    max-height: 60vh;
+    max-height: 50vh;
     padding: 0;
   }
 

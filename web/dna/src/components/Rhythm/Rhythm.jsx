@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
 import styled from "styled-components";
-
 import HeartBeat from "./HeartBeat";
 import Stress from "./Stress/Stress";
-import StressChart from "./Stress/StressChart";
 import Tired from "./Tried/Tired";
-import TiredDetail from "./Tried/TiredChart";
 import Radar from "./Radar";
 import HeatMap from "./HeatMap";
 

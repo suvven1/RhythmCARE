@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Community = () => {
   const nav = useNavigate();
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   const itemsPerPage = 10;
 
-  const [currentPage, setCurrentPage] = useState(1);      // 페이지 이동
+  const [currentPage, setCurrentPage] = useState(1); // 페이지 이동
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
   const [initialLoad, setInitialLoad] = useState(true); // 초기 로딩 여부
+
+  useEffect(() => {
+    if (loginData != null) {
+      axios.post("/board/getBoard").then((res) => {
+        // if (res.data.scheduleData) {
+        //   res.data.scheduleData.map((schedule) => {
+        //     const newEvent = {
+        //       key: schedule.sche_idx,
+        //       title: schedule.sche_title,
+        //       start: schedule.started_at.split("T")[0],
+        //       end: schedule.ended_at.split("T")[0],
+        //       backgroundColor: schedule.sche_color,
+        //     };
+        //     setEvents((prevEvents) => [...prevEvents, newEvent]);
+        //   });
+        // }
+      });
+    }
+  }, []);
 
   const searchBoard = (e) => {
     e.preventDefault();
@@ -21,24 +41,107 @@ const Community = () => {
     setSearchResults(results);
     // 검색 결과가 있을 경우 현재 페이지를 1로 설정
     setCurrentPage(results.length > 0 ? 1 : 0);
-    setInitialLoad(false)
+    setInitialLoad(false);
     console.log("Search results:", searchResults);
-
   };
 
   const dummyData = [
-    { bd_idx: 1, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 2, bd_title: "두번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 3, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 4, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 5, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 6, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 7, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 8, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 9, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 10, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 11, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
-    { bd_idx: 12, bd_title: "첫번째 게시글", mem_id: "최진수", created_at: "23.10.31", bd_likes: 2, bd_views: 2 },
+    {
+      bd_idx: 1,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 2,
+      bd_title: "두번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 3,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 4,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 5,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 6,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 7,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 8,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 9,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 10,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 11,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
+    {
+      bd_idx: 12,
+      bd_title: "첫번째 게시글",
+      mem_id: "최진수",
+      created_at: "23.10.31",
+      bd_likes: 2,
+      bd_views: 2,
+    },
   ];
 
   // 현재 페이지에 대한 인덱스 범위 계산
@@ -46,11 +149,18 @@ const Community = () => {
   const endIndex = startIndex + itemsPerPage;
 
   // 현재 페이지의 아이템 가져오기
-  const currentItems = searchKeyword ? searchResults : dummyData.slice(startIndex, endIndex);
+  const currentItems = searchKeyword
+    ? searchResults
+    : dummyData.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil((searchKeyword ? searchResults.length : dummyData.length) / itemsPerPage);
+  const totalPages = Math.ceil(
+    (searchKeyword ? searchResults.length : dummyData.length) / itemsPerPage
+  );
 
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
 
   return (
     <CommunityBox>
@@ -62,13 +172,13 @@ const Community = () => {
             type="text"
             placeholder="검색어를 입력해주세요"
             value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)} />
+            onChange={(e) => setSearchKeyword(e.target.value)}
+          />
           <input className="search_btn" type="submit" value="검색" />
         </form>
         <Link to="/boardwriteform">
           <button className="writeBtn">글쓰기</button>
         </Link>
-
       </ToolContainer>
       <hr className="custom-hr" />
 
@@ -91,23 +201,38 @@ const Community = () => {
               <div style={{ width: "650px" }}>
                 <Link
                   to={`/boarddetail/${data.bd_idx}`}
-                  style={{ textDecoration: 'none', color: 'black' }}>
+                  style={{ textDecoration: "none", color: "black" }}
+                >
                   {data.bd_title}
                 </Link>
               </div>
               <div style={{ width: "150px" }}>{data.mem_id}</div>
               <div style={{ width: "150px" }}>{data.created_at}</div>
-              <div style={{ width: "150px", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <div
+                style={{
+                  width: "150px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/community/likes.png`}
-                  style={{ width: '20px', marginRight: '5px' }}
+                  style={{ width: "20px", marginRight: "5px" }}
                 />
                 {data.bd_likes}
               </div>
-              <div style={{ width: "150px", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <div
+                style={{
+                  width: "150px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/community/view.png`}
-                  style={{ width: '20px', marginRight: '5px' }}
+                  style={{ width: "20px", marginRight: "5px" }}
                 />
                 {data.bd_views}
               </div>
@@ -115,12 +240,12 @@ const Community = () => {
             {index < currentItems.length - 1 && <hr />}
           </React.Fragment>
         ))
-
-        // 결과 없을떄
-      ) : !initialLoad ? (
-        <div style={{ textAlign: 'center', padding: "10px 0 10px 0" }}>검색 결과가 없습니다.</div>
+      ) : // 결과 없을떄
+      !initialLoad ? (
+        <div style={{ textAlign: "center", padding: "10px 0 10px 0" }}>
+          검색 결과가 없습니다.
+        </div>
       ) : (
-
         // 초기 로딩시 전체 데이터 표시
         dummyData.map((data, index) => (
           <React.Fragment key={data.bd_idx}>
@@ -129,23 +254,38 @@ const Community = () => {
               <div style={{ width: "650px" }}>
                 <Link
                   to={`/boarddetail/${data.bd_idx}`}
-                  style={{ textDecoration: 'none', color: 'black' }}>
+                  style={{ textDecoration: "none", color: "black" }}
+                >
                   {data.bd_title}
                 </Link>
               </div>
               <div style={{ width: "150px" }}>{data.mem_id}</div>
               <div style={{ width: "150px" }}>{data.created_at}</div>
-              <div style={{ width: "150px", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <div
+                style={{
+                  width: "150px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/community/likes.png`}
-                  style={{ width: '20px', marginRight: '5px' }}
+                  style={{ width: "20px", marginRight: "5px" }}
                 />
                 {data.bd_likes}
               </div>
-              <div style={{ width: "150px", display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <div
+                style={{
+                  width: "150px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/community/view.png`}
-                  style={{ width: '20px', marginRight: '5px' }}
+                  style={{ width: "20px", marginRight: "5px" }}
                 />
                 {data.bd_views}
               </div>
@@ -157,15 +297,25 @@ const Community = () => {
       <hr />
       {/* 페이지 버튼 이동 */}
       <Pagination>
-        <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           ←
         </button>
         {pageNumbers.map((number) => (
-          <button key={number} onClick={() => setCurrentPage(number)} className={currentPage === number ? "active" : ""}>
+          <button
+            key={number}
+            onClick={() => setCurrentPage(number)}
+            className={currentPage === number ? "active" : ""}
+          >
             {number}
           </button>
         ))}
-        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
           →
         </button>
       </Pagination>
@@ -177,22 +327,20 @@ export default Community;
 
 const CommunityBox = styled.div`
   margin: 20px 300px 0 300px;
-  
 
   & .custom-hr {
     border: 1px solid #2e2288;
   }
 
-  @media only screen and (max-width: 1040px){
+  @media only screen and (max-width: 1040px) {
     margin: 20px 50px 0 50px;
     font-size: 13px;
-
   }
-`
+`;
 
 const ToolContainer = styled.div`
   display: flex;
-  justify-content  : space-between ;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   & img {
@@ -216,8 +364,8 @@ const ToolContainer = styled.div`
     cursor: pointer;
     text-decoration: none;
   }
-  
-& .writeBtn{
+
+  & .writeBtn {
     padding: 15px 32.5px;
     border-radius: 10px;
     border: none;
@@ -227,48 +375,45 @@ const ToolContainer = styled.div`
     cursor: pointer;
     display: block;
     text-decoration: none;
-
   }
-  @media only screen and (max-width: 1040px){
+  @media only screen and (max-width: 1040px) {
     & .search_text {
-    width: 150px;
-    height: 25px;
-    margin-right: 10px;
+      width: 150px;
+      height: 25px;
+      margin-right: 10px;
     }
 
-    & .writeBtn{
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #2e2288;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-    display: block;
-    text-decoration: none;
+    & .writeBtn {
+      padding: 8px 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #2e2288;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
     }
   }
-`
+`;
 
 const TableHeader = styled.div`
   display: flex;
   justify-content: space-between;
   text-align: center;
   font-weight: bold;
-  padding: 10px 0 10px 0;;
-  `
+  padding: 10px 0 10px 0;
+`;
 
 const TableRow = styled.div`
   display: flex;
   justify-content: space-between;
-  
-  
-  & div{
+
+  & div {
     padding: 10px 0 10px 0;
     text-align: center;
   }
-  
-`
+`;
 
 const Pagination = styled.div`
   margin-top: 30px;
@@ -282,10 +427,9 @@ const Pagination = styled.div`
     cursor: pointer;
     border-radius: 5px;
   }
-  
+
   & button.active {
     background-color: #2e2288;
     color: white;
   }
-  
-`
+`;

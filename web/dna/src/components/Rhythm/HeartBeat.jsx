@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useNotification from "../Notification/useNotification";
 const HeartBeat = () => {
-  const loginData = JSON.parse(localStorage.getItem("loginData"));
-
   // ----------------------------------------------------------------------------
+  const loginData = JSON.parse(localStorage.getItem("loginData"));
   const [heartbeat, setHeartbeat] = useState("--");
+
   const socket = new WebSocket("ws://115.95.222.206:100");
   const triggerNotif = useNotification("[경고] 심박수 이상", {
     body: `기기 사용자의 심박에서 이상을 감지했습니다! \n현재 심박수 : ${heartbeat}`,
@@ -15,7 +15,7 @@ const HeartBeat = () => {
     requireInteraction: true,
   });
 
-  // 심박수 걸음수 받아오기
+  // 심박수 받아오기
   if (loginData != null) {
     socket.addEventListener("message", (e) => {
       e.preventDefault();
@@ -30,6 +30,7 @@ const HeartBeat = () => {
   }
 
   // ----------------------------------------------------------------------------
+
   return (
     <HeartBeatBox>
       <img

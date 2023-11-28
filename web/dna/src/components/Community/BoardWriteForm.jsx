@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "../../axios";
 import styled from "styled-components";
 
 const BoardWriteForm = () => {
   const nav = useNavigate();
+  const id = JSON.parse(localStorage.getItem("loginData")).id;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [file, setFile] = useState("");
+  // const [file, setFile] = useState("");
 
   const uploadBoard = (e) => {
     e.preventDefault();
-    console.log("upload board");
-    console.log(title);
-    console.log(content);
-    console.log(file);
-    nav("/community");
+    axios
+      .post("/board/uploadBoard", { title: title, content: content, id: id })
+      .then((res) => {
+        if (res.data.uploadBoardResult) {
+          alert("작성이 완료되었습니다.");
+          nav("/community");
+        } else {
+          alert("[Network ERROR] 작성에 실패 하였습니다.");
+        }
+      });
   };
 
   return (
@@ -54,15 +61,14 @@ const BoardWriteForm = () => {
 export default BoardWriteForm;
 
 const BoardWriteBox = styled.div`
-
-  margin : 20px 300px 0 300px;
+  margin: 20px 300px 0 300px;
 
   & .custom-hr {
     border: 1px solid #2e2288;
   }
-  
-  & Button{
-    margin : 0 0 20px auto;
+
+  & Button {
+    margin: 0 0 20px auto;
     padding: 15px 25px;
     border-radius: 10px;
     border: none;
@@ -71,7 +77,6 @@ const BoardWriteBox = styled.div`
     font-size: 15px;
     cursor: pointer;
     display: block;
-    
   }
 
   & #boardtitle {
@@ -90,7 +95,7 @@ const BoardWriteBox = styled.div`
     width: 100%;
   }
 
-  & #putBtn{
+  & #putBtn {
     margin: 20px auto 0 auto;
     padding: 15px 25px;
     border-radius: 10px;
@@ -102,10 +107,11 @@ const BoardWriteBox = styled.div`
     display: block;
   }
 
-  @media only screen and (max-width: 1040px){
+  @media only screen and (max-width: 1040px) {
     margin: 20px 50px 0 50px;
 
-    & Button, #putBtn {
+    & Button,
+    #putBtn {
       padding: 8px 10px;
       border-radius: 5px;
       border: none;
@@ -117,8 +123,9 @@ const BoardWriteBox = styled.div`
       text-decoration: none;
     }
 
-    & textarea, #boardtitle{
+    & textarea,
+    #boardtitle {
       font-size: 18px;
     }
   }
-`
+`;
