@@ -26,6 +26,7 @@ myBottomNavi(currentPageIndex, onItemTap) {
   return BottomNavigationBar(
     type: BottomNavigationBarType.fixed,
     showUnselectedLabels: false,
+    selectedLabelStyle: TextStyle(color: Colors.black),
     currentIndex: currentPageIndex,
     onTap: onItemTap,
     items: <BottomNavigationBarItem>[

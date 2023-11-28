@@ -80,6 +80,24 @@ class _blogPageState extends State<blogPage> {
     _refreshIndicator.currentState?.show();
   }
 
+  bool isDraging = false;
+  void viewRightFt() {
+    // 하단 게시물 번호 클릭했을 때 실행되는 함수
+    // 게시물 클릭 시, db를 불러와야 할 때 여기로 불러오면 됨.
+    viewListNum++;
+    isDraging = true;
+    viewListFt(searchList ?? dataDB);
+    _refreshIndicator.currentState?.show();
+  }
+  void viewLeftFt() {
+    // 왼쪽으로  때 실행되는 함수
+    // 게시물 클릭 시, db를 불러와야 할 때 여기로 불러오면 됨.
+    viewListNum--;
+    isDraging = true;
+    viewListFt(searchList ?? dataDB);
+    _refreshIndicator.currentState?.show();
+  }
+
   // 현재 게시글의 양에 대한 페이지 수
   late int viewListCount;
 
@@ -93,27 +111,43 @@ class _blogPageState extends State<blogPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-        key: _refreshIndicator,
-        onRefresh: () async {
-          setState(() {
-            // showToast("화면새로고침 완료");
-          });
-        },
-        child: Container(
-          padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.05),
-          color: Colors.white,
-          child: Column(
-            children: [
-              SizeBoxH40,
-              search(
-                  searchCon: searchCon, searchButtonAction: searchButtonAction),
-              Expanded(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  children: [
-                    ListView.builder(
+      key: _refreshIndicator,
+      onRefresh: () async {
+        setState(() {
+          // showToast("화면새로고침 완료");
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05),
+        color: Colors.white,
+        child: Column(
+          children: [
+            SizeBoxH40,
+            search(
+                searchCon: searchCon, searchButtonAction: searchButtonAction),
+            Expanded(
+              child: Stack(
+                alignment: AlignmentDirectional.bottomEnd,
+                children: [
+                  GestureDetector(
+                    onHorizontalDragUpdate: (details) async{
+                      if(details.delta.dx < -7 && !isDraging && viewListNum < viewListCount){
+                        viewRightFt();
+                        print('right');
+                        Future.delayed(Duration(milliseconds: 500), (){
+                          isDraging = false;
+                        });
+                      } else if(details.delta.dx > 7 && !isDraging && viewListNum >0){
+                        viewLeftFt();
+                        print('left');
+                        Future.delayed(Duration(milliseconds: 500), (){
+                          isDraging = false;
+                        });
+                      }
+                    },
+                    child: ListView.builder(
                       itemCount: viewList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return postContainer(
@@ -124,43 +158,46 @@ class _blogPageState extends State<blogPage> {
                             dataDB: viewList[index]);
                       },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12, right: 4),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            // Get.to(communityWrite());
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12, right: 4),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          // Get.to(communityWrite());
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
                               return communityWrite();
-                            },));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.only(
-                                 top: 10,
-                                bottom: 10,
-                                right: 20,
-                                left: 20,
-                              ),
-                              backgroundColor: Color(0xff2e2288),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)))),
-                          child: Text('글쓰기',
-                              style: TextStyle(
-                                fontSize: 25,
-                              ))),
-                    )
-                  ],
-                ),
+                            },
+                          ));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.only(
+                              top: 10,
+                              bottom: 10,
+                              right: 20,
+                              left: 20,
+                            ),
+                            backgroundColor: Color(0xff2e2288),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)))),
+                        child: Text('글쓰기',
+                            style: TextStyle(
+                              fontSize: 25,
+                            ))),
+                  )
+                ],
               ),
-              horisonLine,
-              postListNum(
-                  viewListNum: viewListNum,
-                  viewFt: viewFt,
-                  viewListCount: viewListCount),
-              horisonLine,
-            ],
-          ),
+            ),
+            horisonLine,
+            postListNum(
+                viewListNum: viewListNum,
+                viewFt: viewFt,
+                viewListCount: viewListCount),
+            horisonLine,
+          ],
         ),
+      ),
     );
   }
 
@@ -168,10 +205,11 @@ class _blogPageState extends State<blogPage> {
   TextEditingController searchCon = TextEditingController();
 
   void searchButtonAction() {
-    searchList = dataDB.where((element) => element[7].contains(searchCon.text)).toList();
+    searchList =
+        dataDB.where((element) => element[7].contains(searchCon.text)).toList();
     viewListCount = (searchList!.length - 1) ~/ 7;
     setState(() {
-      viewListNum=0;
+      viewListNum = 0;
     });
     viewListFt(searchList!);
     _refreshIndicator.currentState?.show();

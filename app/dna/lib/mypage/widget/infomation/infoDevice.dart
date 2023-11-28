@@ -23,6 +23,7 @@ infoDevice() {
         "연결된 기기를 확인할 수 있습니다.",
         style: TextStyle(fontSize: 15, color: Colors.grey),
       ),
+      SizeBoxH10,
       horisonLine,
       Table(
         border: TableBorder.symmetric(inside: BorderSide()),

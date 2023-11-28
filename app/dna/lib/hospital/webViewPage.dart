@@ -1,3 +1,4 @@
+import 'package:dna/widget/enums/bottomNavItem.dart';
 import 'package:dna/widget/sizeBox.dart';
 import "package:flutter/material.dart";
 import 'package:url_launcher/url_launcher.dart';
@@ -29,9 +30,13 @@ class _WebViewPageState extends State<WebViewPage> {
   final String hospitalUrl = 'http://${URL.ip}/hospitalapp';
   bool isWebLoding = false;
 
+  void webViewinitState () {
+
+  }
   @override
   void initState() {
     super.initState();
+
 
     late final PlatformWebViewControllerCreationParams params;
 
@@ -109,6 +114,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(BottomNaviItem.values[1]);
     return Stack(
       children: [
         WebViewWidget(

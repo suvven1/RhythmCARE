@@ -22,6 +22,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:shake/shake.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:webview_flutter/webview_flutter.dart';
 import 'connection/connect.dart';
 import 'controller/GetConnectionController.dart';
 import 'notification/emergency_notification.dart';
@@ -78,6 +79,9 @@ class _mainPageState extends State<mainPage> {
 
   // 바텀 네비게이션을 클릭할 시, 실행할 메소드
   void onItemTap(index) {
+    if(index==1){
+      print('지도');
+    }
     setState(() {
       currentPageIndex = index;
     });

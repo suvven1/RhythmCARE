@@ -64,7 +64,7 @@ void showOverlay(BuildContext context, Offset position, OverlayEntry? overlayEnt
   Overlay.of(context).insert(overlayEntry!);
 
   // 2초 후에 Overlay 제거
-  Future.delayed(Duration(seconds: 2), () {
+  Future.delayed(Duration(seconds: 1), () {
     overlayEntry?.remove();
     print(overlayEntry);
   });
