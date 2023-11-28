@@ -92,8 +92,7 @@ class _blogPageState extends State<blogPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
+    return RefreshIndicator(
         key: _refreshIndicator,
         onRefresh: () async {
           setState(() {
@@ -101,6 +100,9 @@ class _blogPageState extends State<blogPage> {
           });
         },
         child: Container(
+          padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05),
           color: Colors.white,
           child: Column(
             children: [
@@ -126,7 +128,10 @@ class _blogPageState extends State<blogPage> {
                       padding: const EdgeInsets.only(bottom: 12, right: 4),
                       child: ElevatedButton(
                           onPressed: () {
-                            Get.to(communityWrite());
+                            // Get.to(communityWrite());
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return communityWrite();
+                            },));
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.only(
@@ -156,7 +161,6 @@ class _blogPageState extends State<blogPage> {
             ],
           ),
         ),
-      ),
     );
   }
 

@@ -95,7 +95,8 @@ class _communityViewState extends State<communityView> {
                           : ElevatedButton(
                               onPressed: () {
                                 // DB 삭제 여기에 넣으면 됨
-                                Get.back();
+                                // Get.back();
+                                Navigator.pop(context);
                               },
                               child: Text(
                                 '삭제하기',
@@ -106,7 +107,8 @@ class _communityViewState extends State<communityView> {
                             ),
                       ElevatedButton(
                         onPressed: () {
-                          Get.back();
+                          // Get.back();
+                          Navigator.pop(context);
                         },
                         child: Text(
                           '목록으로',

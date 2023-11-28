@@ -83,7 +83,9 @@ class _myPageState extends State<myPage> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width * 0.05),
+                      top: MediaQuery.of(context).size.width * 0.05,
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        right: MediaQuery.of(context).size.width * 0.05),
                     width: double.infinity,
                     color: Colors.grey[200],
                     child: Column(

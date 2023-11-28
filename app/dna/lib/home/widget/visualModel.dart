@@ -16,7 +16,10 @@ visualModel (context, String what) {
           foregroundColor: Colors.black
       ),
       onPressed: (){
-          Get.to(()=>stressPage());
+          // Get.to(()=>stressPage());
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return stressPage();
+        },));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +42,10 @@ visualModel (context, String what) {
           foregroundColor: Colors.black
       ),
       onPressed: (){
-        Get.to(()=>tiredPage());
+        // Get.to(()=>tiredPage());
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return tiredPage();
+        },));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
