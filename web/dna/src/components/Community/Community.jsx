@@ -2,15 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import BoardList from "./BoardList";
 
 const Community = () => {
-  const nav = useNavigate();
-  const loginData = JSON.parse(localStorage.getItem("loginData"));
-  const itemsPerPage = 10;
+  const [headerWidth, setHeaderWidth] = useState(window.innerWidth);
+  // 화면 크기 줄어들 시 사이드바로 전환
+  const handelResize = () => {
+    setHeaderWidth(window.innerWidth);
+  };
 
-  const [currentPage, setCurrentPage] = useState(1); // 페이지 이동
+  useEffect(() => {
+    window.addEventListener("resize", handelResize);
+    return () => {
+      window.removeEventListener("resize", handelResize);
+    };
+  }, []);
+
+  const itemsPerPage = 10;
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
+  const [currentPage, setCurrentPage] = useState(1); // 페이지 이동
   const [initialLoad, setInitialLoad] = useState(true); // 초기 로딩 여부
   const [boardList, setBoardList] = useState([]);
 
@@ -56,6 +67,34 @@ const Community = () => {
     (_, index) => index + 1
   );
 
+  // 검색어와 지역 데이터 비교
+
+  const [search, setSearch] = useState(true);
+
+  const searchData = () => {
+    boardList.map((data) => {
+      const title = [data.bd_title];
+      const filterBoard = (query) => {
+        return title.filter(
+          (el) =>
+            el
+              .toString()
+              .toLowerCase()
+              .indexOf(query.toString().toLowerCase()) > -1
+        );
+      };
+      if (filterBoard(searchKeyword).length != 0) {
+        setSearchResults([...searchResults, data]);
+      }
+    });
+
+    if (searchResults.length != 0) {
+      setSearch(true);
+    } else {
+      setSearch(false);
+    }
+  };
+
   return (
     <CommunityBox>
       <ToolContainer>
@@ -74,67 +113,34 @@ const Community = () => {
           <button className="writeBtn">글쓰기</button>
         </Link>
       </ToolContainer>
-      <hr className="custom-hr" />
 
-      <TableHeader>
-        <div style={{ width: "150px" }}>글번호</div>
-        <div style={{ width: "650px" }}>제목</div>
-        <div style={{ width: "150px" }}>작성자</div>
-        <div style={{ width: "150px" }}>작성일자</div>
-        <div style={{ width: "150px" }}>좋아요수</div>
-        <div style={{ width: "150px" }}>조회수</div>
-      </TableHeader>
+      {headerWidth < 1040 ? (
+        <></>
+      ) : (
+        <>
+          <hr className="custom-hr" />
+          <TableHeader>
+            <div style={{ width: "10%" }}>글번호</div>
+            <div style={{ width: "49%" }}>제목</div>
+            <div style={{ width: "10%" }}>작성자</div>
+            <div style={{ width: "10%" }}>작성일자</div>
+            <div style={{ width: "10%" }}>좋아요수</div>
+            <div style={{ width: "10%" }}>조회수</div>
+          </TableHeader>
+        </>
+      )}
+
       <hr className="custom-hr" />
 
       {/* 검색 결과 있을때 */}
       {currentItems.length > 0 ? (
         currentItems.map((data, index) => (
-          <React.Fragment key={data.bd_idx}>
-            <TableRow>
-              <div style={{ width: "150px" }}>{data.bd_idx}</div>
-              <div style={{ width: "650px" }}>
-                <div
-                  onClick={() =>
-                    nav(`/boarddetail/${data.bd_idx}`, { state: data })
-                  }
-                  style={{ cursor: "pointer" }}
-                >
-                  {data.bd_title}
-                </div>
-              </div>
-              <div style={{ width: "150px" }}>{data.mem_id}</div>
-              <div style={{ width: "150px" }}>{data.created_at}</div>
-              <div
-                style={{
-                  width: "150px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/community/likes.png`}
-                  style={{ width: "20px", marginRight: "5px" }}
-                />
-                {data.bd_likes}
-              </div>
-              <div
-                style={{
-                  width: "150px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/community/view.png`}
-                  style={{ width: "20px", marginRight: "5px" }}
-                />
-                {data.bd_views}
-              </div>
-            </TableRow>
-            {index < currentItems.length - 1 && <hr />}
-          </React.Fragment>
+          <BoardList
+            data={data}
+            index={index}
+            length={boardList.length}
+            key={data.bd_idx}
+          />
         ))
       ) : // 결과 없을떄
       !initialLoad ? (
@@ -144,50 +150,12 @@ const Community = () => {
       ) : (
         // 초기 로딩시 전체 데이터 표시
         boardList.map((data, index) => (
-          <React.Fragment key={data.bd_idx}>
-            <TableRow>
-              <div style={{ width: "150px" }}>{data.bd_idx}</div>
-              <div style={{ width: "650px" }}>
-                <Link
-                  to={`/boarddetail/${data.bd_idx}`}
-                  style={{ textDecoration: "none", color: "black" }}
-                >
-                  {data.bd_title}
-                </Link>
-              </div>
-              <div style={{ width: "150px" }}>{data.mem_id}</div>
-              <div style={{ width: "150px" }}>{data.created_at}</div>
-              <div
-                style={{
-                  width: "150px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/community/likes.png`}
-                  style={{ width: "20px", marginRight: "5px" }}
-                />
-                {data.bd_likes}
-              </div>
-              <div
-                style={{
-                  width: "150px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/community/view.png`}
-                  style={{ width: "20px", marginRight: "5px" }}
-                />
-                {data.bd_views}
-              </div>
-            </TableRow>
-            {index < boardList.length - 1 && <hr />}
-          </React.Fragment>
+          <BoardList
+            data={data}
+            index={index}
+            length={boardList.length}
+            key={data.bd_idx}
+          />
         ))
       )}
       <hr />
@@ -299,16 +267,6 @@ const TableHeader = styled.div`
   text-align: center;
   font-weight: bold;
   padding: 10px 0 10px 0;
-`;
-
-const TableRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  & div {
-    padding: 10px 0 10px 0;
-    text-align: center;
-  }
 `;
 
 const Pagination = styled.div`

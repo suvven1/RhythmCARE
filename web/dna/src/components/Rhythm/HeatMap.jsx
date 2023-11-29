@@ -118,10 +118,11 @@ const HeatMap = () => {
         breakpoint: 600,
         options: {
           chart: {
-            height: 300,
-            width: 400
+            height: 250,
+            width: 320
           }
         }
+        
       }
     ]
   });
@@ -150,8 +151,6 @@ const HeatMap = () => {
           <h2>걸음수 잔디밭</h2>
           <p>
             오늘의 걸음수에 따라 잔디를 채울 수 있어요
-            <br />
-            6000보 이상은 연한 잔디, 10000보 이상은 진한 잔디가 채워져요
           </p>
           <p id="step">{step}걸음</p>
         </StepText>
@@ -184,7 +183,7 @@ const GrassBox = styled.div`
 
   @media only screen and (max-width: 1300px) {
    flex-direction : column ;
-   margin: 0 50px 0 50px;
+   margin: -50px 0 0 0;
    gap: 0px;
   }
 `
@@ -199,17 +198,30 @@ const StepText = styled.div`
   }
 
   & p {
+      margin-top: -10px;
     font-size: 20px;
   }
   & #step {
     font-size: 45px;
     font-weight: bold;
     color: #212e3d;
+    margin-top: 150px;
+
   }
 
   @media only screen and (max-width: 1300px) {
-  & p {
-    font-size: 15px;
-  }
+    padding: 0 20px 0 20px;
+
+    & h2 {
+      font-size: 23px;
+    }
+    & p {
+      font-size: 15px;
+    }
+    & #step {
+      font-size: 40px;
+      margin-top: 10px;
+      text-align: right;
+    }
 }
 `;

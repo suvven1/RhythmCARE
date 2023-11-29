@@ -32,7 +32,7 @@ const Hospital = () => {
       ps.categorySearch('HP8', placesSearchCB, { useMapBounds: true })
     }
 
-    function placesSearchCB(data, status, pagination) {
+    function placesSearchCB(data, status) {
       if (status === kakao.maps.services.Status.OK) {
         const bounds = new kakao.maps.LatLngBounds();
         setPlaces(data);

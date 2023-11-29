@@ -6,6 +6,8 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../connection/connect.dart';
+
 class ConnectionController extends GetxController {
   static ConnectionController get to => Get.find();
   static const MethodChannel platform = MethodChannel('rhythm_method');
@@ -46,6 +48,18 @@ class ConnectionController extends GetxController {
       steps.value = 2;
     }
   }
+
+  void checkConnected() async {
+    final deviceDataStorage = await SharedPreferences.getInstance();
+    var device =
+        deviceDataStorage.getString("deviceName") ?? "STATE_DISCONNECTED";
+    if (device == "STATE_DISCONNECTED") {
+      Get.dialog(connectDialog());
+    } else {
+      startConnect(device);
+    }
+  }
+
 
   void startScan() async {
     isWidgetLoding.value = true;

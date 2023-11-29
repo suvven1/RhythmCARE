@@ -62,6 +62,15 @@ function Calendar() {
     setSelectedDate(today.toISOString().split("T")[0]);
   };
 
+  const isOpen = () => {
+    if (loginData != null) {
+      setShowModal(true);
+    } else {
+      alert("로그인 후 이용해 주세요.");
+      window.location.replace("/login");
+    }
+  };
+
   // 일정추가하기 - 닫기
   const closeModal = () => {
     setShowModal(false);
@@ -166,7 +175,7 @@ function Calendar() {
           </div>
         </ScheduleBack>
         <div>
-          <button className="addScheduleBtn" onClick={() => setShowModal(true)}>
+          <button className="addScheduleBtn" onClick={() => isOpen()}>
             일정 추가하기
           </button>
           {showModal && <ScheduleModal onClose={closeModal} events={events} />}

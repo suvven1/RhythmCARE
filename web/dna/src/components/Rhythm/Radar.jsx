@@ -80,10 +80,15 @@ const Radar = () => {
         breakpoint: 600,
         options: {
           chart: {
-            height: 300,
-            width: 400
+            height: 400,
+            width: 300
+          },
+          legend: {
+            position:"bottom",
+            offsetY: -50
+
           }
-        }
+        },
       }
     ]
   };
@@ -121,7 +126,7 @@ const RaderBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 300px;
+  gap: 100px;
 
   & p {
     color: white;
@@ -133,10 +138,13 @@ const RaderBox = styled.div`
     flex-direction: column;
     height: 500px;
     margin-top: -10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0px;
     gap: 0px;
 
     & p {
-      font-size: 30px;
+      font-size: 28px;
       text-align: center;
       margin-top: 70px;
     }
