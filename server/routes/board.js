@@ -56,10 +56,11 @@ router.post("/deleteBoard", async (req, res) => {
   try {
     await pool.query(deleteBoardSql, [id, bd_idx]);
     res.json({ deleteBoardResult: true });
-    await initBoardInx();
   } catch (err) {
     console.log("게시글 삭제 실패!", err);
     res.json({ deleteBoardResult: false });
+  } finally {
+    await initBoardInx();
   }
 });
 
