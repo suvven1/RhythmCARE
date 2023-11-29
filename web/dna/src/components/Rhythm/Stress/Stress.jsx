@@ -74,6 +74,9 @@ const NowStatus = styled.div`
 const Title = styled.h2`
   font-size: 28px;
   color: #212e3d;
+  @media only screen and (max-width: 600px) {
+    font-size: 23px;
+  }
 `;
 
 // 스트레스 div
@@ -81,7 +84,7 @@ const StressBox = styled.div`
   width: 610px;
   @media only screen and (max-width: 600px) {
     width: 80%;
-    margin-top: -50px;
+    margin-top: -150px;
   }
 `;
 
@@ -101,9 +104,9 @@ const CircleBack = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    margin-top: 0px;
+    margin-top: -10px;
     & img {
-      width: 400px;
+      width: 300px;
     }
   }
 `;
@@ -116,7 +119,7 @@ const CircleBack2 = styled.div`
   z-index: 2;
 
   @media only screen and (max-width: 600px){
-    width: 300px;
+    width: 250px;
   }
 `;
 
@@ -132,31 +135,39 @@ const Circle = styled.div`
   transform: translate(-50%, -50%);
 
   @media only screen and (max-width: 600px){
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
 const RowHighText = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: -10px;
 
   & p {
     font-size: 20px;
     font-weight: bold;
+    display: block;
   }
 
   & .row {
     color: #4bb56d;
+    margin: 20px auto 0 0;
   }
-
+  
   & .high {
     color: #da4b3c;
+    margin: 20px 0 0 auto;
   }
 
-  @media only screen and (max-width: 1300px){
-    margin-top: -20px;
+  @media only screen and (max-width: 600px){
+    margin-top: -30px;
+    & p {
+    font-size: 18px;
+    font-weight: bold;
+    }
   }
 `;
 
@@ -182,4 +193,15 @@ const NowStatusText = styled.div`
     height: 100px;
   }
 
+  @media only screen and (max-width: 600px){
+    & p {
+    font-size: 20px;
+    font-weight: bold;
+    }
+
+    & img {
+    width: 80px;
+    height: 80px;
+  }
+  }
 `;

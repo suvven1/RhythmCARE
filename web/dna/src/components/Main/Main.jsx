@@ -292,10 +292,11 @@ const SloganBack = styled.div`
 
   @media only screen and (max-width: 1040px) {
     margin: 0px;
-    height: 720px;
+    height: 550px;
     
     & img {
-    width: 500px;
+    width: 360px;
+    height: auto;
   }
 
   }

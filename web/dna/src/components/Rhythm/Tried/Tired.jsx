@@ -65,7 +65,7 @@ const Tired = () => {
 export default Tired;
 
 const NowStatus = styled.div`
-  @media only screen and (max-width: 1300px) {
+  @media only screen and (max-width: 600px) {
     cursor: pointer;
   }
 `;
@@ -81,6 +81,9 @@ const FatigueBox = styled.div`
 const Title = styled.h2`
   font-size: 28px;
   color: #212e3d;
+  @media only screen and (max-width: 600px) {
+    font-size: 23px;
+  }
 `;
 
 // 상태바
@@ -99,8 +102,10 @@ const CircleBack = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
+    margin-top: -10px;
+
     & img {
-      width: 400px;
+      width: 300px;
     }
   }
 `;
@@ -112,7 +117,7 @@ const CircleBack2 = styled.div`
   height: 90px;
 
   @media only screen and (max-width: 600px){
-    width: 300px;
+    width: 250px;
   }
 `;
 
@@ -128,8 +133,8 @@ const Circle = styled.div`
   transform: translate(-50%, -50%);
 
   @media only screen and (max-width: 600px){
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
@@ -150,8 +155,12 @@ const RowHighText = styled.div`
   & .high {
     color: #da4b3c;
   }
-  @media only screen and (max-width: 1300px){
-    margin-top: -20px;
+  @media only screen and (max-width: 600px){
+    margin-top: -30px;
+    & p {
+    font-size: 18px;
+    font-weight: bold;
+    }
   }
 `;
 
@@ -175,5 +184,17 @@ const NowStatusText = styled.div`
   & img {
     width: 100px;
     height: 100px;
+  }
+
+  @media only screen and (max-width: 600px){
+    & p {
+    font-size: 20px;
+    font-weight: bold;
+    }
+
+    & img {
+    width: 80px;
+    height: 80px;
+  }
   }
 `;

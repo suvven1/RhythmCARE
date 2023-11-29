@@ -73,13 +73,13 @@ const HeartBeatBox = styled.div`
     font-weight: bold;
   }
 
-  @media only screen and (max-width: 1040px) {
+  @media only screen and (max-width: 600px) {
     & img {
-      width: 400px;
+      width: 340px;
     }
 
     & #hb {
-      margin-top: 120px;
+      margin-top: 80px;
     }
   }
 `;
