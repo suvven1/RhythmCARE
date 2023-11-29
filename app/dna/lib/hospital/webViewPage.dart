@@ -106,7 +106,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
   // 웹뷰 로딩중 표시 함수
   void webLodingFt () async{
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(seconds: 1));
     setState(() {
       isWebLoding = true;
     });

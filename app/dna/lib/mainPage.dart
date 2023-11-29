@@ -128,15 +128,7 @@ class _mainPageState extends State<mainPage> {
         child: SafeArea(
           child: Container(
             color: Colors.white,
-            child: Stack(
-              children: <Widget>[
-                _buildOffstageNavigator(BottomNaviItem.calendar),
-                _buildOffstageNavigator(BottomNaviItem.hospital),
-                _buildOffstageNavigator(BottomNaviItem.home),
-                _buildOffstageNavigator(BottomNaviItem.blog),
-                _buildOffstageNavigator(BottomNaviItem.myPage),
-              ],
-            ),
+            child: _buildOffstageNavigator(BottomNaviItem.values[currentPageIndex]),
           ),
         ),
       ),
@@ -161,10 +153,9 @@ class _mainPageState extends State<mainPage> {
   }
 
   Widget _buildOffstageNavigator(BottomNaviItem item) {
-    return Offstage(
-      offstage: currentPageIndex != item.index,
-      child: Navigator(
-        key: navigatorKeys[currentPageIndex],
+    print(navigatorKeys[item]);
+    return Navigator(
+        key: navigatorKeys[item],
         initialRoute: '/',
         onGenerateRoute: (settings) {
           print(settings);
@@ -174,7 +165,6 @@ class _mainPageState extends State<mainPage> {
             },
           );
         },
-      ),
     );
   }
 }

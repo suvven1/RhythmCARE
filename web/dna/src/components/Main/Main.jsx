@@ -243,17 +243,17 @@ const Main = () => {
 
         <Detail_right id="service_detail4">
           <div>
-            <p className="title">일정 관리하기</p>
+            <p className="title">건강 커뮤니티</p>
             <p className="content">
-              병원 방문 일자,
-              <br /> 개인 일정을 기록해서
-              <br /> 관리해요
+              건강정보를
+              <br /> 서로 공유하고
+              <br /> 건강관리에 힘써요
             </p>
             <p className="detail">
-              병원 방문 일자,
-              <br /> 개인 일정 등<br /> 나만의 스케줄을
+              커뮤니티를 통해
+              <br /> 건강관련 정보를<br /> 서로 공유하여
               <br />
-              기록하여 관리할 수 있어요
+              건강한 습관을 만들어요
             </p>
           </div>
           <div className="blank"></div>
