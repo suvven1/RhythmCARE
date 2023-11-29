@@ -98,6 +98,7 @@ class _blogPageState extends State<blogPage> {
         setState(() {
           fetchData();
         });
+        print('커뮤 새로고침 완료');
       },
       child: Container(
         padding: EdgeInsets.only(
