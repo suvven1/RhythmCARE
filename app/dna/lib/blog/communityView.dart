@@ -9,8 +9,9 @@ import '../url.dart';
 import '../widget/sizeBox.dart';
 
 class communityView extends StatefulWidget {
-  const communityView({Key? key, required this.dataDB}) : super(key: key);
+  const communityView({Key? key, required this.dataDB, required this.isLike}) : super(key: key);
   final Map<String, dynamic> dataDB;
+  final bool isLike;
 
   @override
   State<communityView> createState() => _communityViewState();
@@ -38,29 +39,13 @@ class _communityViewState extends State<communityView> {
   void initState() {
     super.initState();
     fetchData();
-    // postNum = widget.dataDB[0];
-    // likeNum = widget.dataDB[1];
-    likeBool = false;
-    // commentNum = widget.dataDB[3];
-    // writerNick = widget.dataDB[5];
-    // date = widget.dataDB[6].toString().split(' ')[0];
-    // title = widget.dataDB[7];
-    // contexts = widget.dataDB[8];
-
-    /*
-    0 : 글 번호
-    1 : 댓글 번호
-    2 : 댓글 내용
-    3 : 댓글 공감 수
-    4 : 댓글 작성일자
-    5 : 댓글 작성자 닉네임
-    */
+    likeBool = widget.isLike;
     isWriter = userDataCon.nick.value == widget.dataDB["mem_nick"];
   }
 
   void fetchData() async {
     // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
-    blog.commentList = (await getCommentData())!;
+    blog.commentList = (await blog.getCommentData(widget.dataDB["bd_idx"]))!;
 
     // 데이터가 정상적으로 받아와졌다면 실행
     if (blog.commentList.isNotEmpty) {
@@ -83,21 +68,7 @@ class _communityViewState extends State<communityView> {
     }
   }
 
-  Future<RxList<Map<String, dynamic>>?> getCommentData() async {
-    String url = "http://${URL.ip}/comment/getComment";
-    http.Response res = await http.post(Uri.parse(url),
-        headers: <String, String>{'Content-Type': 'application/json'},
-        body: jsonEncode({"bd_idx": widget.dataDB["bd_idx"]}));
 
-    var resData = jsonDecode(res.body)["commentData"];
-
-    if (resData != false) {
-      RxList<Map<String, dynamic>> commentList =
-          RxList<Map<String, dynamic>>.from(resData.toList());
-      return commentList;
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {

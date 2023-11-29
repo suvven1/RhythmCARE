@@ -77,7 +77,7 @@ class _blogPageState extends State<blogPage> {
 
   void fetchData() async {
     // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
-      blog.boardLists = (await getBoardData())!;
+      blog.boardLists = (await blog.getBoardData())!;
 
     // 데이터가 정상적으로 받아와졌다면 실행
     if (blog.boardLists.isNotEmpty) {
@@ -88,17 +88,7 @@ class _blogPageState extends State<blogPage> {
     }
   }
 
-  Future<RxList<Map<String, dynamic>>?>  getBoardData() async {
-    String url = "http://${URL.ip}/board/getBoard";
-    http.Response res = await http.post(Uri.parse(url),
-        headers: <String, String>{'Content-Type': 'application/json'});
-    var resData = jsonDecode(res.body)["boardData"];
-    if (resData != false) {
-      RxList<Map<String, dynamic>> boardList = RxList<Map<String, dynamic>>.from(resData.toList());
-      return boardList;
-    }
-    return null;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +96,7 @@ class _blogPageState extends State<blogPage> {
       key: _refreshIndicator,
       onRefresh: () async {
         setState(() {
-          // showToast("화면새로고침 완료");
+          fetchData();
         });
       },
       child: Container(

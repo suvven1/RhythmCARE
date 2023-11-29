@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 import 'dart:typed_data';
 
 import 'package:dna/blog/communityView.dart';
@@ -20,17 +21,31 @@ class postContainer extends StatefulWidget {
 }
 
 class _postContainerState extends State<postContainer> {
+  BlogController blog = Get.put(BlogController());
 
-
-  late bool likeBool;
+  late bool likeBool = false;
+  late int likeCnt = widget.dataDB["bd_likes"];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    likeBool = false;
-  }
+    fetchData();
 
+  }
+  void fetchData() async {
+    int likeResult = await blog.getIsLiked(widget.dataDB["bd_idx"]);
+    // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
+    setState(() {
+      if(likeResult != 0){
+        likeBool = true;
+        likeCnt = likeResult;
+      }else{
+        likeBool = false;
+        likeCnt = likeResult;
+      }
+    });
+  }
 
   TextStyle textStyle = TextStyle(fontSize: 20);
 
@@ -40,7 +55,7 @@ class _postContainerState extends State<postContainer> {
       onPressed: () {
         // Get.to(communityView(dataDB: widget.dataDB, detailData: detailData,));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return communityView(dataDB: widget.dataDB);
+          return communityView(dataDB: widget.dataDB, isLike: likeBool);
         },));
       },
       style: TextButton.styleFrom(
@@ -74,7 +89,7 @@ class _postContainerState extends State<postContainer> {
                     SizedBox(
                       width: 40,
                       child: Text(
-                        '${widget.dataDB["bd_likes"]}',
+                        '$likeCnt',
                         style: textStyle,
                       ),
                     ),
