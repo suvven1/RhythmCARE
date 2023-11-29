@@ -23,6 +23,7 @@ class _searchState extends State<search> {
                 decoration: BoxDecoration(
                     border: Border.all()),
                 child: TextField(
+                  focusNode: FocusNode(),
                   controller: widget.searchCon,
                   decoration: InputDecoration(
                       border: InputBorder.none,

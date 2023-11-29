@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dna/blog/blogPage.dart';
+
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,8 @@ import '../url.dart';
 import '../widget/sizeBox.dart';
 
 class communityView extends StatefulWidget {
-  const communityView({Key? key, required this.dataDB, required this.isLike}) : super(key: key);
+  const communityView({Key? key, required this.dataDB, required this.isLike})
+      : super(key: key);
   final Map<String, dynamic> dataDB;
   final bool isLike;
 
@@ -68,8 +71,6 @@ class _communityViewState extends State<communityView> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +103,9 @@ class _communityViewState extends State<communityView> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffD95051)),
                             ),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       ElevatedButton(
                         onPressed: () {
                           // Get.back();
@@ -130,14 +133,14 @@ class _communityViewState extends State<communityView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          flex: 9,
+                          flex: -widget.dataDB["mem_nick"].length + 18,
                           child: Text(
                             widget.dataDB["bd_title"],
                             style: titleStyle,
                           ),
                         ),
                         Expanded(
-                          flex: widget.dataDB["mem_nick"].length-1,
+                          flex: widget.dataDB["mem_nick"].length,
                           child: Text(
                             widget.dataDB["mem_nick"],
                             style: titleStyle,
@@ -215,9 +218,9 @@ class _communityViewState extends State<communityView> {
                         (index) => Container(
                               padding: EdgeInsets.only(bottom: 12),
                               decoration: BoxDecoration(
-                                  border: Border(
-                                      top: BorderSide(color: Colors.grey),
-                                  ),
+                                border: Border(
+                                  top: BorderSide(color: Colors.grey),
+                                ),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,9 +269,10 @@ class _communityViewState extends State<communityView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         // 댓글 내용
-                                        Text(commentList[index],
-                                            style: contextStyle,
-                                            ),
+                                        Text(
+                                          commentList[index],
+                                          style: contextStyle,
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
@@ -276,8 +280,7 @@ class _communityViewState extends State<communityView> {
                                           // 댓글 입력 날짜
                                           commentdate[index],
                                           style: TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.grey),
+                                              fontSize: 17, color: Colors.grey),
                                         ),
                                       ],
                                     ),
@@ -288,18 +291,39 @@ class _communityViewState extends State<communityView> {
                   ),
                   horisonLine,
                   SizeBoxH20,
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                    ),
-                    child: TextField(
-                      controller: commentCon,
-                      style: contextStyle,
-                      decoration: InputDecoration(
-                        hintText: '댓글을 남겨주세요.',
-                        border: InputBorder.none,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 8, right: 8),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: TextField(
+
+                            controller: commentCon,
+                            style: contextStyle,
+                            decoration: InputDecoration(
+                              hintText: '댓글을 남겨주세요.',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(60, 55),
+                              backgroundColor: Color(0xff2e2288)),
+                          child: Text(
+                            '입력',
+                            style: contextStyle,
+                          )),
+                    ],
                   ),
                   SizeBoxH40
                 ],
