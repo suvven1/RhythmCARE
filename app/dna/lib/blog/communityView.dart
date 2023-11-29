@@ -103,7 +103,7 @@ class _communityViewState extends State<communityView> {
                                 style: TextStyle(fontSize: 17),
                               ),
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xff2e2288)),
+                                  backgroundColor: Color(0xffD95051)),
                             ),
                       ElevatedButton(
                         onPressed: () {
