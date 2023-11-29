@@ -46,7 +46,7 @@ class _mainPageState extends State<mainPage> {
     attend();
     Future.delayed(Duration.zero, () {
       setState(() {
-        checkConnected();
+        connect.checkConnected();
         notice.requestNotificationPermissions(context);
       });
     });
@@ -54,16 +54,7 @@ class _mainPageState extends State<mainPage> {
     detector.startListening();
   }
 
-  void checkConnected() async {
-    final deviceDataStorage = await SharedPreferences.getInstance();
-    var device =
-        deviceDataStorage.getString("deviceName") ?? "STATE_DISCONNECTED";
-    if (device == "STATE_DISCONNECTED") {
-      Get.dialog(connectDialog());
-    } else {
-      connect.startConnect(device);
-    }
-  }
+
 
   // 초기 페이지 2번 인덱스(홈)
   int currentPageIndex = 2;

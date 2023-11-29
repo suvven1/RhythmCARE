@@ -1,34 +1,29 @@
+import 'dart:convert';
+
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
+import '../controller/GetBlogController.dart';
+import '../url.dart';
 import '../widget/sizeBox.dart';
 
 class communityView extends StatefulWidget {
-  const communityView(
-      {Key? key, required this.dataDB, required this.detailData})
-      : super(key: key);
-  final List<dynamic> dataDB;
-  final List<dynamic> detailData;
+  const communityView({Key? key, required this.dataDB}) : super(key: key);
+  final Map<String, dynamic> dataDB;
 
   @override
   State<communityView> createState() => _communityViewState();
 }
 
 class _communityViewState extends State<communityView> {
-  late int postNum;
-  late int likeNum;
+  BlogController blog = Get.put(BlogController());
   late bool likeBool;
-  late int commentNum;
-  late String writerNick;
-  late String date;
-  late String title;
-  late String contexts;
-  late List<String> commentList;
-  late List<int> commentLike;
-  late List<bool> commentLikeBool;
-  late List<String> commentdate;
-  late List<String> commentNick;
+  late List<String> commentList = [];
+  late List<int> commentLike = [];
+  late List<bool> commentLikeBool = [];
+  late List<String> commentdate = [];
+  late List<String> commentNick = [];
 
   // 현재 뷰어가 작성자인가?
   late bool isWriter;
@@ -42,26 +37,16 @@ class _communityViewState extends State<communityView> {
   @override
   void initState() {
     super.initState();
-    postNum = widget.dataDB[0];
-    likeNum = widget.dataDB[1];
-    likeBool = widget.dataDB[2];
-    commentNum = widget.dataDB[3];
-    writerNick = widget.dataDB[5];
-    date = widget.dataDB[6].toString().split(' ')[0];
-    title = widget.dataDB[7];
-    contexts = widget.dataDB[8];
-    commentList = List.generate(
-        commentNum, (index) => widget.detailData[postNum * 3 + index][2]);
-    commentLike = List.generate(
-        commentNum, (index) => widget.detailData[postNum * 3 + index][3]);
-    commentLikeBool = List.generate(
-        commentNum, (index) => widget.detailData[postNum * 3 + index][4]);
-    commentdate = List.generate(
-        commentNum,
-        (index) =>
-            widget.detailData[postNum * 3 + index][5].toString().split(' ')[0]);
-    commentNick = List.generate(
-        commentNum, (index) => widget.detailData[postNum * 3 + index][6]);
+    fetchData();
+    // postNum = widget.dataDB[0];
+    // likeNum = widget.dataDB[1];
+    likeBool = false;
+    // commentNum = widget.dataDB[3];
+    // writerNick = widget.dataDB[5];
+    // date = widget.dataDB[6].toString().split(' ')[0];
+    // title = widget.dataDB[7];
+    // contexts = widget.dataDB[8];
+
     /*
     0 : 글 번호
     1 : 댓글 번호
@@ -70,7 +55,48 @@ class _communityViewState extends State<communityView> {
     4 : 댓글 작성일자
     5 : 댓글 작성자 닉네임
     */
-    isWriter = userDataCon.nick.value == widget.dataDB[5];
+    isWriter = userDataCon.nick.value == widget.dataDB["mem_nick"];
+  }
+
+  void fetchData() async {
+    // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
+    blog.commentList = (await getCommentData())!;
+
+    // 데이터가 정상적으로 받아와졌다면 실행
+    if (blog.commentList.isNotEmpty) {
+      setState(() {
+        commentList = List.generate(blog.commentList.length,
+            (index) => blog.commentList[index]["cmt_content"]);
+
+        commentLike = List.generate(blog.commentList.length,
+            (index) => blog.commentList[index]["cmt_likes"]);
+
+        commentLikeBool =
+            List.generate(blog.commentList.length, (index) => false);
+
+        commentdate = List.generate(blog.commentList.length,
+            (index) => blog.commentList[index]["created_at"].split("T")[0]);
+
+        commentNick = List.generate(blog.commentList.length,
+            (index) => blog.commentList[index]["mem_nick"]);
+      });
+    }
+  }
+
+  Future<RxList<Map<String, dynamic>>?> getCommentData() async {
+    String url = "http://${URL.ip}/comment/getComment";
+    http.Response res = await http.post(Uri.parse(url),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode({"bd_idx": widget.dataDB["bd_idx"]}));
+
+    var resData = jsonDecode(res.body)["commentData"];
+
+    if (resData != false) {
+      RxList<Map<String, dynamic>> commentList =
+          RxList<Map<String, dynamic>>.from(resData.toList());
+      return commentList;
+    }
+    return null;
   }
 
   @override
@@ -132,11 +158,11 @@ class _communityViewState extends State<communityView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          title,
+                          widget.dataDB["bd_title"],
                           style: titleStyle,
                         ),
                         Text(
-                          writerNick,
+                          widget.dataDB["mem_nick"],
                           style: titleStyle,
                         ),
                       ],
@@ -147,14 +173,14 @@ class _communityViewState extends State<communityView> {
                   Row(
                     children: [
                       Text(
-                        date,
+                        widget.dataDB["created_at"].split("T")[0],
                         style: contextStyle,
                       ),
                     ],
                   ),
                   SizeBoxH20,
                   Text(
-                    contexts,
+                    widget.dataDB["bd_content"],
                     style: contextStyle,
                   ),
                   SizeBoxH30,
@@ -162,7 +188,9 @@ class _communityViewState extends State<communityView> {
                     onPressed: () {
                       setState(() {
                         likeBool = !likeBool;
-                        likeBool ? likeNum++ : likeNum--;
+                        likeBool
+                            ? widget.dataDB["bd_likes"]++
+                            : widget.dataDB["bd_likes"]--;
                       });
                     },
                     child: Column(
@@ -174,7 +202,7 @@ class _communityViewState extends State<communityView> {
                           height: 50,
                         ),
                         Text(
-                          '$likeNum',
+                          '${widget.dataDB["bd_likes"]}',
                           style: contextStyle,
                         ),
                       ],
@@ -186,7 +214,7 @@ class _communityViewState extends State<communityView> {
                   Row(
                     children: [
                       Text(
-                        '댓글 $commentNum',
+                        '댓글 ${blog.commentList.length}',
                         style: titleStyle,
                       ),
                     ],
@@ -249,10 +277,9 @@ class _communityViewState extends State<communityView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            commentList[index],
-                                            style: contextStyle,
-                                          ),
+                                          Text(commentList[index],
+                                              style: contextStyle,
+                                              ),
                                           SizedBox(
                                             height: 5,
                                           ),

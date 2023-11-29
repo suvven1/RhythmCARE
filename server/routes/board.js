@@ -24,7 +24,7 @@ router.post("/uploadBoard", async (req, res) => {
 
 // 게시판 목록 조회(글조회)
 router.post("/getBoard", async (req, res) => {
-  let getBoardSql = `select board.*,mem.mem_nick
+  let getBoardSql = `select board.*,mem.mem_nick, mem.mem_profile_img
                          from t_member as mem left join t_board as board
                            on mem.mem_id = board.mem_id
                            where mem.mem_id = board.mem_id

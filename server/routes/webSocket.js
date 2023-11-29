@@ -31,6 +31,7 @@ if (cluster.isMaster) {
       appWebconnected = true;
       if (data.channel == "RhythmCare") {
         if (heart != data.heartRate) {
+          // console.log(`심박수 입력 : ${data.heartRate}bpm`);
           id = data.ID;
           heart = data.heartRate;
           steps = data.step;
@@ -56,6 +57,7 @@ if (cluster.isMaster) {
     // 클라이언트로 실시간 데이터 보내기
     setInterval(() => {
       if (appWebconnected) {
+        // console.log(`심박수 전송 : ${heart}bpm`);
         socket.send(JSON.stringify({ heartRate: heart, steps: steps, id: id }));
       }
     }, 3000);

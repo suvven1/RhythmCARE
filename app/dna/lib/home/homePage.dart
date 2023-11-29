@@ -7,6 +7,8 @@ import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controller/GetConnectionController.dart';
+
 class homePage extends StatefulWidget {
   const homePage({super.key});
 
@@ -15,6 +17,7 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  ConnectionController connect = Get.put(ConnectionController());
 
   //잔디심기
   List<int> walkNum = List.filled(35, 0);
@@ -49,7 +52,7 @@ class _homePageState extends State<homePage> {
     return RefreshIndicator(
       onRefresh: () async {
         setState(() {
-          showToast("화면새로고침 완료");
+          connect.checkConnected();
         });
       },
       child: ListView(
