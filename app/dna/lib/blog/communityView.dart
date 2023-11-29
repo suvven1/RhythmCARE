@@ -114,7 +114,7 @@ class _communityViewState extends State<communityView> {
                 children: [
                   SizeBoxH40,
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       !isWriter
                           ? SizedBox()
@@ -125,12 +125,13 @@ class _communityViewState extends State<communityView> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                '삭제하기',
+                                '삭제',
                                 style: TextStyle(fontSize: 17),
                               ),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xffD95051)),
                             ),
+                      SizedBox(width: 10,),
                       ElevatedButton(
                         onPressed: () {
                           // Get.back();
@@ -152,18 +153,25 @@ class _communityViewState extends State<communityView> {
                             top: BorderSide(
                                 color: Color(0xff2e2288), width: 5))),
                   ),
-                  SizedBox(
-                    height: 50,
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.dataDB["bd_title"],
-                          style: titleStyle,
+                        Expanded(
+                          flex: 9,
+                          child: Text(
+                            widget.dataDB["bd_title"],
+                            style: titleStyle,
+                          ),
                         ),
-                        Text(
-                          widget.dataDB["mem_nick"],
-                          style: titleStyle,
+                        Expanded(
+                          flex: widget.dataDB["mem_nick"].length-1,
+                          child: Text(
+                            widget.dataDB["mem_nick"],
+                            style: titleStyle,
+                            textAlign: TextAlign.end,
+                          ),
                         ),
                       ],
                     ),
@@ -171,17 +179,27 @@ class _communityViewState extends State<communityView> {
                   horisonLine,
                   SizeBoxH10,
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        // 게시글 작성 날짜
                         widget.dataDB["created_at"].split("T")[0],
+                        style: contextStyle,
+                      ),
+                      Text(
+                        // 조회수
+                        '조회수',
                         style: contextStyle,
                       ),
                     ],
                   ),
                   SizeBoxH20,
-                  Text(
-                    widget.dataDB["bd_content"],
-                    style: contextStyle,
+                  Container(
+                    width: double.infinity,
+                    child: Text(
+                      widget.dataDB["bd_content"],
+                      style: contextStyle,
+                    ),
                   ),
                   SizeBoxH30,
                   TextButton(
@@ -227,7 +245,9 @@ class _communityViewState extends State<communityView> {
                               padding: EdgeInsets.only(bottom: 12),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      top: BorderSide(color: Colors.grey))),
+                                      top: BorderSide(color: Colors.grey),
+                                  ),
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -268,30 +288,28 @@ class _communityViewState extends State<communityView> {
                                       ),
                                     ],
                                   ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(commentList[index],
-                                              style: contextStyle,
-                                              ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            commentdate[index],
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Colors.grey),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // 댓글 내용
+                                        Text(commentList[index],
+                                            style: contextStyle,
+                                            ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          // 댓글 입력 날짜
+                                          commentdate[index],
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: Colors.grey),
+                                        ),
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
