@@ -20,6 +20,7 @@ class communityView extends StatefulWidget {
 class _communityViewState extends State<communityView> {
   BlogController blog = Get.put(BlogController());
   late bool likeBool;
+  late List<int> commentIdxList = [];
   late List<String> commentList = [];
   late List<int> commentLike = [];
   late List<bool> commentLikeBool = [];
@@ -40,7 +41,7 @@ class _communityViewState extends State<communityView> {
     super.initState();
     fetchData();
     likeBool = widget.isLike;
-    isWriter = userDataCon.nick.value == widget.dataDB["mem_nick"];
+    isWriter = blog.id == widget.dataDB["mem_id"];
   }
 
   void fetchData() async {
@@ -49,15 +50,19 @@ class _communityViewState extends State<communityView> {
 
     // 데이터가 정상적으로 받아와졌다면 실행
     if (blog.commentList.isNotEmpty) {
+      List<bool> isLikedList = await Future.wait(List.generate(blog.commentList.length,
+              (index) => blog.getIsCmtLiked(blog.commentList[index]["cmt_idx"]) as Future<bool>));
       setState(() {
+        commentIdxList= List.generate(blog.commentList.length,
+                (index) => blog.commentList[index]["cmt_idx"]);
+
         commentList = List.generate(blog.commentList.length,
             (index) => blog.commentList[index]["cmt_content"]);
 
         commentLike = List.generate(blog.commentList.length,
             (index) => blog.commentList[index]["cmt_likes"]);
 
-        commentLikeBool =
-            List.generate(blog.commentList.length, (index) => false);
+        commentLikeBool = List.from(isLikedList);
 
         commentdate = List.generate(blog.commentList.length,
             (index) => blog.commentList[index]["created_at"].split("T")[0]);
@@ -67,8 +72,6 @@ class _communityViewState extends State<communityView> {
       });
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +94,7 @@ class _communityViewState extends State<communityView> {
                           ? SizedBox()
                           : ElevatedButton(
                               onPressed: () {
-                                // DB 삭제 여기에 넣으면 됨
-                                // Get.back();
-                                Navigator.pop(context);
+                                blog.deleteBoard(widget.dataDB["bd_idx"], context);
                               },
                               child: Text(
                                 '삭제',
@@ -177,9 +178,13 @@ class _communityViewState extends State<communityView> {
                     onPressed: () {
                       setState(() {
                         likeBool = !likeBool;
-                        likeBool
-                            ? widget.dataDB["bd_likes"]++
-                            : widget.dataDB["bd_likes"]--;
+                        if(likeBool){
+                          blog.likesAdd(widget.dataDB["bd_idx"]);
+                          widget.dataDB["bd_likes"]++;
+                        }else{
+                          blog.likesPop(widget.dataDB["bd_idx"]);
+                          widget.dataDB["bd_likes"]--;
+                        }
                       });
                     },
                     child: Column(
@@ -236,9 +241,13 @@ class _communityViewState extends State<communityView> {
                                           setState(() {
                                             commentLikeBool[index] =
                                                 !commentLikeBool[index];
-                                            commentLikeBool[index]
-                                                ? commentLike[index]++
-                                                : commentLike[index]--;
+                                            if(commentLikeBool[index]){
+                                              blog.cmtLikesAdd(commentIdxList[index]);
+                                              commentLike[index]++;
+                                            }else{
+                                              blog.cmtLikesPop(commentIdxList[index]);
+                                              commentLike[index]--;
+                                            }
                                           });
                                         },
                                         child: Row(

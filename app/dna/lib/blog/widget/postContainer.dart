@@ -28,13 +28,13 @@ class _postContainerState extends State<postContainer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchData();
 
   }
   void fetchData() async {
-    int likeResult = await blog.getIsLiked(widget.dataDB["bd_idx"]);
+    int likeResult = -1;
+    likeResult = await blog.getIsLiked(widget.dataDB["bd_idx"]);
     // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
     setState(() {
       if(likeResult != 0){

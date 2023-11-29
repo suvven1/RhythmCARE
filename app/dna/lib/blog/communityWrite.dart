@@ -1,6 +1,9 @@
 import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../controller/GetBlogController.dart';
 
 class communityWrite extends StatefulWidget {
   const communityWrite({super.key});
@@ -10,7 +13,7 @@ class communityWrite extends StatefulWidget {
 }
 
 class _communityWriteState extends State<communityWrite> {
-
+  BlogController blog = Get.put(BlogController());
   TextEditingController titleCon = TextEditingController();
   TextEditingController contextCon = TextEditingController();
 
@@ -79,9 +82,7 @@ class _communityWriteState extends State<communityWrite> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        print(titleCon.text);
-                        print(contextCon.text);
-                        Get.back();
+                        blog.uploadBoard(titleCon.text, contextCon.text, context);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
