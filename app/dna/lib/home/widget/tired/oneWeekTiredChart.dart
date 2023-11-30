@@ -12,13 +12,7 @@ class _oneWeekTiredChartState extends State<oneWeekTiredChart> {
 
   // 피로도 데이터 (index = 0 : 오늘 피로도, 1 : 어제 피로도, ... , 6 : 6일 전 피로도)
   List<double> data = [
-    32,
-    27,
-    36,
-    41,
-    53,
-    43,
-    28,
+    10, 41, 35, 51, 49, 62, 6
   ];
 
   // 오늘 날짜로부터 일주일의 날짜 리스트
