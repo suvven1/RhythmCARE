@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dna/controller/GetRhythmController.dart';
 import 'package:dna/home/widget/grass/grass.dart';
 import 'package:dna/home/widget/heartBeat.dart';
@@ -20,14 +22,9 @@ class _homePageState extends State<homePage> {
   ConnectionController connect = Get.put(ConnectionController());
 
   //잔디심기
-  List<int> walkNum = List.filled(35, 0);
+  List<int> walkNum = List.generate(35, (index) => index%2 ==0 ? Random().nextInt(12000) : 4000+ Random().nextInt(8000));
 
   List<Color> grassColor(List list) {
-    walkNum[0] = 10000; // test용 값 - DB입력 후 지우기
-    walkNum[1] = 8000; // test용 값 - DB입력 후 지우기
-    walkNum[2] = 6000; // test용 값 - DB입력 후 지우기
-    walkNum[3] = 4000; // test용 값 - DB입력 후 지우기
-    walkNum[4] = 2000; // test용 값 - DB입력 후 지우기
     List<Color> newList = [];
     list.forEach((e) {
       if (e > 9999) {
