@@ -24,14 +24,9 @@ class communityView extends StatefulWidget {
 }
 
 class _communityViewState extends State<communityView> {
+
   BlogController blog = Get.put(BlogController());
   late bool likeBool;
-  late List<int> commentIdxList = [];
-  late List<String> commentLists = [];
-  late List<int> commentLike = [];
-  late List<bool> commentLikeBool = [];
-  late List<String> commentdate = [];
-  late List<String> commentNick = [];
 
   // 현재 뷰어가 작성자인가?
   late bool isWriter;
@@ -49,6 +44,8 @@ class _communityViewState extends State<communityView> {
   void fetchData() async {
     blog.commentLists = (await blog.getCommentData(widget.dataDB["bd_idx"]))!;
   }
+
+  FocusNode textFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +86,12 @@ class _communityViewState extends State<communityView> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const blogPage();
+                              },
+                              settings: const RouteSettings(name: 'blogPage'), // RouteSettings 추가
+                            ), (route) => false);
                           },
                           child: Text(
                             '목록으로',

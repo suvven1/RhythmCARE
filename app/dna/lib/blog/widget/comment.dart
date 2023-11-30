@@ -18,12 +18,27 @@ class _commentState extends State<comment> {
   BlogController blog = Get.put(BlogController());
   TextStyle titleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
   TextStyle contextStyle = TextStyle(fontSize: 20);
+  bool cmtLikes = false;
 
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    bool result = await blog.getIsCmtLiked(blog.commentLists[widget.index]["cmt_idx"]);
+    setState(() {
+      if(result){
+        cmtLikes = true;
+      }else{
+        cmtLikes = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    bool cmtLikes = false;
 
     return Container(
       padding: EdgeInsets.only(bottom: 12),
@@ -91,7 +106,7 @@ class _commentState extends State<comment> {
                 ),
                 Text(
                   // 댓글 입력 날짜
-                  blog.commentLists[widget.index]["created_at"],
+                  blog.commentLists[widget.index]["created_at"].split("T")[0],
                   style: TextStyle(
                       fontSize: 17, color: Colors.grey),
                 ),

@@ -33,8 +33,8 @@ class _commentWriteState extends State<commentWrite> {
               border: Border.all(),
             ),
             child: TextField(
-              focusNode: _focusNode,
               controller: commentCon,
+              focusNode: _focusNode,
               onEditingComplete: () {
                 _focusNode.unfocus();
               },

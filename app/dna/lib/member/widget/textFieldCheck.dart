@@ -34,6 +34,7 @@ class _textFieldCheckState extends State<textFieldCheck> {
             border: InputBorder.none,
           ),
           obscureText: widget.hide,
+          textInputAction: TextInputAction.next,
         ),
       ),
       Row(

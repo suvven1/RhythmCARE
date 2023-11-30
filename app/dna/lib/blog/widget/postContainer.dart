@@ -24,7 +24,6 @@ class _postContainerState extends State<postContainer> {
   BlogController blog = Get.put(BlogController());
 
   late bool likeBool = false;
-  late int likeCnt = widget.dataDB["bd_likes"];
 
   @override
   void initState() {
@@ -33,16 +32,12 @@ class _postContainerState extends State<postContainer> {
 
   }
   void fetchData() async {
-    int likeResult = -1;
-    likeResult = await blog.getIsLiked(widget.dataDB["bd_idx"]);
-    // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
+    int likeResult = await blog.getIsLiked(widget.dataDB["bd_idx"]);
     setState(() {
-      if(likeResult != 0){
+      if(likeResult != -1){
         likeBool = true;
-        likeCnt = likeResult;
       }else{
         likeBool = false;
-        likeCnt = likeResult;
       }
     });
   }
@@ -53,9 +48,15 @@ class _postContainerState extends State<postContainer> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return communityView(dataDB: widget.dataDB, isLike: likeBool);
-        },));
+        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //   return communityView(dataDB: widget.dataDB, isLike: likeBool);
+        // },));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context) {
+            return communityView(dataDB: widget.dataDB, isLike: likeBool);
+          },
+          settings: const RouteSettings(name: 'communityView'), // RouteSettings 추가
+        ), (route) => false);
       },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
@@ -86,14 +87,14 @@ class _postContainerState extends State<postContainer> {
                       width: 5,
                     ),
                     SizedBox(
-                      width: 40,
+                      width: 25,
                       child: Text(
-                        '$likeCnt',
+                        "${widget.dataDB["bd_likes"]}",
                         style: textStyle,
                       ),
                     ),
                     Image.asset(
-                      'image/comment_icon.png',
+                      'image/view.png',
                       height: 25,
                     ),
                     SizedBox(

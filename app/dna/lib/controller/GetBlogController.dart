@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dna/blog/blogPage.dart';
 import 'package:dna/toastMessage/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class BlogController extends GetxController {
   // 게시글 관련 변수
   RxList<Map<String, dynamic>> boardLists = RxList<Map<String, dynamic>>();
   RxList<Map<String, dynamic>> viewList= RxList<Map<String, dynamic>>();
+  RxInt viewListCount = 1.obs;
+  RxInt viewListNum = 0.obs;
 
   // 게시글 조회 / 작성 / 삭제------------------------------------------------------------------------
   // 게시글 조회
@@ -32,6 +35,24 @@ class BlogController extends GetxController {
     return null;
   }
 
+  Future<String> fetchData() async {
+    // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
+    boardLists = (await getBoardData())!;
+
+    // 데이터가 정상적으로 받아와졌다면 실행
+    if (boardLists.isNotEmpty) {
+        viewListCount.value = (boardLists.length - 1) ~/ 7;
+        viewListFt(boardLists);
+        return"";
+    }
+    return"";
+  }
+
+  void viewListFt(List list) {
+    viewList = RxList.generate(
+        viewListNum.value == viewListCount.value ? list.length - viewListCount.value * 7 : 7,
+            (index) => list[index + viewListNum.value * 7]);
+  }
   // -----------------------------------------------------------------------------------------------------
   // 게시글 작성
   void uploadBoard(String title, String content, context) async {
@@ -41,9 +62,14 @@ class BlogController extends GetxController {
         body: jsonEncode({"title": title, "content":content, "id": id }));
     var resData = jsonDecode(res.body)["uploadBoardResult"];
     if (resData) {
-      await getBoardData();
+      await fetchData();
       showToast("게시글 작성이 완료 되었습니다.");
-      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+        builder: (context) {
+          return const blogPage();
+        },
+        settings: const RouteSettings(name: 'blogPage'), // RouteSettings 추가
+      ), (route) => false);
     }else{
       showToast("[네트워크 에러] 게시글 추가 실패");
     }
@@ -57,9 +83,14 @@ class BlogController extends GetxController {
         body: jsonEncode({"id": id, "bd_idx": bdIdx}));
     var resData = jsonDecode(res.body)["deleteBoardResult"];
     if (resData) {
-      await getBoardData();
+      await fetchData();
       showToast("게시글 삭제가 완료 되었습니다.");
-      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+        builder: (context) {
+          return const blogPage();
+        },
+        settings: const RouteSettings(name: 'blogPage'), // RouteSettings 추가
+      ), (route) => false);
     }else{
       showToast("[네트워크 에러] 게시글 삭제 실패");
     }
@@ -77,7 +108,7 @@ class BlogController extends GetxController {
     if (resData != false) {
       return resData;
     }
-    return 0;
+    return -1;
   }
 
   // 게시글 좋아요 추가

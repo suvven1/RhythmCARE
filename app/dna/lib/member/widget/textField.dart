@@ -15,6 +15,7 @@ textField (TextEditingController Con, String hintText, {bool? hide}){
         border: InputBorder.none,
       ),
       obscureText: hide ?? false,
+      textInputAction: TextInputAction.next,
     ),
   );
 }
