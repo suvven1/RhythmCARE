@@ -92,95 +92,92 @@ class _blogPageState extends State<blogPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      key: _refreshIndicator,
-      onRefresh: () async {
-        setState(() {
-          fetchData();
-        });
-        print('커뮤 새로고침 완료');
-      },
-      child: Container(
-        padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width * 0.05,
-            right: MediaQuery.of(context).size.width * 0.05),
-        color: Colors.white,
-        child: Column(
-          children: [
-            SizeBoxH40,
-            search(
-                searchCon: searchCon, searchButtonAction: searchButtonAction),
-            Expanded(
-              child: Stack(
-                alignment: AlignmentDirectional.bottomEnd,
-                children: [
-                  GestureDetector(
-                    onHorizontalDragUpdate: (details) async{
-                      if(details.delta.dx < -7 && !isDraging && viewListNum < viewListCount){
-                        viewRightFt();
-                        print('right');
-                        Future.delayed(Duration(milliseconds: 500), (){
-                          isDraging = false;
-                        });
-                      } else if(details.delta.dx > 7 && !isDraging && viewListNum >0){
-                        viewLeftFt();
-                        print('left');
-                        Future.delayed(Duration(milliseconds: 500), (){
-                          isDraging = false;
-                        });
-                      }
-                    },
-                    child: ListView.builder(
-                      itemCount: blog.viewList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Obx(() =>
-                          postContainer(
-                            // key를 부여하지 않는다면,
-                            // flutter는 기본적으로 같은 키에 대해
-                            // 재사용을 하기 때문에 상태변화가 일어나지 않을 수 있다.
-                              key: ValueKey(blog.viewList[index]["bd_idx"]),
-                              dataDB: blog.viewList[index]),
-                        );
+    return Obx(()=>
+      RefreshIndicator(
+        key: _refreshIndicator,
+        onRefresh: () async {
+          setState(() {
+            fetchData();
+          });
+          print('커뮤 새로고침 완료');
+        },
+        child: Container(
+          padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05),
+          color: Colors.white,
+          child: Column(
+            children: [
+              SizeBoxH40,
+              search(
+                  searchCon: searchCon, searchButtonAction: searchButtonAction),
+              Expanded(
+                child: Stack(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  children: [
+                    GestureDetector(
+                      onHorizontalDragUpdate: (details) async{
+                        if(details.delta.dx < -7 && !isDraging && viewListNum < viewListCount){
+                          viewRightFt();
+                          print('right');
+                          Future.delayed(Duration(milliseconds: 500), (){
+                            isDraging = false;
+                          });
+                        } else if(details.delta.dx > 7 && !isDraging && viewListNum >0){
+                          viewLeftFt();
+                          print('left');
+                          Future.delayed(Duration(milliseconds: 500), (){
+                            isDraging = false;
+                          });
+                        }
                       },
+                      child: ListView.builder(
+                          itemCount: blog.viewList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return postContainer(
+                                  key: ValueKey(blog.viewList[index]["bd_idx"]),
+                                  dataDB: blog.viewList[index]);
+                          },
+                        ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12, right: 4),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          // Get.to(communityWrite());
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return communityWrite();
-                            },
-                          ));
-                        },
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                              right: 20,
-                              left: 20,
-                            ),
-                            backgroundColor: Color(0xff2e2288),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(12)))),
-                        child: Text('글쓰기',
-                            style: TextStyle(
-                              fontSize: 25,
-                            ))),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12, right: 4),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            // Get.to(communityWrite());
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return communityWrite();
+                              },
+                            ));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                                right: 20,
+                                left: 20,
+                              ),
+                              backgroundColor: Color(0xff2e2288),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(12)))),
+                          child: Text('글쓰기',
+                              style: TextStyle(
+                                fontSize: 25,
+                              ))),
+                    )
+                  ],
+                ),
               ),
-            ),
-            horisonLine,
-            postListNum(
-                viewListNum: viewListNum,
-                viewFt: viewFt,
-                viewListCount: viewListCount),
-            horisonLine,
-          ],
+              horisonLine,
+              postListNum(
+                  viewListNum: viewListNum,
+                  viewFt: viewFt,
+                  viewListCount: viewListCount),
+              horisonLine,
+            ],
+          ),
         ),
       ),
     );

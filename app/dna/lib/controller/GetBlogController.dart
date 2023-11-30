@@ -26,6 +26,7 @@ class BlogController extends GetxController {
     var resData = jsonDecode(res.body)["boardData"];
     if (resData != false) {
       RxList<Map<String, dynamic>> boardList = RxList<Map<String, dynamic>>.from(resData.toList());
+      boardLists.assignAll(boardList);
       return boardList;
     }
     return null;
@@ -40,6 +41,7 @@ class BlogController extends GetxController {
         body: jsonEncode({"title": title, "content":content, "id": id }));
     var resData = jsonDecode(res.body)["uploadBoardResult"];
     if (resData) {
+      await getBoardData();
       showToast("게시글 작성이 완료 되었습니다.");
       Navigator.pop(context);
     }else{
@@ -55,6 +57,7 @@ class BlogController extends GetxController {
         body: jsonEncode({"id": id, "bd_idx": bdIdx}));
     var resData = jsonDecode(res.body)["deleteBoardResult"];
     if (resData) {
+      await getBoardData();
       showToast("게시글 삭제가 완료 되었습니다.");
       Navigator.pop(context);
     }else{
@@ -103,7 +106,7 @@ class BlogController extends GetxController {
 
   // -----------------------------------------------------------------------------------------------------
   // 댓글 관련 변수
-  RxList<Map<String, dynamic>> commentList= RxList<Map<String, dynamic>>();
+  RxList<Map<String, dynamic>> commentLists= RxList<Map<String, dynamic>>();
   RxList<bool> commentLikeBoolList = RxList<bool>();
 
   // 댓글 조회 / 추가---------------------------------------------------------------------------------------
@@ -119,6 +122,7 @@ class BlogController extends GetxController {
     if (resData != false) {
       RxList<Map<String, dynamic>> commentList =
       RxList<Map<String, dynamic>>.from(resData.toList());
+      commentLists.assignAll(commentList);
       return commentList;
     }
     return null;
@@ -131,7 +135,10 @@ class BlogController extends GetxController {
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode({"bd_idx": bdIdx, "cmt_content":content, "mem_id": id }));
     var resData = jsonDecode(res.body)["uploadCommentResult"];
-    if (!resData) {
+    if (resData) {
+      showToast("댓글 작성이 완료 되었습니다.");
+      await getCommentData(bdIdx);
+    }else{
       showToast("[네트워크 에러] 댓글 추가 실패");
     }
   }

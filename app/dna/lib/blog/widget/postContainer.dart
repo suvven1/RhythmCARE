@@ -53,7 +53,6 @@ class _postContainerState extends State<postContainer> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        // Get.to(communityView(dataDB: widget.dataDB, detailData: detailData,));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return communityView(dataDB: widget.dataDB, isLike: likeBool);
         },));

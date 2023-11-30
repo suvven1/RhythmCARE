@@ -48,7 +48,7 @@ router.post("/getBoard", async (req, res) => {
   }
 });
 
-// 일정 삭제
+// 게시글 삭제
 router.post("/deleteBoard", async (req, res) => {
   let { id, bd_idx } = req.body;
   let deleteBoardSql = "delete from t_board where mem_id=? and bd_idx=?";

@@ -82,7 +82,9 @@ class _communityWriteState extends State<communityWrite> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        blog.uploadBoard(titleCon.text, contextCon.text, context);
+                        setState(() {
+                          blog.uploadBoard(titleCon.text, contextCon.text, context);
+                        });
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),

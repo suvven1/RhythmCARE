@@ -38,6 +38,7 @@ dependencies:
   get: ^4.6.6 # 상태관리
   flutter_native_splash: ^2.3.5 # splash
   http: ^1.1.0 # 서버 연결
+  provider: ^6.1.1
   web_socket_channel: ^2.4.0 # 앱 -> 서버 -> 웹을 위한 라이브러리
   flutter_blue: ^0.8.0 # 블루투스
   flutter_blue_plus: ^1.29.5 # 블루투스

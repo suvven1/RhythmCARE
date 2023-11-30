@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:dna/blog/blogPage.dart';
+import 'package:dna/blog/widget/comment.dart';
+import 'package:dna/blog/widget/commentWrite.dart';
 
 import 'package:dna/controller/GetMyPageController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../controller/GetBlogController.dart';
 import '../url.dart';
 import '../widget/sizeBox.dart';
@@ -24,7 +27,7 @@ class _communityViewState extends State<communityView> {
   BlogController blog = Get.put(BlogController());
   late bool likeBool;
   late List<int> commentIdxList = [];
-  late List<String> commentList = [];
+  late List<String> commentLists = [];
   late List<int> commentLike = [];
   late List<bool> commentLikeBool = [];
   late List<String> commentdate = [];
@@ -32,10 +35,6 @@ class _communityViewState extends State<communityView> {
 
   // 현재 뷰어가 작성자인가?
   late bool isWriter;
-
-  TextEditingController commentCon = TextEditingController();
-  final MypageController userDataCon = Get.put(MypageController());
-
   TextStyle titleStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
   TextStyle contextStyle = TextStyle(fontSize: 20);
 
@@ -48,32 +47,7 @@ class _communityViewState extends State<communityView> {
   }
 
   void fetchData() async {
-    // 데이터를 받아오는 비동기 함수 (예: API 호출 등)
-    blog.commentList = (await blog.getCommentData(widget.dataDB["bd_idx"]))!;
-
-    // 데이터가 정상적으로 받아와졌다면 실행
-    if (blog.commentList.isNotEmpty) {
-      List<bool> isLikedList = await Future.wait(List.generate(blog.commentList.length,
-              (index) => blog.getIsCmtLiked(blog.commentList[index]["cmt_idx"]) as Future<bool>));
-      setState(() {
-        commentIdxList= List.generate(blog.commentList.length,
-                (index) => blog.commentList[index]["cmt_idx"]);
-
-        commentList = List.generate(blog.commentList.length,
-            (index) => blog.commentList[index]["cmt_content"]);
-
-        commentLike = List.generate(blog.commentList.length,
-            (index) => blog.commentList[index]["cmt_likes"]);
-
-        commentLikeBool = List.from(isLikedList);
-
-        commentdate = List.generate(blog.commentList.length,
-            (index) => blog.commentList[index]["created_at"].split("T")[0]);
-
-        commentNick = List.generate(blog.commentList.length,
-            (index) => blog.commentList[index]["mem_nick"]);
-      });
-    }
+    blog.commentLists = (await blog.getCommentData(widget.dataDB["bd_idx"]))!;
   }
 
   @override
@@ -85,261 +59,153 @@ class _communityViewState extends State<communityView> {
             right: MediaQuery.of(context).size.width * 0.05,
             left: MediaQuery.of(context).size.width * 0.05,
           ),
-          child: ListView(
-            children: [
-              Column(
-                children: [
-                  SizeBoxH40,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      !isWriter
-                          ? SizedBox()
-                          : ElevatedButton(
-                              onPressed: () {
-                                blog.deleteBoard(widget.dataDB["bd_idx"], context);
-                              },
-                              child: Text(
-                                '삭제',
-                                style: TextStyle(fontSize: 17),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xffD95051)),
-                            ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Get.back();
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          '목록으로',
-                          style: TextStyle(fontSize: 17),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff2e2288)),
-                      ),
-                    ],
-                  ),
-                  SizeBoxH10,
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(
-                                color: Color(0xff2e2288), width: 5))),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          child: Obx(()=>
+            ListView(
+              children: [
+                Column(
+                  children: [
+                    SizeBoxH40,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                          flex: -widget.dataDB["mem_nick"].length + 18,
-                          child: Text(
-                            widget.dataDB["bd_title"],
-                            style: titleStyle,
-                          ),
+                        !isWriter
+                            ? SizedBox()
+                            : ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    blog.deleteBoard(
+                                        widget.dataDB["bd_idx"], context);
+                                  });
+                                },
+                                child: Text(
+                                  '삭제',
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xffD95051)),
+                              ),
+                        SizedBox(
+                          width: 10,
                         ),
-                        Expanded(
-                          flex: widget.dataDB["mem_nick"].length,
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: Text(
-                            widget.dataDB["mem_nick"],
-                            style: titleStyle,
-                            textAlign: TextAlign.end,
+                            '목록으로',
+                            style: TextStyle(fontSize: 17),
                           ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff2e2288)),
                         ),
                       ],
                     ),
-                  ),
-                  horisonLine,
-                  SizeBoxH10,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        // 게시글 작성 날짜
-                        widget.dataDB["created_at"].split("T")[0],
-                        style: contextStyle,
-                      ),
-                      Text(
-                        // 조회수
-                        '조회수',
-                        style: contextStyle,
-                      ),
-                    ],
-                  ),
-                  SizeBoxH20,
-                  Container(
-                    width: double.infinity,
-                    child: Text(
-                      widget.dataDB["bd_content"],
-                      style: contextStyle,
+                    SizeBoxH10,
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(
+                                  color: Color(0xff2e2288), width: 5))),
                     ),
-                  ),
-                  SizeBoxH30,
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        likeBool = !likeBool;
-                        if(likeBool){
-                          blog.likesAdd(widget.dataDB["bd_idx"]);
-                          widget.dataDB["bd_likes"]++;
-                        }else{
-                          blog.likesPop(widget.dataDB["bd_idx"]);
-                          widget.dataDB["bd_likes"]--;
-                        }
-                      });
-                    },
-                    child: Column(
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: -widget.dataDB["mem_nick"].length + 18,
+                            child: Text(
+                              widget.dataDB["bd_title"],
+                              style: titleStyle,
+                            ),
+                          ),
+                          Expanded(
+                            flex: widget.dataDB["mem_nick"].length,
+                            child: Text(
+                              widget.dataDB["mem_nick"],
+                              style: titleStyle,
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    horisonLine,
+                    SizeBoxH10,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(
-                          likeBool
-                              ? 'image/trueLike_icon.png'
-                              : 'image/falseLike_icon.png',
-                          height: 50,
+                        Text(
+                          // 게시글 작성 날짜
+                          widget.dataDB["created_at"].split("T")[0],
+                          style: contextStyle,
                         ),
                         Text(
-                          '${widget.dataDB["bd_likes"]}',
+                          // 조회수
+                          '조회수',
                           style: contextStyle,
                         ),
                       ],
                     ),
-                  ),
-                  SizeBoxH20,
-                  horisonLine,
-                  SizeBoxH30,
-                  Row(
-                    children: [
-                      Text(
-                        '댓글 ${blog.commentList.length}',
-                        style: titleStyle,
+                    SizeBoxH20,
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        widget.dataDB["bd_content"],
+                        style: contextStyle,
                       ),
-                    ],
-                  ),
-                  SizeBoxH20,
-                  Column(
-                    children: List.generate(
-                        commentList.length,
-                        (index) => Container(
-                              padding: EdgeInsets.only(bottom: 12),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(color: Colors.grey),
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        commentNick[index],
-                                        style: contextStyle,
-                                        maxLines: 1,
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            commentLikeBool[index] =
-                                                !commentLikeBool[index];
-                                            if(commentLikeBool[index]){
-                                              blog.cmtLikesAdd(commentIdxList[index]);
-                                              commentLike[index]++;
-                                            }else{
-                                              blog.cmtLikesPop(commentIdxList[index]);
-                                              commentLike[index]--;
-                                            }
-                                          });
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              commentLikeBool[index]
-                                                  ? 'image/trueLike_icon.png'
-                                                  : 'image/falseLike_icon.png',
-                                              width: 20,
-                                            ),
-                                            Text(
-                                              ' ${commentLike[index]}',
-                                              style: contextStyle,
-                                              maxLines: 1,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // 댓글 내용
-                                        Text(
-                                          commentList[index],
-                                          style: contextStyle,
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          // 댓글 입력 날짜
-                                          commentdate[index],
-                                          style: TextStyle(
-                                              fontSize: 17, color: Colors.grey),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )),
-                  ),
-                  horisonLine,
-                  SizeBoxH20,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(left: 8, right: 8),
-                          decoration: BoxDecoration(
-                            border: Border.all(),
+                    ),
+                    SizeBoxH30,
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          likeBool = !likeBool;
+                          if (likeBool) {
+                            blog.likesAdd(widget.dataDB["bd_idx"]);
+                            widget.dataDB["bd_likes"]++;
+                          } else {
+                            blog.likesPop(widget.dataDB["bd_idx"]);
+                            widget.dataDB["bd_likes"]--;
+                          }
+                        });
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            likeBool
+                                ? 'image/trueLike_icon.png'
+                                : 'image/falseLike_icon.png',
+                            height: 50,
                           ),
-                          child: TextField(
-
-                            controller: commentCon,
+                          Text(
+                            '${widget.dataDB["bd_likes"]}',
                             style: contextStyle,
-                            decoration: InputDecoration(
-                              hintText: '댓글을 남겨주세요.',
-                              border: InputBorder.none,
-                            ),
                           ),
+                        ],
+                      ),
+                    ),
+                    SizeBoxH20,
+                    horisonLine,
+                    SizeBoxH30,
+                    Row(
+                      children: [
+                        Text(
+                          '댓글 ${blog.commentLists.length}',
+                          style: titleStyle,
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size(60, 55),
-                              backgroundColor: Color(0xff2e2288)),
-                          child: Text(
-                            '입력',
-                            style: contextStyle,
-                          )),
-                    ],
-                  ),
-                  SizeBoxH40
-                ],
-              ),
-            ],
+                      ],
+                    ),
+                    SizeBoxH20,
+                    Column(
+                      children: List.generate(blog.commentLists.length,
+                          (index) => comment(index: index)),
+                    ),
+                    commentWrite(bdIdx: widget.dataDB["bd_idx"]),
+                    SizeBoxH40
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
