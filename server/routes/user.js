@@ -68,10 +68,12 @@ router.post("/join", async (req, res) => {
     try {
       await pool.query(attendSql, [id]);
       console.log("출석 데이터 입력 성공");
-      initAttendInx();
+      console.log("회원가입 성공");
+      res.json({ joinResult: true });
+      // initAttendInx();
     } catch (err) {
       console.log("출석 데이터 입력 실패", err);
-      deleteMember();
+      await deleteMember();
     }
   };
 
@@ -81,10 +83,10 @@ router.post("/join", async (req, res) => {
 
     try {
       await pool.query(joinUserSql, [id, uName, nick, uBirth, uGender, uPhone]);
-      setAttend();
+      await setAttend();
     } catch (err) {
       console.log("사용자 회원가입 실패!", err);
-      deleteMember();
+      await deleteMember();
     }
   };
 
@@ -98,7 +100,7 @@ router.post("/join", async (req, res) => {
       mGender,
       mPhone,
     ]);
-    joinUser();
+    await joinUser();
   } catch (err) {
     console.log("보호자 회원가입 실패!", err);
     res.json({ joinResult: false });

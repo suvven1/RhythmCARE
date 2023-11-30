@@ -86,8 +86,7 @@ const SideBarBox = styled.div`
 `;
 
 const SideBarView = styled.div`
-  background-color: white;
-  border-left: 1px solid gray;
+  background-color: #ffffffdd;
   border-radius: 30px 0 0 30px;
   position: fixed;
   top: 0;

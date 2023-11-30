@@ -100,7 +100,9 @@ const SideBarContentBox = styled.div`
 const UserDataBox = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #6ebcff;
+  background-color: #001c6faa;
+  /* background-image: url("${process.env.PUBLIC_URL}/images/sideBar.png");
+  background-size: cover; */
   height: 220px;
   border-radius: 30px 0 0 0;
   border-top: 1px solid gray;
@@ -116,14 +118,16 @@ const UserDataBox = styled.div`
 `;
 
 const LoginedUserBox = styled.div`
-  margin-top: 15px;
+  margin-top: 30px;
   & a {
-    color: black;
+    color: whitesmoke;
   }
   & .goTOmypage {
-    margin: 0 70px 0 40px;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 50px 0 40px;
     &:hover {
-      color: white;
+      color: black;
     }
   }
 `;
@@ -146,17 +150,18 @@ const ImgBox = styled.div`
   }
 `;
 const MenuBox = styled.div`
-  margin: 40px 0 0 20px;
+  margin: 40px 0 0 40px;
   display: flex;
   flex-direction: column;
 
   & a {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
     height: 70px;
     &:hover {
-      color: #40a3f9;
-      font-size: 21px;
+      color: #2e2288;
+      font-size: px;
     }
   }
 `;
