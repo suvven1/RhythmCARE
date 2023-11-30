@@ -115,7 +115,8 @@ const Hospital = () => {
         mapscript(latitude, longitude)
       },
       (error) => {
-        mapscript(35.160007, 126.851610)
+        // mapscript(35.160007, 126.851610)  //광주시청
+        mapscript(35.146506, 126.922199)  //학원
       }
     )
   }, [])
@@ -196,6 +197,7 @@ const HospitalBox = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 0px;
+    padding: 50px 0 50px 0;
 
     & #map{
       order: 1;
@@ -206,15 +208,15 @@ const HospitalBox = styled.div`
     }
 
     & ul{
-      margin-top: 20px;
+      margin-top: 30px;
       order: 2;
     margin-left: 0px;
-    max-height: 300px; 
+    max-height: 400px; 
 
     }
     & li {
     height: 60px;
-
+    width: 550px;
     }
   }
 `;
