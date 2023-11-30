@@ -212,6 +212,16 @@ class BlogController extends GetxController {
     }
   }
 
+
+  // 목록으로 이동
+  void goToMenu(context){
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+      builder: (context) {
+        return const blogPage();
+      },
+      settings: const RouteSettings(name: 'blogPage'), // RouteSettings 추가
+    ), (route) => false);
+  }
 @override
   void onInit() async {
     super.onInit();

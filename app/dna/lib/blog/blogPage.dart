@@ -124,9 +124,11 @@ class _blogPageState extends State<blogPage> {
                         child: ListView.builder(
                           itemCount: blog.viewList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return postContainer(
-                                  key: ValueKey(blog.viewList[index]["bd_idx"]),
-                                  dataDB: blog.viewList[index]);
+                            return Obx( ()=>
+                               postContainer(
+                                    key: ValueKey(blog.viewList[index]["bd_idx"]),
+                                    index: index),
+                            );
                           },
                         ),
                       ),

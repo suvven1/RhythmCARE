@@ -13,8 +13,9 @@ import '../../controller/GetBlogController.dart';
 import '../../url.dart';
 
 class postContainer extends StatefulWidget {
-  const postContainer({Key? key, required this.dataDB}) : super(key: key);
-  final Map<String, dynamic> dataDB;
+  const postContainer({Key? key, required this.index}) : super(key: key);
+  // final Map<String, dynamic> dataDB;
+  final int index;
 
   @override
   State<postContainer> createState() => _postContainerState();
@@ -29,10 +30,10 @@ class _postContainerState extends State<postContainer> {
   void initState() {
     super.initState();
     fetchData();
-
   }
+
   void fetchData() async {
-    int likeResult = await blog.getIsLiked(widget.dataDB["bd_idx"]);
+    int likeResult = await blog.getIsLiked(blog.viewList[widget.index]["bd_idx"]);
     setState(() {
       if(likeResult != -1){
         likeBool = true;
@@ -53,7 +54,7 @@ class _postContainerState extends State<postContainer> {
         // },));
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
           builder: (context) {
-            return communityView(dataDB: widget.dataDB, isLike: likeBool);
+            return communityView(dataDB: blog.viewList[widget.index], isLike: likeBool);
           },
           settings: const RouteSettings(name: 'communityView'), // RouteSettings 추가
         ), (route) => false);
@@ -72,7 +73,7 @@ class _postContainerState extends State<postContainer> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'no. ${widget.dataDB["bd_idx"]}',
+                  'no. ${blog.viewList[widget.index]["bd_idx"]}',
                   style: textStyle,
                 ),
                 Row(
@@ -89,7 +90,7 @@ class _postContainerState extends State<postContainer> {
                     SizedBox(
                       width: 25,
                       child: Text(
-                        "${widget.dataDB["bd_likes"]}",
+                        "${blog.viewList[widget.index]["bd_likes"]}",
                         style: textStyle,
                       ),
                     ),
@@ -103,7 +104,7 @@ class _postContainerState extends State<postContainer> {
                     SizedBox(
                       width: 40,
                       child: Text(
-                          '${widget.dataDB["bd_views"]}', style: textStyle),
+                          '${blog.viewList[widget.index]["bd_views"]}', style: textStyle),
                     ),
                   ],
                 ),
@@ -113,10 +114,10 @@ class _postContainerState extends State<postContainer> {
             Row(
               children: [
                 ClipOval(
-                  child: widget.dataDB["mem_profile_img"] != null
+                  child: blog.viewList[widget.index]["mem_profile_img"] != null
                       ? Image.memory(
                     Uint8List.fromList(List<int>.from(
-                        widget.dataDB["mem_profile_img"]["data"])),
+                        blog.viewList[widget.index]["mem_profile_img"]["data"])),
                     width: 50,
                     height: 50,
                   )
@@ -133,11 +134,11 @@ class _postContainerState extends State<postContainer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.dataDB["mem_nick"],
+                      blog.viewList[widget.index]["mem_nick"],
                       style: textStyle,
                     ),
                     Text(
-                      widget.dataDB["created_at"].split("T")[0],
+                      blog.viewList[widget.index]["created_at"].split("T")[0],
                       style: textStyle,
                     ),
                   ],
@@ -146,7 +147,7 @@ class _postContainerState extends State<postContainer> {
             ),
             SizeBoxH20,
             Text(
-              widget.dataDB["bd_title"],
+              blog.viewList[widget.index]["bd_title"],
               style: textStyle,
             ),
             SizeBoxH30

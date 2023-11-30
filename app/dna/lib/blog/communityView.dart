@@ -86,12 +86,7 @@ class _communityViewState extends State<communityView> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (context) {
-                                return const blogPage();
-                              },
-                              settings: const RouteSettings(name: 'blogPage'), // RouteSettings 추가
-                            ), (route) => false);
+                            blog.goToMenu(context);
                           },
                           child: Text(
                             '목록으로',
