@@ -14,8 +14,8 @@ router.post("/getSchedule", async (req, res) => {
     console.log("캘린더 정보 조회 성공!");
     rows.map((schedule) => {
       schedule.sche_idx = schedule.sche_idx.toString();
-      schedule.started_at.setHours(schedule.started_at.getHours() + 18);
-      schedule.ended_at.setHours(schedule.ended_at.getHours() + 18);
+      schedule.started_at.setHours(schedule.started_at.getHours() + 9);
+      schedule.ended_at.setHours(schedule.ended_at.getHours() + 33);
     });
     res.json({
       scheduleData: rows,
@@ -38,7 +38,7 @@ router.post("/updateSchedule", async (req, res) => {
   try {
     await pool.query(updateScheduleSql, [id, title, start, end, color]);
     console.log("캘린더 정보 저장 성공!");
-    initScheduleInx();
+    await initScheduleInx();
     res.json({
       updateScheduleResult: true,
     });
@@ -62,7 +62,7 @@ router.post("/deleteSchedule", async (req, res) => {
     await pool.query(deleteScheduleSql, [id, key]);
     console.log("일정 삭제 성공");
     res.json({ deleteScheduleResult: true });
-    initScheduleInx();
+    await initScheduleInx();
   } catch (err) {
     console.log("일정 삭제 실패!", err);
     res.json({ deleteScheduleResult: false });

@@ -41,7 +41,12 @@ const BadgeDetail = ({ setBadgeOpen, badgeData }) => {
           <img src={badgeData.img} alt={badgeData.title} />
         </div>
       </div>
-      <div className="badgeDetail"></div>
+      <div className="badgeDetail">
+        <div>{badgeData.content1}</div>
+        <div>{badgeData.content2}</div>
+        {/* <div>{"걸음수 잔디밭에 처음으로"}</div>
+        <div>{"잔디를 심었어요."}</div> */}
+      </div>
     </BadgeBox>
   );
 };
@@ -76,7 +81,7 @@ const BadgeBox = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 30px;
-    margin: 40px 0 0 0;
+    margin: 60px 0 0 0;
     padding: 0 10px 0 10px;
     width: 86%;
     height: 40px;
@@ -155,10 +160,13 @@ const BadgeBox = styled.div`
 
   & .badgeDetail {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-weight: lighter;
+    font-size: 25px;
     padding: 0 10px 0 10px;
-    margin: 10px 0 10px 0;
+    margin: -40px 0 10px 0;
     width: 86%;
     height: 185px;
   }

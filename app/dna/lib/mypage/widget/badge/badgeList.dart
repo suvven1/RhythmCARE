@@ -93,7 +93,7 @@ badgeList() {
           badgeText.add("피로도가 지속적으로 낮아요. 관리를 잘 하고 있어요.");
         } else if (i == 18) {
           badgeName.add("롤러코스터");
-          badgeText.add("피로도가 풀리셨나요? 지금처럼만 유지해주세요.");
+          badgeText.add("피로가 풀리셨나요? 지금처럼만 유지해주세요.");
         } else if (i == 19) {
           badgeName.add("평온의폭발");
           badgeText.add("너무 무리하지 마세요! 피로도가 갑자기 높아졌어요.");
