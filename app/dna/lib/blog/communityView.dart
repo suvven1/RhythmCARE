@@ -27,6 +27,7 @@ class _communityViewState extends State<communityView> {
 
   BlogController blog = Get.put(BlogController());
   late bool likeBool;
+  late int views;
 
   // 현재 뷰어가 작성자인가?
   late bool isWriter;
@@ -37,7 +38,9 @@ class _communityViewState extends State<communityView> {
   void initState() {
     super.initState();
     fetchData();
+    blog.viewsAdd(widget.dataDB["bd_idx"]);
     likeBool = widget.isLike;
+    views = widget.dataDB["bd_views"] + 1;
     isWriter = blog.id == widget.dataDB["mem_id"];
   }
 
@@ -139,7 +142,7 @@ class _communityViewState extends State<communityView> {
                         ),
                         Text(
                           // 조회수
-                          '조회수',
+                          '조회수 $views',
                           style: contextStyle,
                         ),
                       ],

@@ -222,6 +222,24 @@ class BlogController extends GetxController {
       settings: const RouteSettings(name: 'blogPage'), // RouteSettings 추가
     ), (route) => false);
   }
+
+  // 조회수
+  Future<int> viewsAdd(int bdIdx) async {
+    String url = "http://${URL.ip}/board/viewsAdd";
+    http.Response res = await http.post(Uri.parse(url),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode({"bd_idx": bdIdx}));
+
+    var resData = jsonDecode(res.body)["viewsAddResult"];
+    if (resData != false) {
+      fetchData();
+      return resData;
+    }
+    return -1;
+  }
+
+
+
 @override
   void onInit() async {
     super.onInit();
