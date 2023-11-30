@@ -4,32 +4,32 @@ import styled from "styled-components";
 const { kakao } = window;
 
 const Hospital = () => {
-
-  const [map, setMap] = useState(null)
+  const [map, setMap] = useState(null);
 
   const [markers, setMarkers] = useState([]);
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(
-    parseInt(localStorage.getItem("selectedPlace"), 10) || null);
-    const [infowindow, setInfowindow] = useState(new kakao.maps.InfoWindow({ zIndex: 1 }));
+    parseInt(localStorage.getItem("selectedPlace"), 10) || null
+  );
+  const [infowindow, setInfowindow] = useState(
+    new kakao.maps.InfoWindow({ zIndex: 1 })
+  );
 
   const mapscript = (userLatitude, userLongitude) => {
-
-
-    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    const options = { //지도를 생성할 때 필요한 기본 옵션
+    const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+    const options = {
+      //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(userLatitude, userLongitude), //지도의 중심좌표.
-      level: 4 //지도의 레벨(확대, 축소 정도)
+      level: 4, //지도의 레벨(확대, 축소 정도)
     };
 
     const newMap = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    setMap(newMap)
+    setMap(newMap);
 
-
-    const ps = new kakao.maps.services.Places(newMap)
+    const ps = new kakao.maps.services.Places(newMap);
 
     function searchPlaces() {
-      ps.categorySearch('HP8', placesSearchCB, { useMapBounds: true })
+      ps.categorySearch("HP8", placesSearchCB, { useMapBounds: true });
     }
 
     function placesSearchCB(data, status) {
@@ -43,7 +43,7 @@ const Hospital = () => {
           bounds.extend(placePosition);
 
           kakao.maps.event.addListener(marker, "click", function () {
-            handleMarkerClick(marker, place.place_name, index)
+            handleMarkerClick(marker, place.place_name, index);
             const listItem = document.getElementById(`place-${index}`);
             if (listItem) {
               listItem.click();
@@ -64,24 +64,21 @@ const Hospital = () => {
     }
 
     function addMarker(map, position, title) {
-      const imageSrc = process.env.PUBLIC_URL + '/images/map_marker1.png';
-      const imageSize = new kakao.maps.Size(36, 37)
-      const markerImage = new kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize
-      )
+      const imageSrc = process.env.PUBLIC_URL + "/images/map_marker1.png";
+      const imageSize = new kakao.maps.Size(36, 37);
+      const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
       const marker = new kakao.maps.Marker({
         position: position,
         image: markerImage,
-        title: title
-      })
+        title: title,
+      });
 
-      marker.setMap(map)
-      return marker
+      marker.setMap(map);
+      return marker;
     }
-    searchPlaces()
-  }
+    searchPlaces();
+  };
 
   const handleMarkerClick = (marker, title, index) => {
     infowindow.close();
@@ -95,9 +92,9 @@ const Hospital = () => {
   };
 
   const handleListItemClick = (index) => {
-    if(!map) {
-      console.error("Map is not avilable")
-      return
+    if (!map) {
+      console.error("Map is not avilable");
+      return;
     }
 
     const marker = markers[index];
@@ -105,21 +102,21 @@ const Hospital = () => {
     const placePosition = new kakao.maps.LatLng(place.y, place.x);
 
     map.setCenter(placePosition);
-    handleMarkerClick(marker, place.place_name, index)
+    handleMarkerClick(marker, place.place_name, index);
   };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        mapscript(latitude, longitude)
+        mapscript(latitude, longitude);
       },
       (error) => {
         // mapscript(35.160007, 126.851610)  //광주시청
-        mapscript(35.146506, 126.922199)  //학원
+        mapscript(35.146506, 126.922199); //학원
       }
-    )
-  }, [])
+    );
+  }, []);
 
   return (
     <HospitalBox>
@@ -144,7 +141,7 @@ const Hospital = () => {
       </ul>
       <div id="map" />
     </HospitalBox>
-  )
+  );
 };
 
 export default Hospital;
@@ -155,7 +152,7 @@ const HospitalBox = styled.div`
   justify-content: center;
   gap: 50px;
   overflow: hidden;
-  height : 855px;
+  height: 855px;
   background-color: #f5f5f5;
 
   & #map {
@@ -166,18 +163,17 @@ const HospitalBox = styled.div`
     order: 2;
   }
 
-
   & ul {
-    overflow-y: auto; 
-    max-height: 700px; 
-    padding: 0; 
+    overflow-y: auto;
+    max-height: 700px;
+    padding: 0;
     margin-left: 300px;
     order: 1;
   }
 
   & li {
-    
     background-color: white;
+    list-style-type: none;
     padding: 20px;
     width: 320px;
     height: 80px;
@@ -192,31 +188,39 @@ const HospitalBox = styled.div`
     margin-top: 17px;
   }
 
-  @media only screen and (max-width: 1040px){
+  @media only screen and (max-width: 1040px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0px;
     padding: 50px 0 50px 0;
 
-    & #map{
+    & #map {
       order: 1;
-      width:80% ;
+      width: 80%;
       height: 400px;
       margin-right: 0px;
-
     }
 
-    & ul{
+    & ul {
       margin-top: 30px;
       order: 2;
-    margin-left: 0px;
-    max-height: 400px; 
-
+      margin-left: 0px;
+      max-height: 400px;
     }
     & li {
-    height: 60px;
-    width: 550px;
+      height: 60px;
+      width: 100%;
+    }
+
+    & #places-list {
+      width: 75%;
+      padding-top: 50px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 `;

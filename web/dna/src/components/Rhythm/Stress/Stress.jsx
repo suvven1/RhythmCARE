@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StressChart from "./StressChart";
 import { useNavigate } from "react-router-dom";
-const Stress = () => {
+const Stress = ({ heart }) => {
   const nav = useNavigate();
-  var stress = 0;
+  const [stress, setStress] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const calStress = parseInt(((heart - 80) / 80) * 100);
+    if (calStress < 0) {
+      setStress(0);
+    } else if (calStress > 100) {
+      setStress(100);
+    } else {
+      setStress(calStress);
+    }
+  }, [heart]);
 
   // 화면 크기 감지
   const handelResize = () => {
@@ -118,7 +129,7 @@ const CircleBack2 = styled.div`
   height: 90px;
   z-index: 2;
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     width: 250px;
   }
 `;
@@ -134,7 +145,7 @@ const Circle = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     width: 30px;
     height: 30px;
   }
@@ -156,17 +167,17 @@ const RowHighText = styled.div`
     color: #4bb56d;
     margin: 20px auto 0 0;
   }
-  
+
   & .high {
     color: #da4b3c;
     margin: 20px 0 0 auto;
   }
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     margin-top: -30px;
     & p {
-    font-size: 18px;
-    font-weight: bold;
+      font-size: 18px;
+      font-weight: bold;
     }
   }
 `;
@@ -193,15 +204,15 @@ const NowStatusText = styled.div`
     height: 100px;
   }
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     & p {
-    font-size: 20px;
-    font-weight: bold;
+      font-size: 20px;
+      font-weight: bold;
     }
 
     & img {
-    width: 80px;
-    height: 80px;
-  }
+      width: 80px;
+      height: 80px;
+    }
   }
 `;

@@ -7,12 +7,17 @@ import Radar from "./Radar";
 import HeatMap from "./HeatMap";
 
 const Rhythm = () => {
+  const [heart, setHeart] = useState(0);
+  const propsHeart = (e) => {
+    setHeart(e);
+  };
+
   return (
     <RhythmBox>
-      <HeartBeat />
+      <HeartBeat propsHeart={propsHeart} />
       <MeasurementBox>
-        <Stress />
-        <Tired />
+        <Stress heart={heart} />
+        <Tired heart={heart} />
       </MeasurementBox>
       <Radar />
       <HeatMap />
@@ -24,14 +29,13 @@ export default Rhythm;
 
 const RhythmBox = styled.div`
   margin: 0 300px 0 300px;
-  
+
   @media only screen and (max-width: 1300px) {
     margin: 0px;
     flex-direction: column;
     gap: 0px;
   }
-`
-
+`;
 
 // 스트레스 피로도 전체 div---------
 const MeasurementBox = styled.div`

@@ -46,7 +46,6 @@ const Community = () => {
     // 검색 결과가 있을 경우 현재 페이지를 1로 설정
     setCurrentPage(results.length > 0 ? 1 : 0);
     setInitialLoad(false);
-    console.log("Search results:", searchResults);
   };
 
   // 현재 페이지에 대한 인덱스 범위 계산

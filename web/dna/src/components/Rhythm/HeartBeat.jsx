@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useNotification from "../Notification/useNotification";
-const HeartBeat = () => {
+
+const HeartBeat = ({ propsHeart }) => {
   // ----------------------------------------------------------------------------
   const loginData = JSON.parse(localStorage.getItem("loginData"));
   const [heartbeat, setHeartbeat] = useState("--");
@@ -22,6 +23,7 @@ const HeartBeat = () => {
       const data = JSON.parse(e.data);
       if (data.id == loginData.id) {
         setHeartbeat(data.heartRate);
+        propsHeart(data.heartRate);
         if (parseInt(data.heartRate) < 60 || parseInt(data.heartRate) > 100) {
           triggerNotif();
         }

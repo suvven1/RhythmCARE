@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TiredChart from "./TiredChart";
 import { useNavigate } from "react-router-dom";
-const Tired = () => {
+const Tired = ({ heart }) => {
   const nav = useNavigate();
-  var fatigue = 100;
+  const [fatigue, setFatigue] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const calFatigue = parseInt(((heart - 60) / 60) * 100);
+    if (calFatigue < 0) {
+      setFatigue(0);
+    } else if (calFatigue > 100) {
+      setFatigue(100);
+    } else {
+      setFatigue(calFatigue);
+    }
+  }, [heart]);
 
   // 화면 크기 감지
   const handelResize = () => {
@@ -29,7 +40,7 @@ const Tired = () => {
       <NowStatus onClick={showChart}>
         <Title>현재 피로도 지수</Title>
         <CircleBack>
-        <img src={`${process.env.PUBLIC_URL}/images/rhythm/status.png`}></img>
+          <img src={`${process.env.PUBLIC_URL}/images/rhythm/status.png`}></img>
           <CircleBack2>
             <Circle
               style={{
@@ -88,7 +99,7 @@ const Title = styled.h2`
 
 // 상태바
 const CircleBack = styled.div`
- width: 100%;
+  width: 100%;
   height: 90px;
   display: flex;
   align-items: center;
@@ -116,7 +127,7 @@ const CircleBack2 = styled.div`
   position: absolute;
   height: 90px;
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     width: 250px;
   }
 `;
@@ -132,7 +143,7 @@ const Circle = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     width: 30px;
     height: 30px;
   }
@@ -155,11 +166,11 @@ const RowHighText = styled.div`
   & .high {
     color: #da4b3c;
   }
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     margin-top: -30px;
     & p {
-    font-size: 18px;
-    font-weight: bold;
+      font-size: 18px;
+      font-weight: bold;
     }
   }
 `;
@@ -186,15 +197,15 @@ const NowStatusText = styled.div`
     height: 100px;
   }
 
-  @media only screen and (max-width: 600px){
+  @media only screen and (max-width: 600px) {
     & p {
-    font-size: 20px;
-    font-weight: bold;
+      font-size: 20px;
+      font-weight: bold;
     }
 
     & img {
-    width: 80px;
-    height: 80px;
-  }
+      width: 80px;
+      height: 80px;
+    }
   }
 `;

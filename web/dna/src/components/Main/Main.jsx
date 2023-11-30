@@ -17,7 +17,6 @@ function TopButton() {
 
   useEffect(() => {
     const handleShowButton = () => {
-      console.log(window.scrollY);
       window.scrollY > 500 ? setShowButton(true) : setShowButton(false);
     };
 
@@ -79,7 +78,9 @@ const Main = () => {
     <MainBox>
       <TopButton />
       <SloganBack>
-      <img src={`${process.env.PUBLIC_URL}/images/main/${sloganImage}.png`}></img>
+        <img
+          src={`${process.env.PUBLIC_URL}/images/main/${sloganImage}.png`}
+        ></img>
       </SloganBack>
       <ServiceBack>
         <span>서비스</span>
@@ -251,7 +252,8 @@ const Main = () => {
             </p>
             <p className="detail">
               커뮤니티를 통해
-              <br /> 건강관련 정보를<br /> 서로 공유하여
+              <br /> 건강관련 정보를
+              <br /> 서로 공유하여
               <br />
               건강한 습관을 만들어요
             </p>
@@ -285,7 +287,7 @@ const MainBox = styled.div`
 const SloganBack = styled.div`
   margin: 50px 350px 0 350px;
   height: 870px;
-  
+
   & img {
     width: 1280px;
   }
@@ -293,15 +295,13 @@ const SloganBack = styled.div`
   @media only screen and (max-width: 1040px) {
     margin: 0px;
     height: 550px;
-    
-    & img {
-    width: 360px;
-    height: auto;
-  }
 
+    & img {
+      width: 360px;
+      height: auto;
+    }
   }
 `;
-
 
 // 서비스 css---------------
 const ServiceBack = styled.div`
