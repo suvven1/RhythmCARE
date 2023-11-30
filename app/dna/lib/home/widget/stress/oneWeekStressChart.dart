@@ -12,13 +12,7 @@ class _oneWeekStressChartState extends State<oneWeekStressChart> {
 
   // 스트레스 데이터 (index = 0 : 오늘스트레스, 1 : 어제 스트레스, ... , 6 : 6일 전 스트레스)
   List<double> data = [
-    32,
-    27,
-    36,
-    41,
-    53,
-    43,
-    28,
+    10, 41, 35, 51, 49, 62, 6
   ];
 
   // 오늘 날짜로부터 일주일의 날짜 리스트

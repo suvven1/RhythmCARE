@@ -11,18 +11,7 @@ class oneDayStressChart extends StatefulWidget {
 class oneDayStressChartState extends State<oneDayStressChart> {
   // 하루 스트레스 더미데이터
   List<int> data = [
-    23,
-    53,
-    42,
-    87,
-    75,
-    25,
-    13,
-    20,
-    23,
-    25,
-    27,
-    50,
+    44, 55, 57, 56, 61, 58, 63, 60, 80
   ];
 
   @override
