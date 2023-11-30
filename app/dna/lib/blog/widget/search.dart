@@ -2,9 +2,10 @@ import 'package:dna/widget/sizeBox.dart';
 import 'package:flutter/material.dart';
 
 class search extends StatefulWidget {
-  const search({Key? key, required this.searchCon, required this.searchButtonAction});
+  const search({Key? key, required this.searchCon, required this.searchButtonAction, required this.focusNode});
   final TextEditingController searchCon;
   final searchButtonAction;
+  final FocusNode focusNode;
 
   @override
   State<search> createState() => _searchState();
@@ -23,17 +24,17 @@ class _searchState extends State<search> {
                 decoration: BoxDecoration(
                     border: Border.all()),
                 child: TextField(
-                  focusNode: FocusNode(),
+                  focusNode: widget.focusNode,
                   controller: widget.searchCon,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.all(10),
                     prefixIcon: Padding(
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(10),
                       child: Image.asset(
                         'image/search_icon.png',
-                        width: 38,
-                        height: 38,
+                        width: 28,
+                        height: 28,
                       ),
                     ),
                   ),
