@@ -67,7 +67,8 @@ class GetXCalendar extends GetxController{
       DateTime modifiedDate = originalDate.subtract(Duration(days: 1));
 
       stringList[3] = stringList[3].split("T")[0];
-      stringList[4] = modifiedDate.toString().split("T")[0];
+      stringList[4] = modifiedDate.toString().split(" ")[0];
+      print(stringList[4]);
       if(stringList[5] == "#eb6867"){
         stringList[5] = '0xffeb6867';
       }else if(stringList[5] == "#f39a47"){
