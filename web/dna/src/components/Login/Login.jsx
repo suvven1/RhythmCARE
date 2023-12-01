@@ -13,9 +13,9 @@ const Login = () => {
 
   // 로그인 상태시 메인페이지로 우회
   useEffect(() => {
-    // if (localStorage.getItem("userData")) {
-    //   nav("/");
-    // }
+    if (localStorage.getItem("userData")) {
+      nav("/");
+    }
   });
 
   // 로그인 유지 체크 여부
