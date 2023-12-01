@@ -102,7 +102,9 @@ const Header = () => {
                   로그인이 필요합니다.
                   <UserBox>
                     <div>
-                      <Link to="/login">로그인</Link>
+                      <Link to="/login" onClick={() => localStorage.clear()}>
+                        로그인
+                      </Link>
                     </div>
                     <div>
                       <Link to="/join/logindata">회원가입</Link>
