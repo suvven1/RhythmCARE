@@ -13,10 +13,6 @@ class calendarWidget extends StatefulWidget {
 
 class _calendarWidgetState extends State<calendarWidget> {
 
-  int year = DateTime.now().year;
-  int month = DateTime.now().month;
-  int day = DateTime.now().day;
-
   @override
   Widget build(BuildContext context) {
     final GetXCalendar controller = Get.put(GetXCalendar());
@@ -29,14 +25,14 @@ class _calendarWidgetState extends State<calendarWidget> {
             printDate(),
             // 날짜 출력
             ...List.generate(
-                fiveOrSix(year, month), // 선택된 달이 몇 주인지? (4~7)
+                fiveOrSix(controller.selectedYear.value, controller.selectedMonth.value), // 선택된 달이 몇 주인지? (4~7)
                     (index) => TableRow(
                     children: List.generate(
                         7,
                             (index2) => dayByDay(
                           // 달력 날짜 버튼 위젯
                           day: index * 7 + index2 - calculateDate(controller.selectedYear.value, controller.selectedMonth.value, index, index2),
-                          thirtyOrOne: thirtyOrOne(month),))))
+                          thirtyOrOne: thirtyOrOne(controller.selectedMonth.value),))))
           ],
         );
       }
