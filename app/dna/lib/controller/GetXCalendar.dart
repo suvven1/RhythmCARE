@@ -30,7 +30,7 @@ class GetXCalendar extends GetxController{
   List<List<List<String>>> reset (List<List<String>> toDoList, int year, int month) {
     int i = 0;
     int j = 1;
-    List<List<List<String>>> tempList = List.generate(31, (index) => []);
+    List<List<List<String>>> tempList = List.generate(32, (index) => []);
     DateTime startDate = DateTime.now();
     DateTime lastDate = DateTime.now();
     DateTime currentDate = DateTime.now();
