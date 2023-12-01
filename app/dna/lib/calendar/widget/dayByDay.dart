@@ -23,7 +23,7 @@ class dayByDay extends StatelessWidget {
         : GetX<GetXCalendar>(builder: (context) {
             List<Widget> toDoColorContainer() {
               List<Widget> resultList = [];
-              for (int i = 0; i < controller.todayList[day].length; i++) {
+              for (int i = 0; i < controller.todayList[day-1].length; i++) {
                 Color color = Color(int.parse(controller.todayList[day][i][5]));
                 resultList.add(Container(
                   height: 10,

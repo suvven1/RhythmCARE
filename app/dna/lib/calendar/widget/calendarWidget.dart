@@ -35,7 +35,7 @@ class _calendarWidgetState extends State<calendarWidget> {
                         7,
                             (index2) => dayByDay(
                           // 달력 날짜 버튼 위젯
-                          day: index * 7 + index2 - calculateDate(controller.selectedYear.value, controller.selectedMonth.value),
+                          day: index * 7 + index2 - calculateDate(controller.selectedYear.value, controller.selectedMonth.value, index, index2),
                           thirtyOrOne: thirtyOrOne(month),))))
           ],
         );
@@ -45,7 +45,7 @@ class _calendarWidgetState extends State<calendarWidget> {
 }
 
 // 1일의 요일 번호 [일:0, 월:1, ..., 토:6]
-int calculateDate(int year, int month) {
+int calculateDate(int year, int month, int index, int index2) {
   List<String> date = ["일", "월", "화", "수", "목", "금", "토"];
   int dateNum = (1 +
               ((((month + 1) * 26) / 10) ~/ 1) +
