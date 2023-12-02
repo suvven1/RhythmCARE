@@ -14,7 +14,8 @@ const Hospitalapp = () => {
         mapscript(latitude, longitude);
       },
       (error) => {
-        mapscript(35.160007, 126.85161);
+        // mapscript(35.160007, 126.85161);
+        mapscript(35.146521, 126.840251); //김대중컨벤션
       }
     );
   }, []);
